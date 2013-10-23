@@ -1,0 +1,7 @@
+cgi-bin
+files
+downloads
+*.swo
+*.swp
+settings.php
+config.php # future use
