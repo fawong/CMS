@@ -1,31 +1,31 @@
 <?php
 //PAGE COMMAND
-if ($act == ''){
-    if ($act2 == ''){
-        if ($cmd == ''){
-            if ($page != ''){
+if ($act == '') {
+    if ($act2 == '') {
+        if ($cmd == '') {
+            if ($page != '') {
                 $find_page = mysql_query("SELECT * FROM `pages` WHERE `page` = '$page'");
-                if (mysql_num_rows($find_page) == 1){
-                    while ($row = mysql_fetch_array($find_page)){
+                if (mysql_num_rows($find_page) == 1) {
+                    while ($row = mysql_fetch_array($find_page)) {
                         title("$row[page_title]");
                         $password_protected = $row['password'];
                         $_SESSION['page_lock'] = false;
-                        if ($row[$_SESSION['group']] == 1){
-                            if ($password_protected == ''){
+                        if ($row[$_SESSION['group']] == 1) {
+                            if ($password_protected == '') {
                                 mysql_query("UPDATE `pages` SET `views` = views + 1 WHERE `page` = '$page'") or die(mysql_error());
 ?>
 <?php page_header($row['page_title']) ?>
 <?php print $row['body'] ?>
 <?php
                             };
-                            if ($password_protected != ''){
-                                if ($_SESSION['page_lock'] == false){
-                                    if ($tick == 'tock'){
+                            if ($password_protected != '') {
+                                if ($_SESSION['page_lock'] == false) {
+                                    if ($tick == 'tock') {
                                         $password_find = mysql_query("SELECT * FROM `pages` WHERE `password` ='$_POST[pass]' AND `page` ='$page'");
-                                        if (mysql_num_rows($password_find) == 1){
+                                        if (mysql_num_rows($password_find) == 1) {
                                             mysql_query("UPDATE `pages` SET views = views+1 WHERE `page` ='$page'") or die(mysql_error());
-                                            page_header($row[page_title]);
-                                            print $row[body];
+                                            page_header($row['page_title']);
+                                            print $row['body'];
 ?>
 <?php
                                             $_SESSION['page_lock'] = true;

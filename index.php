@@ -44,8 +44,7 @@ if ($act == 'admin') {
     require_once('admin.php');
 } else if ($act == 'wpcp') {
     require_once('wpcp.php');
-}
-else if ($act == 'register'){
+} else if ($act == 'register') {
     require_once('register.php');
 } else if ($act == 'manager') {
     require_once('filemanager.php');
@@ -75,9 +74,9 @@ else if ($act == 'register'){
     require_once('failed.php');
 } else if ($act == 'comments') {
     require_once('comments.php');
-} else {
+} /*else {
     page_header('Go away');
-}
+}*/
 // FOOTER
 require('footer.php');
 ?>
