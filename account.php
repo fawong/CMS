@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if ($act == 'account'){
 if ($_SESSION['login'] != true){
 redirect("index.php?act=failed&amp;id=2");

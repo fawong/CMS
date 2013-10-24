@@ -1,5 +1,4 @@
 <?php
-session_start();
 if ($_REQUEST['act'] == 'failed'){
     //No Error Occurred
     if ($id == '' || ($id != 1 && $id != 2)){

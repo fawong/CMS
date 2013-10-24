@@ -16,29 +16,42 @@ $settings['agree_page'] = 1;
 // Site maintenance
 $settings['force_block'] = 0;
 
-// Webmaster email address
-$settings['email'] = 'webmaster@fawong.com';
+// Email address
+$settings['email'] = 'email@example.com';
+
+// Reply email for automated messages
+$settings['replyemail'] ='noreply@example.com';
 
 // Universal layout
 $settings['text_style'] = 0;
 
-// Flash text overlay with anti-alias
-$settings['layout'] = 'default';
-$settings['layout_change'] = 1;
+// Default theme
+$settings['theme'] = 'default';
 
-// User settings
+// Allow theme changes by users
+$settings['theme_change'] = 1;
+
+// Inbox limit for basic members
 $settings['inbox_limit_member'] = 100;
+
+// Inbox limit for regular members
 $settings['inbox_limit_webjk'] = 500;
+
+// Inbox limit for administrators
 $settings['inbox_limit_admin'] = 'unlimited';
+
+// Path to user files
 $settings['files_path'] = '/path/to/store/files/';
 
 // Allow members to post comments in News and Updates page
 $settings['comments'] = 1;
 
-// Gallery page
+// Default images per page in gallery
 $settings['img_per_pg'] = 16;
 
-// Image upload
+// Maximum image upload size (in MB)
 $settings['img_size'] = 128;
-$settings['img_qty'] = 'unlimited';
+
+// Maximum quantity of images
+$settings['img_qnty'] = 'unlimited';
 ?>

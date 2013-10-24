@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if ($act == 'downloadscontrolpanel'){
 if ($_SESSION['group'] != 'admin' || $access['downloadscontrolpanel'] = '0'){
 redirect("index.php?act=failed&amp;id=2");

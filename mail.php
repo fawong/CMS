@@ -1,5 +1,4 @@
 <?php 
-session_start();
 $current_folder = 'inbox';
 //INBOX
 if ($act == 'inbox'){

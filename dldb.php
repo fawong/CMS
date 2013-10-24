@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if ($act == 'dldb'){
 if ($_SESSION['login'] != true){
 $_SESSION[error] = 'Error: Not Enough Access';

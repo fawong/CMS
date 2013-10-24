@@ -1,5 +1,4 @@
 <?php
-session_start();
 if ($act == 'calendar'){
 error_reporting('0'); 
 ini_set('display_errors', '0'); 

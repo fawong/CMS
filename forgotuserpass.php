@@ -34,7 +34,7 @@ $fetchmember = mysql_fetch_array($findmember) or die (mysql_error());
 if ($row = $fetchmember){
 //Formating for e-mail
 //Headers
-$replyemail ="noreply@fawong.com";//Change this address within quotes to your address
+$replyemail = $settings['replyemail'];
 $headers .= "Return-path: $replyemail\n";
 $headers .= "Reply-to: $replyemail\n";
 $headers .= "From: $replyemail\n";

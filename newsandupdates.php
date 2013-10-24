@@ -1,5 +1,4 @@
 <?php
-session_start();
 //NEWS AND UPDATES
 if ($act == ''){
     title("News and Updates");

@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if($act == 'admin'){
     if($_SESSION['group'] != 'admin'){
         redirect("index.php?act=failed&amp;id=2");

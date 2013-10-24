@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if ($act == 'gallery'){
 if ($_SESSION['login'] != true){
 $_SESSION[error] = 'Error: Not Enough Access';

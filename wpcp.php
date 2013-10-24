@@ -1,5 +1,4 @@
 <?php 
-session_start();
 if ($act == 'wpcp'){
 $check_sql = mysql_query("SELECT * FROM users WHERE username = '$_SESSION[username]'");
 $check_row = mysql_num_rows($check_sql);
