@@ -18,17 +18,17 @@ document.title = "'.$title.' - '.$GLOBALS['website_name'].'";
  */
 //PRINT HEADER
 function page_header($name) {
-print '<h1>' . $name . '</h1></div>';
+    print '<h1>' . $name . '</h1></div>';
 }
 //VALID URL
 function valid_url($str){
-return preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\(com|org|net|us)+?\/?/i', $str);
-//return(!preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i', $str)) ? FALSE : TRUE;
+    return preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\(com|org|net|us)+?\/?/i', $str);
+    //return(!preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i', $str)) ? FALSE : TRUE;
 };
 //REDIRECT FUNCTION
 function redirect($url){
-// func: redirect($to,$code=307)
-// spec: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    // func: redirect($to,$code=307)
+    // spec: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 /*function redirect($to,$code=301)
 {
 $location = null;
@@ -78,49 +78,50 @@ echo "</div>\n</div>\n";
 }
 exit(0);
 };*/
-print '<meta http-equiv="refresh" content="0; url='.$url.'" />';
+    print '<meta http-equiv="refresh" content="0; url='.$url.'" />';
 /*print '<script type="text/javascript" language="JavaScript">
 window.location = "'.$url.'";
 </script>';*/
 };
 //FIND TOTAL STORAGE SPACE
 function total_message(){
-if($_SESSION[group] == 'admin'){
-$max = 'unlimited';
-};//if($_SESSION[group] == 'admin')
-if($_SESSION[group] != 'admin'){
-$max = '100';
-};//if($_SESSION[group] != 'admin')
-$find_total = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]'") or die(mysql_error());
-$find_number = mysql_num_rows($find_total);
-print $find_number.'/'.$max;
+    if($_SESSION[group] == 'admin'){
+        $max = 'unlimited';
+    };//if($_SESSION[group] == 'admin')
+    if($_SESSION[group] != 'admin'){
+        $max = '100';
+    };//if($_SESSION[group] != 'admin')
+    $find_total = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]'") or die(mysql_error());
+    $find_number = mysql_num_rows($find_total);
+    print $find_number.'/'.$max;
 };
 //CHECK NEW MESSAGES IN "INBOX" AND NEW COMMENTS IN "USER_COMMENTS"
 function check_inbox(){
-if ($_SESSION['login'] == true){
-$check_new_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]' AND `read` = '0'") or die(mysql_error());
-$check_count = mysql_num_rows($check_new_query);
-if ($check_count > 0){
-$important = '<center><strong>
-<a href="index.php?act=inbox">NEW MESSAGE(S)</a>
-</strong></center>';
-};
-$check_import_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]' AND `read` ='0' AND `important` ='1'");
-$check_count_import = mysql_num_rows($check_import_query);
-if ($check_count_import > 0){
-$important .= '<center><span class="important">
-<a href="index.php?act=inbox">IMPORTANT MESSAGE(S)</a>
-</span></center>';
-};
-$check_comment_query = mysql_query("SELECT * FROM `user_comments` WHERE `username` = '$_SESSION[username]' AND `read` = '0'");
-$check_count_comment = mysql_num_rows($check_comment_query);
-if ($check_count_comment > 0){
-$important .= '<center><span class="important">
-<a href="index.php?act=profile&act2=comment&set=view_comments">NEW COMMENT(S)</a>
-</span></center>';
-};
-print ''.$important.'';
-};
+    if ($_SESSION['login'] == true){
+        $check_new_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]' AND `read` = '0'") or die(mysql_error());
+        $check_count = mysql_num_rows($check_new_query);
+        $important = 'Nothing important right now.';
+        if ($check_count > 0){
+            $important = '<center><strong>
+                <a href="index.php?act=inbox">NEW MESSAGE(S)</a>
+                </strong></center>';
+        };
+        $check_import_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$_SESSION[username]' AND `read` ='0' AND `important` ='1'");
+        $check_count_import = mysql_num_rows($check_import_query);
+        if ($check_count_import > 0){
+            $important .= '<center><span class="important">
+                <a href="index.php?act=inbox">IMPORTANT MESSAGE(S)</a>
+                </span></center>';
+        };
+        $check_comment_query = mysql_query("SELECT * FROM `user_comments` WHERE `username` = '$_SESSION[username]' AND `read` = '0'");
+        $check_count_comment = mysql_num_rows($check_comment_query);
+        if ($check_count_comment > 0){
+            $important .= '<center><span class="important">
+                <a href="index.php?act=profile&act2=comment&set=view_comments">NEW COMMENT(S)</a>
+                </span></center>';
+        };
+        print ''.$important.'';
+    };
 };
 /*function img_comments($id){
 $find = mysql_query("SELECT * FROM img_comment WHERE `img_id` ='$id'");

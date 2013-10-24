@@ -16,8 +16,6 @@ Date: <?php print $row['date'] ?>
 <?php
             if ($_SESSION['group'] == 'admin') {
 ?>
-<br />
-<div align="center">
 <a href="index.php?act=admin&amp;act2=edit_post&amp;id='.$row[id].'">Edit Post</a> &mdash;
 <a href="index.php?act=admin&amp;act2=delete_post&amp;id='.$row[id].'">Delete Post
 </a>
@@ -30,12 +28,11 @@ Date: <?php print $row['date'] ?>
 <?php
                 };
                 if ($_SESSION['group'] == 'admin' || $_SESSION['group'] == 'member' || $_SESSION['group'] == 'basic') {
-                    print '<tr><td>
-                        <div align="center"><a href="index.php?act=comments&amp;act2=add_comments&amp;id='.$row[id].'">Add Comments</a> &mdash;
+?>
+                    <br />
+                    <a href="index.php?act=comments&amp;act2=add_comments&amp;id='.$row[id].'">Add Comments</a> &mdash;
                     <a href="index.php?act=comments&amp;act2=view_comments&amp;id='.$row[id].'">View Comments</a>
-                        </div>
-                        <br /><br />
-                        </td></tr>';
+<?php
                 };
             };
         };

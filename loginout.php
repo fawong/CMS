@@ -51,7 +51,6 @@ $sql = "UPDATE users SET last_log_on = '$local_time', ip = '$ip' WHERE username 
 $result2 = mysql_query($sql) or die (mysql_error());
 $sql2 = "UPDATE users SET online = '1' WHERE username = '$_SESSION[username]'";
 $result3 = mysql_query($sql2) or die (mysql_error());
-check_inbox();
 redirect("index.php");
 }//if ($check_row == 1)
 else{

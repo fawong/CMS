@@ -42,13 +42,10 @@ if ($act == 'create_account'){
                           //"INSERT INTO `users` VALUES ('$new_user_id', 'member', 'member', '$requestusername', '$password', '$local_time', '$date_of_birth', '$email', '', '', '$ip', '0', '', '$activate_code', '0', '', '', '', '', '', '', '', '', '', '', 'default', '0', '0', '0', '0', '0', '0', '0')";
                           //$msysql_add = "INSERT INTO `users` ( `id`, `username`, `tag`, `password`, `date_joined`, `date_of_birth`, `email`, `activate_code`) VALUES ( `$new_user_id`, '$requestusername`, `$name_tag`, `$password`, `$date`, `$date_of_birth`, `$email`, `$activate_code`) ";
                           title("Successful Registration");
-                          print '<center><h1>Successful Registration</h1></center>
-                            <hr width="100%" align="center" />
-                            <table align="center">
-                            <tr><td>
-                            You have successfully register for the FAWONG SUPER TESTING Website.
-                            </td></tr>
-                            </table>'; 
+                          page_header('Successful Registration');
+?>
+                            You have successfully register for <?php print $cms_name ?>.
+<?php
                         }else{print 'You did not agree to the Terms of Service.';};//if ($agree == 'agree')
                       }else{print 'You did not provide a date of birth.';};//if ($date_of_birth != '')
                     }else{print 'The email does not match.';};//if ($password == $confirm_password)

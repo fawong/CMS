@@ -29,10 +29,7 @@ if($settings['force_block'] == 0) {
             <li><a href="?page=contact">Contact Us</a></li>
             <li><a href="?page=about">About <?php print $cms_name ?></a></li>
 <?php
-if ($_SESSION['login'] == true && $settings['force_block'] == 0) {
-    if($_SESSION[group] != 'admin'){
-        check_inbox();
-    };
+    if ($_SESSION['login'] == true && $settings['force_block'] == 0) {
 ?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
@@ -40,21 +37,20 @@ if ($_SESSION['login'] == true && $settings['force_block'] == 0) {
                 <li><a href="index.php?act=account&amp;act2=members_list">View Members List</a></li>
                 <li><a href="index.php?act=profile&amp;act2=options">Options</a></li>
 <?php
-if ($_SESSION['group'] == 'member') {
+        if ($_SESSION['group'] == 'member') {
 ?>
                 <li><a href="index.php?act=wpcp&amp;act2=page">Web Page Control Panel</a></li>
 <?php
-};
-if ($_SESSION['group'] == 'admin' || ($_SESSION['access_file_manager'] == 1 && $settings['force_block'] == 0)) {
+        };
+        if ($_SESSION['group'] == 'admin' || ($_SESSION['access_file_manager'] == 1 && $settings['force_block'] == 0)) {
 ?>
                 <li><a href="index.php?act=manager">File Manager</a></li>
 <?php
-};
+        };
 ?>
                 <li><a href="index.php?act=inbox">Inbox</a></li>
 <?php
-if ($_SESSION['group'] == 'admin' && $settings['force_block'] == 0) {
-        check_inbox();
+        if ($_SESSION['group'] == 'admin' && $settings['force_block'] == 0) {
 ?>
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator Control Panel</li>
@@ -63,26 +59,27 @@ if ($_SESSION['group'] == 'admin' && $settings['force_block'] == 0) {
                 <li><a href="index.php?act=admin&amp;act2=page">Web Page Control Panel</a></li>
                 <li><a href="index.php?act=admin&amp;act2=edit_users_list">Edit Members List</a></li>
                 <li><a href="index.php?act=downloadscontrolpanel&amp;act2=overview">Downloads Control Panel</a></li>
+              </ul>
 <?php
-};
-};
+        };
+    };
 ?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
 <?php
-if($_SESSION['login'] != true) {
+    if($_SESSION['login'] != true) {
 ?>
             <li><a href="?act=login">Login</a></li>
             <li><a href="?act=register">Register</a></li>
 <?php
         //<a href="index.php?act=forgot_username/password">Forgot Username and/or Password?</a>';
-} //if($_SESSION['login'] != true)
-else {
+    } //if($_SESSION['login'] != true)
+    else {
 ?>
             <li><a href="?act=profile&act2=view"><?php print $_SESSION['username']; ?></a></li>
             <li><a href="index.php?act=logout">Logout</a></li>
 <?php
-};
+    };
 ?>
           </ul>
         </div><!--/.nav-collapse -->
@@ -97,14 +94,13 @@ else {
 };//if ($settings['force_block'] == 0)
 if (($page == '') && ($settings['force_block'] == 0 || $_SESSION['group'] == 'admin')) {
     require_once('newsandupdates.php');
+    check_inbox();
 };
 if ($_SESSION['group'] != 'admin' && $settings['force_block'] == 1){
     title("Website Under Maintainance");
     print '<h1><center>Website Under Maintainance</center></h1>
         <table class="table">
         <h3><center><strong>
-        <font color="#0000CC" size="7">FAWONG.COM</font><br />
-        <font size="5">The FAWONG Website is undergoing maintainance and/or upgrades right now.<br />
         It will be back up as soon as the maintainance and/or upgrades are done.<br />
         <br />
         Thank you for your patience.</font>
