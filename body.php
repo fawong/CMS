@@ -1,5 +1,5 @@
+<body>
 <?php
-session_start();
 global $error_message;
 if($settings['force_block'] == 0) {
     if ($_SESSION['login'] == false) {
@@ -8,8 +8,8 @@ if($settings['force_block'] == 0) {
         $_SESSION['username'] = 'Guest';
         $_SESSION['theme'] = 'default';
     };
+check_inbox();
 ?>
-<body>
 <div id="wrap">
 
     <!-- Fixed navbar -->
@@ -94,7 +94,6 @@ if($settings['force_block'] == 0) {
 };//if ($settings['force_block'] == 0)
 if (($page == '') && ($settings['force_block'] == 0 || $_SESSION['group'] == 'admin')) {
     require_once('newsandupdates.php');
-    check_inbox();
 };
 if ($_SESSION['group'] != 'admin' && $settings['force_block'] == 1){
     title("Website Under Maintainance");

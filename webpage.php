@@ -25,7 +25,7 @@ if ($act == ''){
                                         if (mysql_num_rows($password_find) == 1){
                                             mysql_query("UPDATE `pages` SET views = views+1 WHERE `page` ='$page'") or die(mysql_error());
                                             page_header($row[page_title]);
-                                                print $row[body];
+                                            print $row[body];
 ?>
 <?php
                                             $_SESSION['page_lock'] = true;

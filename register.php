@@ -74,16 +74,13 @@ if ($act == 'create_account'){
 if ($act == 'register'){
   if($_SESSION['login'] == TRUE){
     title("Registration Error");
-    print '<center><h1>You Are Already Logged In</h1></center>
-      <hr width="100%" align="center" />
-      <table align="center">
-      <tr><td>
-      You are already logged in to the '.$website_name.' system.
-      </td></tr>
-      </table>';
+    page_header('You Are Already Logged In');
+?>
+You are already logged in to <?php print $cms_name ?>.
+<?php
   }//if($_SESSION['login'] == TRUE)
   else{
-    title("Register for $website_name");
+    title("Register for $cms_name");
     print '<script type="text/javascript">
       var RecaptchaOptions = {
         theme : \'clean\'
@@ -93,7 +90,7 @@ if ($act == 'register'){
 <hr width="100%" align="center" />
 <table align="center"><tr><td>
 Please remember to read our Terms of Service.<br />
-Please fill out the form below in order to sign up for '.$website_name.'.<br /><br />
+Please fill out the form below in order to sign up for '.$cms_name.'.<br /><br />
 * = Required Item
 </td></tr></table>
 <form method="post" action="index.php?act=create_account">

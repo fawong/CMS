@@ -15,11 +15,11 @@
 // Allow direct file download (hotlinking)?
 // Empty - allow hotlinking
 // If set to nonempty value (Example: example.com) will only allow downloads when referrer contains this text
-define('ALLOWED_REFERRER', 'fawong.com');
+define('ALLOWED_REFERRER', '');
 
 // Download folder, i.e. folder where you keep all files for download.
 // MUST end with slash (i.e. "/" )
-define('BASE_DIR','/home/waf/public_html/supertesting/downloads/');
+define('BASE_DIR','/tmp/files/');
 
 // log downloads?  true/false
 define('LOG_DOWNLOADS',true);
