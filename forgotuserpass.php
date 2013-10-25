@@ -17,7 +17,7 @@ print '<center><h1>Forgot Password</h1></center>
 <hr width="100%" align="center" />
 <center>Not enabled yet</center>';
 /*<table class="table" align="center"><tr><td>Please enter your username and email address.</td></tr></table>
-<form action="index.php?act=submit_forgot_username/password" method="post">
+<form action="?act=submit_forgot_username/password" method="post">
 <table class="table" align="center">
 <tr><td><strong>Username:</strong></td><td><input type="text" name="username" size="60" /></td></tr>
 <tr><td><strong>Email Address:</strong></td><td><input type="text" name="email" size="60" /></td></tr>

@@ -108,7 +108,7 @@ $weeks = array_chunk($new_count, 7);
 
 
 // Build Previous and Next Links 
-$previous_link = '<a href="index.php?act=calendar&date='; 
+$previous_link = '<a href="?act=calendar&date='; 
 if($month == 1){ 
 $previous_link .= mktime(0,0,0,12,$day,($year -1)); 
 } else { 
@@ -116,7 +116,7 @@ $previous_link .= mktime(0,0,0,($month -1),$day,$year);
 } 
 $previous_link .= '"><< Prev</a>'; 
 
-$next_link = '<a href="index.php?act=calendar&date='; 
+$next_link = '<a href="?act=calendar&date='; 
 if($month == 12){ 
 $next_link .= mktime(0,0,0,1,$day,($year + 1)); 
 } else { 
@@ -125,7 +125,7 @@ $next_link .= mktime(0,0,0,($month +1),$day,$year);
 $next_link .= '">Next >></a>'; 
 
 if ($_SESSION['group'] == 'admin' || $_SESSION['access_calendar'] == 1){
-print '<a href="index.php?act=calendar&act2=add_event&date='.$date.'">[Add Event to Current Date]</a>';
+print '<a href="?act=calendar&act2=add_event&date='.$date.'">[Add Event to Current Date]</a>';
 };
 
 
@@ -152,7 +152,7 @@ foreach($weeks AS $week){
 echo '<tr>'; 
 foreach($week as $d){ 
 if($i < $offset_count){ 
-$day_link = '<a href="index.php?act=calendar&date='.mktime(0,0,0,$month -1,$d,$year).'">'.$d.'</a>'; 
+$day_link = '<a href="?act=calendar&date='.mktime(0,0,0,$month -1,$d,$year).'">'.$d.'</a>'; 
 $last_month = mktime(0,0,0,$month -1,$d,$year);
 $find_mate = mysql_query('SELECT * FROM calendar');
 $count_may = 0;
@@ -172,7 +172,7 @@ echo '<td class="nonmonthdays">'.$day_link.'</td>';
 };
 } 
 if(($i >= $offset_count) && ($i < ($num_weeks * 7) - $outset)){ 
-$day_link = '<a href="index.php?act=calendar&date='.mktime(0,0,0,$month,$d,$year).'">'.$d.'</a>'; 
+$day_link = '<a href="?act=calendar&date='.mktime(0,0,0,$month,$d,$year).'">'.$d.'</a>'; 
 if($date == mktime(0,0,0,$month,$d,$year)){
 $this_month = mktime(0,0,0,$month,$d,$year);
 $find_love = mysql_query('SELECT * FROM calendar');
@@ -235,7 +235,7 @@ echo '<td class='days'>$day_link</td>';
 } elseif(($outset > 0)) { 
 if(($i >= ($num_weeks * 7) - $outset)){ 
 $next_month = mktime(0,0,0,$month +1,$d,$year);
-$day_link = '<a href="index.php?act=calendar&date='.mktime(0,0,0,$month +1,$d,$year).'">$d</a>'; 
+$day_link = '<a href="?act=calendar&date='.mktime(0,0,0,$month +1,$d,$year).'">$d</a>'; 
 $find_cake = mysql_query('SELECT * FROM calendar');
 $count_cake = 0;
 while($row = mysql_fetch_array($find_love)){
@@ -280,13 +280,13 @@ if ($act2 == ''){
 /*$find = mysql_query('SELECT * FROM calendar WHERE `date` = '$date'');
 while ($row = mysql_fetch_array($find)){
 if ($_SESSION[group] == 'admin' || $_SESSION['access_calendar'] == 1){
-$admin_funcs = '<div align='right'><a href='index.php?act=calendar&act2=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&act2=event_delete&id='.$row[id].''> Delete Post
+$admin_funcs = '<div align='right'><a href='?act=calendar&act2=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&act2=event_delete&id='.$row[id].''> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
 };
 print '<tr bordercolor='#0066CC'><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href='index.php?act=profile&act2=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
+&nbsp;&nbsp;&nbsp;-posted by: <a href='?act=profile&act2=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
 </td>
 </tr><tr bordercolor='#0066CC'><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -300,13 +300,13 @@ $kadate = mktime(0,0,0,$month,$day+$count_dj,$year);
 $find = mysql_query("SELECT * FROM calendar WHERE `date` = '$kadate' LIMIT 1");
 while ($row = mysql_fetch_array($find)){
 if ($_SESSION['group'] == 'admin' || $_SESSION['access_calendar'] == 1){
-$admin_funcs = '<div align="right"><a href="index.php?act=calendar&act2=event_edit&id='.$row[id].'">Edit Post</a> -<a href="index.php?act=calendar&act2=event_delete&id='.$row[id].'"> Delete Post
+$admin_funcs = '<div align="right"><a href="?act=calendar&act2=event_edit&id='.$row[id].'">Edit Post</a> -<a href="index.php?act=calendar&act2=event_delete&id='.$row[id].'"> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
 };
 print '<tr bordercolor="#0066CC"><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href="index.php?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
+&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
 </td>
 </tr><tr bordercolor="#0066CC"><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -322,7 +322,7 @@ $fastd--;
 if ($act2 == 'add_event'){
 print '<tr><td>';
 print '<h1>Add an Event</h1><br />';
-print '<form action="index.php?act=calendar&act2=save_event" method="post">
+print '<form action="?act=calendar&act2=save_event" method="post">
 Title: <input type="text" name="title" value="" /><br />
 Date: <input type="text" disabled="disabled" name="fun" value="".$month."-".$day."-".$year."" /> <input name="date" type="hidden" value="'.$date.'"/><br />
 Description:<br />
@@ -334,7 +334,7 @@ print '</td></tr>';
 
 if ($act2 == 'save_event'){
 print '<tr><td>';
-$save = mysql_query("INSERT INTO `calendar` VALUES ('', '$_POST[title]', '$_POST[date]', '$_SESSION[username]', '$_POST[text]')") or die ('Mysql Error: '.mysql_error());
+$save = mysql_query("INSERT INTO `calendar` VALUES ('', '$_POST[title]', '$_POST[date]', '$username', '$_POST[text]')") or die ('Mysql Error: '.mysql_error());
 print '<strong>Event:'.$_POST[title].' on '.$month.'-'.$day.'-'.$year.' has been saved.</strong>';
 print '</td></tr>';
 };
@@ -344,7 +344,7 @@ print '<tr><td>';
 print '<h1>Edit Event</h1><br />';
 $find = mysql_query("SELECT * FROM calendar WHERE `id` ='$id'");
 while ($row = mysql_fetch_array($find)){
-print '<form action="index.php?act=calendar&act2=event_save&id=".$id."" method="post">
+print '<form action="?act=calendar&act2=event_save&id=".$id."" method="post">
 Title: <input type="text" name="title" value="'.$row[title].'" /><br />
 Date:<input type="text" disabled="disabled" name="fun" value="'.date("m-d-Y", $row[date]).'" />
 <input name="date" type="hidden" value="'.$row[date].'"/><br />
@@ -371,12 +371,12 @@ print '<tr><td>
 <strong>Are you sure you want to delete this event?</strong>
 <br />
 '.$row[title].'
-&nbsp;&nbsp;&nbsp;-posted by: <a href="index.php?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
+&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
 </td>
 </tr><tr><td>
 <p>&nbsp;&nbsp;'.$row[post].'</p>'.$admin_funcs.'
 </td></tr>';
-print '<form action="index.php?act=calendar&act2=delete_event&id='.$id.'" method="post">
+print '<form action="?act=calendar&act2=delete_event&id='.$id.'" method="post">
 <input type="submit" name="Delete Event" value="Delete Event" />
 </form>';
 };

@@ -1,21 +1,21 @@
 <?php 
 if ($act == 'downloadscontrolpanel'){
 if ($_SESSION['group'] != 'admin' || $access['downloadscontrolpanel'] = '0'){
-redirect("index.php?act=failed&amp;id=2");
+redirect("?act=failed&amp;id=2");
 };
 if ($_SESSION['group'] == 'admin' || $access['downloadscontrolpanel'] == '1'){
 if ($act2 == 'overview'){
 title("Downloads Control Panel");
 print '<h1><center>Downloads Control Panel</center></h1>
 <hr width="100%" align="center"/>
-<table class="table" align="center"><tr><td><a href="index.php?act=downloadscontrolpanel&amp;act2=new_file">Add a New File</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=create_new_file_category">Create New File Category</a></td></tr>
+<table class="table" align="center"><tr><td><a href="?act=downloadscontrolpanel&amp;act2=new_file">Add a New File</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=create_new_file_category">Create New File Category</a></td></tr>
 <tr><td>
 Top 10  Downloads:<br />
 <tr><td>';
 $count = 1;
 $find_top = mysql_query("SELECT * FROM `files` WHERE `downloads` != '0' ORDER BY downloads DESC LIMIT 10");
 while ($row = mysql_fetch_array($find_top)){
-print '#'.$count.' <a href="index.php?act=dldb&amp;act2=view&amp;id='.$row[id].'">'.$row[name].'</a> '.$row[downloads].'<br />';
+print '#'.$count.' <a href="?act=dldb&amp;act2=view&amp;id='.$row[id].'">'.$row[name].'</a> '.$row[downloads].'<br />';
 $count++;
 };
 print '</td></tr></table><br />';
@@ -36,7 +36,7 @@ print '<tr>
 <td>'.$row[author].'</td>
 <td align="center">'.$row[downloads].'</td>
 <td>'.$row[date_submitted].'</td>
-<td><a href="index.php?act=dldb&amp;act2=view&amp;id='.$row[id].'">View</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=edit_file">Edit</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=delete_file">Delete</a></td>
+<td><a href="?act=dldb&amp;act2=view&amp;id='.$row[id].'">View</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=edit_file">Edit</a> | <a href="index.php?act=downloadscontrolpanel&amp;act2=delete_file">Delete</a></td>
 </tr>';
 };
 print '</table>';
@@ -74,7 +74,7 @@ if ($act2 == 'save_file'){
 //id, file_id, name, author, submited_by, file_name, file_size, file_type, file_path, views, downloads, date_submited, rating, description, hidden, cat
 //$save_sql25 = "INSERT INTO `files` VALUES id, file_id, name, author, submit_by, user_id, file_name, file_size, file_type, file_path, views, downloads, date_submit, rate, description, hidden, cat, password, comments";
 $file_id = rand(000000,999999);
-$save_file = "INSERT INTO `files` (`downloads`, `file_id`, `name`, `author`, `submitted_by`, `file_name`, `file_size`, `file_type`, `file_path`, `date_submitted`, `rating`, `description`, `hidden`) VALUES (0, '$file_id', '$_POST[name]', '$_POST[author]', '$_SESSION[username]', '$_POST[file_name]', '$_POST[file_size]', '$_POST[file_type]', '$_POST[file_path]', '$local_time', '$_POST[rate]', '$_POST[text]', '$_POST[hidden]')";
+$save_file = "INSERT INTO `files` (`downloads`, `file_id`, `name`, `author`, `submitted_by`, `file_name`, `file_size`, `file_type`, `file_path`, `date_submitted`, `rating`, `description`, `hidden`) VALUES (0, '$file_id', '$_POST[name]', '$_POST[author]', '$username', '$_POST[file_name]', '$_POST[file_size]', '$_POST[file_type]', '$_POST[file_path]', '$local_time', '$_POST[rate]', '$_POST[text]', '$_POST[hidden]')";
 $save_query = mysql_query($save_file) or die (mysql_error());
 print $_POST[file_name].' has been saved correctly';
 };

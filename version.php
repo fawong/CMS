@@ -4,7 +4,7 @@
  *
  * @global string $cms_version
  */
-$cms_version = '2013.10.23-dev';
+$cms_version = '2013.10.25-dev';
 
 /**
  * Holds the CMS DB revision, increments when changes are made to the WordPress DB schema.

@@ -2,7 +2,7 @@
 if ($act == 'gallery'){
 if ($_SESSION['login'] != true){
 $_SESSION[error] = 'Error: Not Enough Access';
-redirect("index.php?act=failed");
+redirect("?act=failed");
 };
 if ($_SESSION['login'] == true){
 print '<h1>Gallery</h1>
@@ -16,7 +16,7 @@ while ($row = mysql_fetch_array($find_newsest)){
 if ($count == '1' ){
 print '<tr>';
 };
-print '<td><a href="index.php?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="img/'.$row[filename].'"></a></td>';
 if ($count == '4'){
 print '</tr>';
 print '<tr>';
@@ -77,10 +77,10 @@ Sukisho()<br></td>
 		</tr></table>
 		
 		</td></tr>'.$shota_gallery.'<tr><td><b>Search Gallery</b></td></tr>
-		<tr><td><form action="index.php?act=gallery&act2=search" method="post">Quick Search:<input name="query" type="text" size="50" />
+		<tr><td><form action="?act=gallery&act2=search" method="post">Quick Search:<input name="query" type="text" size="50" />
 <input type="submit" value="Search"><br><br>
 		</form></td></tr><tr><td><b>Advance Search</b></td></tr><tr><td>
-		<!-- <form action="index.php?act=gallery&act2=search_adv" method="post" name="adv_search">
+		<!-- <form action="?act=gallery&act2=search_adv" method="post" name="adv_search">
 		Search:<input name="search" type="text" size="50" /><br>
 		Search By:
 		<select name="search_by">
@@ -118,7 +118,7 @@ while ($row = mysql_fetch_array($getdata)){
 if ($counta == 1){
 print '<tr>';
 };
-print '<td><a href="index.php?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="/gallery/img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="/gallery/img/'.$row[filename].'"></a></td>';
 if ($counta == 4){
 print '</tr>';
 $counta = 0;
@@ -166,13 +166,13 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 					<center><img src="'.$row[file_path].'" width="'.$frow[file_L].'" height="'.$row[file_H].'"/></center>
 					</td></tr>
 					<tr><td>
-					<center>					  <a href="index.php?act=gallery&act2=report&id='.$row[id].'">Report Image</a> |<a href="index.php?act=gallery&amp;act2=add_fave&amp;id='.$row[id].'"> Add To Favorites</a> </center>
+					<center>					  <a href="?act=gallery&act2=report&id='.$row[id].'">Report Image</a> |<a href="index.php?act=gallery&amp;act2=add_fave&amp;id='.$row[id].'"> Add To Favorites</a> </center>
 					</td></tr>
 					<tr><td>
 					Information:
 					<table class="table" width="500"><tr><Td>
 					Name: '.$row[name].'<br />
-					Submitted by: <a href="index.php?act=profile&act2=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
+					Submitted by: <a href="?act=profile&act2=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
 					Author: '.$row[author].'<br />
 					File Size: '.$row[file_size].'<br />
 					File Type: '.$row[file_type].'<br />
@@ -195,13 +195,13 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 					$abs[$count][avatar] = $row[avatar];
 					};
 					print '
-					<tr><td><center><a href="index.php?act=profile&act2=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
+					<tr><td><center><a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
 					$count++;
 					};
 					print '
 					</table>
 					<br />
-					<form action="index.php?act=gallery&act2=comment&id='.$row[id].'" method="post">
+					<form action="?act=gallery&act2=comment&id='.$row[id].'" method="post">
 					<center><strong>Add a Comment</strong> <br />
 					<textarea name="comment" rows="8" cols="50">
 					</textarea>
@@ -213,7 +213,7 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 };
 };
 if ($act2 == 'upload_file'){
-print '<form action="index.php?act=gallery&act2=upload&path='.$_SESSION[path].'" method="post" enctype="multipart/form-data">
+print '<form action="?act=gallery&act2=upload&path='.$_SESSION[path].'" method="post" enctype="multipart/form-data">
 Title: <input name="title" type="text" size="30">
 
 <br>
@@ -286,10 +286,10 @@ $set_to = '0';
    } else {
    $file_id = rand(0000000000,999999999);
        echo "Success!<br />" . $_FILES['file']['name'] . " has been uploaded.<br /><br />";
-	   //$save = mysql_query("INSERT INTO `images` VALUES ('', '$file_id', '$_POST[name]', '$_POST[author]', '$_SESSION[username]', '$_FILES['file']['name']', '$_FILES['file']['size']', '$path_parts['extension']', '/img/$_FILES['file']['name']', '/home/yaoidhs/public_html/yaoiboys/img/$_FILES['file']['name']', '0', '$local_time', '0', '$_POST[description]', '0', '$_POST[cat]', '1', `file_L`, `file_H`)");
+	   //$save = mysql_query("INSERT INTO `images` VALUES ('', '$file_id', '$_POST[name]', '$_POST[author]', '$username', '$_FILES['file']['name']', '$_FILES['file']['size']', '$path_parts['extension']', '/img/$_FILES['file']['name']', '/home/yaoidhs/public_html/yaoiboys/img/$_FILES['file']['name']', '0', '$local_time', '0', '$_POST[description]', '0', '$_POST[cat]', '1', `file_L`, `file_H`)");
 	    if ($save){
-		 $find = mysql_query("SELECT * FROM `images` WHERE `username` =$_SESSION[username] AND `author` ='$_POST[author]' AND `title` ='$_POST[title]' AND `file_name` ='$_FILES[file][name]' ");
-		print '<a href="index.php?act=gallery&act2=view&id=">Click here to view your sumbited image.</a>';
+		 $find = mysql_query("SELECT * FROM `images` WHERE `username` =$username AND `author` ='$_POST[author]' AND `title` ='$_POST[title]' AND `file_name` ='$_FILES[file][name]' ");
+		print '<a href="?act=gallery&act2=view&id=">Click here to view your sumbited image.</a>';
 		};
    }
 
@@ -301,9 +301,9 @@ $set_to = '0';
 };
 if ($act2 == 'comment'){
  if ($id != ''){
- $save_comment = mysql_query("INSERT INTO 'img_comment' VALUES ('', '$id', '$_SESSION[username], '$_SESSION[user_id], '$_POST[comment]')");
+ $save_comment = mysql_query("INSERT INTO 'img_comment' VALUES ('', '$id', '$username, '$_SESSION[user_id], '$_POST[comment]')");
  $_SESSION[saved] = "Your comment has been saved correctly.<br>";
- redirect("index.php?act=gallery&act2=view&id=$id");
+ redirect("?act=gallery&act2=view&id=$id");
  };
 };
 
@@ -326,7 +326,7 @@ while ($row = mysql_fetch_array($getdata)){
 if ($counta == 1){
 print '<tr>';
 };
-print '<td><a href="index.php?act=gallery&act2=view&id='.$row[id].'"><img width="100" height="100" src="/gallery/img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="100" height="100" src="/gallery/img/'.$row[filename].'"></a></td>';
 if ($counta == 5){
 print '</tr>';
 $counta = 0;

@@ -1,12 +1,12 @@
 <?php 
 if ($act == 'profile'){
     if ($_SESSION['login'] != true){
-        redirect("index.php?act=failed&id=2");
+        redirect("?act=failed&id=2");
     };
     if ($_SESSION['login'] == true){
         //VIEW PROFILE
         if($act2 == 'view'){
-            $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$_SESSION[username]'");
+            $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$username'");
             $comment_count = mysql_num_rows($count_comment);
             if ($_GET['username'] == ''){
                 title("View Own Profile");
@@ -40,8 +40,8 @@ if ($act == 'profile'){
 <strong>Comments:</strong> <?php print $comment_count ?><br />
 <strong>Positive (+) Reputation:</strong> <?php print $row['kpos'] ?><br />
 <strong>Negative (-) Reputation:</strong> <?php print $row['kneg'] ?><br />
-<a href="index.php?act=profile&amp;act2=reputation&amp;username=<?php print $row['username'] ?>">Change <?php print $currentusername ?>'s Reputation</a><br />
-<a href="index.php?act=inbox&amp;act2=compose&amp;to=<?php print $row['username'] ?>">Compose New Message</a><br />
+<a href="?act=profile&amp;act2=reputation&amp;username=<?php print $row['username'] ?>">Change <?php print $currentusername ?>'s Reputation</a><br />
+<a href="?act=inbox&amp;act2=compose&amp;to=<?php print $row['username'] ?>">Compose New Message</a><br />
 <strong>AIM User Name:</strong> <?php print $row['aim'] ?><br />
 <strong>About:</strong> <?php print $row['about'] ?><br />
 <strong>Interests:</strong> <?php print $row['interests'] ?><br />
@@ -50,7 +50,7 @@ if ($act == 'profile'){
 <?php
                 };//if ($_GET['username'] == '')
             };
-            if ($_GET[username] != '' && $_SESSION[username] != 'Guest'){
+            if ($_GET['username'] != '' && $username != 'Guest'){
                 $view_user_query = mysql_query("SELECT * FROM `users` WHERE `username` = '$_GET[username]' LIMIT 1") or die(mysql_error());
                 if(mysql_num_rows($view_user_query) == 0){
                     title("Member Does Not Exist");
@@ -84,8 +84,8 @@ if ($act == 'profile'){
                             <strong>Number of Comments:</strong> '.$comment_count.'<br />
                             <strong>Positive (+) Reputation:</strong> '.$row[kpos].'<br />
                             <strong>Negative (-) Reputation:</strong> '.$row[kneg].'<br />
-                            <a href="index.php?act=profile&amp;act2=reputation&amp;username='.$_GET[username].'">Change '.$_GET[username].'\'s Reputation</a><br />
-                            <a href="index.php?act=inbox&amp;act2=compose&amp;to='.$row[username].'">Compose New Message</a><br />
+                            <a href="?act=profile&amp;act2=reputation&amp;username='.$_GET[username].'">Change '.$_GET[username].'\'s Reputation</a><br />
+                            <a href="?act=inbox&amp;act2=compose&amp;to='.$row[username].'">Compose New Message</a><br />
                             <strong>AIM User Name:</strong> '.$row[aim].'<br />
                             <strong>About:</strong> '.$row[about].'<br />
                             <strong>Interests:</strong> '.$row[interests].'<br />
@@ -93,20 +93,20 @@ if ($act == 'profile'){
                             <strong>Email:</strong> <a href="mailto:"'.$row[email].'">'.$row[email].'</a><br /><br />
                             <font size="+1"><strong><center>Add a New Comment:</center></strong></font>
                             <hr width="100%" align="center"/>
-                            <form action="index.php?act=profile&amp;act2=comment&amp;set=add_new_comment&amp;username='.$_GET[username].'" method="post">
+                            <form action="?act=profile&amp;act2=comment&amp;set=add_new_comment&amp;username='.$_GET[username].'" method="post">
                             <textarea name="comment" cols="50" rows="10"></textarea><br />
                             <input type="submit" value="Submit New Comment" /></form><br /><br /><br />
                             </td></tr></table>';
                     };//while ($row = mysql_fetch_array($view_user_query))
                 };
-            };//if ($_GET[username] != '' && $_SESSION[username] != 'Guest')
+            };//if ($_GET[username] != '' && $username != 'Guest')
         };//if($act2 == 'view')
         //ACCOUNT OVERVIEW
         if ($act2 == 'options'){
             title("Options");
-            $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$_SESSION[username]'");
+            $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$username'");
             $comment_count = mysql_num_rows($count_comment);
-            $find_data = mysql_query("SELECT * FROM `users` WHERE `username` = '$_SESSION[username]'");
+            $find_data = mysql_query("SELECT * FROM `users` WHERE `username` = '$username'");
             while ($row = mysql_fetch_array($find_data)){
                 print '<h1><center>Options</center></h1>
                     <hr width="100%" align="center"/>
@@ -123,16 +123,16 @@ if ($act == 'profile'){
                     </tr>
                     <tr><td>
                     <strong>Profile Settings:</strong><br />
-                    <a href="index.php?act=profile&amp;act2=view">View My Profile </a> |
-                    <a href="index.php?act=profile&amp;act2=comment&amp;set=view_comments&amp;username='.$_SESSION[username].'">View Comments</a> |
-                    <a href="index.php?act=profile&amp;act2=edit_profile">Edit Profile</a> |
-                    <a href="index.php?act=profile&amp;act2=change_password">Change Password</a>
+                    <a href="?act=profile&amp;act2=view">View My Profile </a> |
+                    <a href="?act=profile&amp;act2=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
+                    <a href="?act=profile&amp;act2=edit_profile">Edit Profile</a> |
+                    <a href="?act=profile&amp;act2=change_password">Change Password</a>
                     </td></tr>
                     </table> ';
             };
         };
-/*<a href="index.php?act=profile&amp;act2=upload_photo">Upload Photo</a> |
-<a href="index.php?act=profile&amp;act2=view_album&amp;username='.$_SESSION[username].'">View Photo Album</a> |*/
+/*<a href="?act=profile&amp;act2=upload_photo">Upload Photo</a> |
+<a href="?act=profile&amp;act2=view_album&amp;username='.$username.'">View Photo Album</a> |*/
         //COMMENT FUNCTIONS
         if ($act2 == 'comment'){
             //ADD NEW COMMENT
@@ -145,7 +145,7 @@ if ($act == 'profile'){
                         <table class="table" align="center">
                         <tr><td>
                         The comment has been saved.<br />
-                        <a href="index.php?act=profile&amp;act2=view&amp;username='.$currentusername.'">Back to <strong>'.$currentusername.'\'s</strong> profile</a>
+                        <a href="?act=profile&amp;act2=view&amp;username='.$currentusername.'">Back to <strong>'.$currentusername.'\'s</strong> profile</a>
                         </td></tr>
                         </table>';
                 }else{
@@ -155,7 +155,7 @@ if ($act == 'profile'){
             //VIEW COMMENTS
             if ($set == 'view_comments'){
                 title("View Comments");
-                $find_new_comments = mysql_query("SELECT * FROM `user_comments` WHERE `username` = '$_SESSION[username]' ORDER BY username DESC");
+                $find_new_comments = mysql_query("SELECT * FROM `user_comments` WHERE `username` = '$username' ORDER BY username DESC");
                 //DELETE COMMENTS
                 if($set2 == 'delete_comment'){
                     title("Delete Comment");
@@ -171,7 +171,7 @@ if ($act == 'profile'){
                                 <table class="table" align="center">
                                 <tr><td>
                                 <div align="center">
-                                <font size="+1"><strong>Posted by: <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                                <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                                 </div>
                                 </td></tr>
@@ -183,7 +183,7 @@ if ($act == 'profile'){
                                 <table class="table" align="center">
                                 <tr><td>
                                 <strong>Are you sure you want to delete this comment?</strong><br />
-                                <form action="index.php?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;set3=delete&amp;id='.$row[id].'" method="post">
+                                <form action="?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;set3=delete&amp;id='.$row[id].'" method="post">
                                 <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                                 </form>
                                 </td></tr>
@@ -193,7 +193,7 @@ if ($act == 'profile'){
                 };
                 if(mysql_num_rows($find_new_comments) == 1){
                     if($id == ''){
-                        $get_all_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$_SESSION[username]'");
+                        $get_all_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$username'");
                         $get_comment_count = mysql_num_rows($get_all_comment);
                         title("View Comments");
                         print '<h1><center>View Comments</center></h1>
@@ -202,7 +202,7 @@ if ($act == 'profile'){
                             <tr><td>
                             Viewing Comments '.$get_comment_count.' of '.$get_comment_count.'
                             </td></tr></table>';
-                        $find_avatar = mysql_query("SELECT `avatar` FROM `users` WHERE `username` = '$_SESSION[username]' LIMIT 1");
+                        $find_avatar = mysql_query("SELECT `avatar` FROM `users` WHERE `username` = '$username' LIMIT 1");
                         while($row = mysql_fetch_array($find_avatar)){
                             if ($row[avatar] == ''){  //|| !valid_url('$row[avatar]')){
                                 $avatar = 'themes/'.$_SESSION[theme].'/images/no_avatar.gif';
@@ -212,20 +212,20 @@ if ($act == 'profile'){
                             };
                         };//while($row = mysql_fetch_array($find_avatar))
                         while($row = mysql_fetch_array($find_new_comments)){
-                            $set_read = mysql_query("UPDATE `user_comments` SET `read` = '1' WHERE `username` = '$_SESSION[username]' AND `read` = '0'");
+                            $set_read = mysql_query("UPDATE `user_comments` SET `read` = '1' WHERE `username` = '$username' AND `read` = '0'");
                             print '<table class="table" align="center"><tr>
                                 <td><center>
-                                <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'<br />
+                                <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'<br />
                                 <img src="'.$avatar.'" /></a>
                                 </center></td></tr>
                                 <tr><td>Posted on '.$row[date].' at '.$row[time].'</td>
                                 <tr><td>'.$row[post].'</td></tr>
                                 <tr><td><div align="right">
-                                <a href="index.php?act=profile&amp;act2=comment&amp;set=edit_comment&amp;id='.$row[id].'">Edit Comment</a> –
-                                <a href="index.php?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;id='.$row[id].'">Delete Comment</a>
+                                <a href="?act=profile&amp;act2=comment&amp;set=edit_comment&amp;id='.$row[id].'">Edit Comment</a> –
+                                <a href="?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;id='.$row[id].'">Delete Comment</a>
                                 </div></td></tr>
                                 </tr></table>';
-                            $add_to_count = mysql_query("UPDATE `user_comments` SET count = count+1 WHERE `username` = '$_SESSION[username]'") or die(mysql_error());
+                            $add_to_count = mysql_query("UPDATE `user_comments` SET count = count+1 WHERE `username` = '$username'") or die(mysql_error());
                         };//while($row = mysql_fetch_array($find_new_comments))
                     };//if($set3 == 'delete' || $id== '')
                 }//if(mysql_num_rows($find_new_comments) == 0){
@@ -249,7 +249,7 @@ if ($act == 'profile'){
                             <hr width="100%" align="center"/>
                             <table class="table" align="center">
                             <tr><td>
-                            <form action="index.php?act=profile&amp;act2=comment&amp;set=edit_comment&amp;set2=submit&amp;id='.$requestid.'" method="post">
+                            <form action="?act=profile&amp;act2=comment&amp;set=edit_comment&amp;set2=submit&amp;id='.$requestid.'" method="post">
                             Username: '.$row[username].'<br />
                             Date: '.$row[date].'<br />
                             Post:<br />
@@ -267,7 +267,7 @@ if ($act == 'profile'){
                 <hr width="100%" align="center"/>
                 <table class="table" align="center">
                 <tr><td>Would you like to add +rep or -rep?
-                <form action="index.php?act=profile&amp;act2=change_reputation&amp;username='.$_GET[username].'" method="post">
+                <form action="?act=profile&amp;act2=change_reputation&amp;username='.$_GET[username].'" method="post">
                 <select name="rep"><option value="+rep">Add One (+1) to Reputation</option><option value="-rep">Subtract One (-1) to Reputation</option></select>
                 <input type="submit" value="Submit Change in Reputation" />
                 </form></td></tr></table>';
@@ -280,7 +280,7 @@ if ($act == 'profile'){
                     <hr width="100%" align="center"/>
                     <table class="table" align="center">
                     <tr><td>Positive reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                    <a href="index.php?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+                    <a href="?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
                     </td></tr></table>';
             };
             if ($_POST['rep'] == '-rep'){
@@ -290,7 +290,7 @@ if ($act == 'profile'){
                     <hr width="100%" align="center"/>
                     <table class="table" align="center">
                     <tr><td>Negative reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                    <a href="index.php?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+                    <a href="?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
                     </td></tr></table>';
             };
         };//if ($act2 == 'change_reputation')
@@ -305,11 +305,11 @@ if ($act == 'profile'){
             title("Edit Profile");
             print '<h1><center>Edit Profile</center></h1>
                 <hr width="100%" align="center"/>';
-            $edit_query = mysql_query("SELECT * FROM `users` WHERE `username` = '$_SESSION[username]'");
+            $edit_query = mysql_query("SELECT * FROM `users` WHERE `username` = '$username'");
             while ($row = mysql_fetch_array($edit_query)){
                 print '<table class="table" align="center">
                     <tr><td>
-                    <form method="post" action="index.php?act=profile&amp;act2=edit_profile&amp;set=fix">
+                    <form method="post" action="?act=profile&amp;act2=edit_profile&amp;set=fix">
                     <strong>Username:</strong> '.$row[username].'<br />
                     <strong>First Name:</strong><br />
                     <input type="text" name="fname" size="65" value="'.$row[first_name].'" /><br />
@@ -344,7 +344,7 @@ if ($act == 'profile'){
                 <hr width="100%" align="center"/>
                 <table class="table" align="center">
                 <tr><td>
-                <form action="index.php?act=profile&amp;act2=submit_change_password" method="post">
+                <form action="?act=profile&amp;act2=submit_change_password" method="post">
                 Current Password: <input type="password" name="current_password" value="" /><br />
                 New Password: <input type="password" name="new_password" value="" /><br />
                 Re-Enter New Password: <input type="password" name="reenter_new_password" value="" /><br />
@@ -355,13 +355,13 @@ if ($act == 'profile'){
         //SUBMIT CHANGE PASSWORD
         if ($act2 == 'submit_change_password'){
             $currentpass = sha1(md5($_POST[current_password]));
-            $query = mysql_query("SELECT * FROM users WHERE `username` = '$_SESSION[username]' AND `password` = '$currentpass' LIMIT 1");
+            $query = mysql_query("SELECT * FROM users WHERE `username` = '$username' AND `password` = '$currentpass' LIMIT 1");
             if (mysql_num_rows($query) == 1){
                 if ($_POST[new_password] == $_POST[reenter_new_password]){
                     if ($_POST[new_password] != ''){
                         if ($_POST[reenter_new_password] != ''){
                             $newpass = sha1(md5($_POST[new_password]));
-                            $sql = "UPDATE users SET online = 0, `password` = '$newpass' WHERE `username` = '$_SESSION[username]'";
+                            $sql = "UPDATE users SET online = 0, `password` = '$newpass' WHERE `username` = '$username'";
                             $result = mysql_query($sql) or die (mysql_error());
                             $_SESSION['group'] = 'public';
                             $_SESSION['rank'] = 'member';

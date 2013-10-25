@@ -1,7 +1,7 @@
 <?php 
 if ($act == 'account'){
 if ($_SESSION['login'] != true){
-redirect("index.php?act=failed&amp;id=2");
+redirect("?act=failed&amp;id=2");
 };
 if ($_SESSION['login'] == true){
 //DISPLAY MEMBERS LIST
@@ -21,7 +21,7 @@ $find_admin = mysql_query("SELECT * FROM users WHERE `group` = 'admin' ORDER BY 
 while($row = mysql_fetch_array($find_admin)){
 print '<tr>
 <td>
-<a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'"><strong>'.$row[username].'</strong></a>
+<a href="?act=profile&amp;act2=view&amp;username='.$row[username].'"><strong>'.$row[username].'</strong></a>
 </td>
 <td><strong>Administrator</strong></td>
 </tr>';
@@ -30,7 +30,7 @@ $find_webmaster = mysql_query("SELECT * FROM users WHERE `group` = 'member' ORDE
 while($row = mysql_fetch_array($find_webmaster)){
 print '<tr>
 <td>
-<a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+<a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
 </td>
 <td>Member</td>
 </tr>';
@@ -39,7 +39,7 @@ $find_member = mysql_query("SELECT * FROM users WHERE `group` = 'basic' ORDER BY
 while($row = mysql_fetch_array($find_member)){
 print '<tr>
 <td>
-<a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+<a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
 </td>
 <td>Basic Member</td>
 </tr>';

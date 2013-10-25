@@ -1,12 +1,12 @@
 <?php 
 if ($_SESSION['login'] != true){
-    redirect("index.php?act=failed&id=2");
+    redirect("?act=failed&id=2");
 };
 if ($_SESSION['login'] == true){
     if($act == 'manager'){
         title("File Manager");
         if($_SESSION['access_file_manager'] == 0){
-            redirect("index.php?act=failed&id=2");
+            redirect("?act=failed&id=2");
         };
         if($_SESSION['access_file_manager'] == 1){
             function size_file($size){
@@ -51,10 +51,10 @@ if ($_SESSION['login'] == true){
                     <p>Total Disk Space Usage: <strong><?php print size_file($_SESSION['dir_t']) ?></strong>
                     <p>Total Disk Space Limit: <strong><?php print $_SESSION['limit_space'] ?></strong>
                     <br />
-                    <a href="index.php?act=manager&act2=create_new_file&path=<?php print $_SESSION['path'] ?>">Create New File</a> | 
-                    <a href="index.php?act=manager&act2=create_new_folder&path=<?php print $_SESSION['path'] ?>">Create New Folder</a> | 
-                    <a href="index.php?act=manager&act2=upload_file&path=<?php print $_SESSION['path'] ?>">Upload a File</a> | 
-                    <a href="index.php?act=manager&act2=view_folder&cpath=<?php print $_SESSION['username'] ?>/">Parent Directory</a>
+                    <a href="?act=manager&act2=create_new_file&path=<?php print $_SESSION['path'] ?>">Create New File</a> | 
+                    <a href="?act=manager&act2=create_new_folder&path=<?php print $_SESSION['path'] ?>">Create New Folder</a> | 
+                    <a href="?act=manager&act2=upload_file&path=<?php print $_SESSION['path'] ?>">Upload a File</a> | 
+                    <a href="?act=manager&act2=view_folder&cpath=<?php print $_SESSION['username'] ?>/">Parent Directory</a>
                     <table class="table" align="center">
                     <tr>
                     <td><strong><center>File Name</center></strong></td>
@@ -77,11 +77,11 @@ if ($_SESSION['login'] == true){
                                 <td><center>'.size_file(filesize($dirname.$filename)).'</center></td>
                                 <td><center>'.substr(sprintf('%o', fileperms($dirname.'/'.$filename)), -3).'</center></td>
                                 <td>
-                                <a href="index.php?act=manager&act2=view_folder&cpath='.$_SESSION['path'].$filename.'/">View</a> | 
-                                <a href="index.php?act=manager&act2=move_folder&path='.$_SESSION['path'].'&file='.$filename.'">Move</a> | 
-                                <a href="index.php?act=manager&act2=rename_folder&path='.$_SESSION['path'].'&file='.$filename.'">Rename</a> |  
-                                <a href="index.php?act=manager&act2=chmod_folder&path='.$_SESSION['path'].'&file='.$filename.'">CHMOD</a> | 
-                                <a href="index.php?act=manager&act2=delete_folder&path='.$_SESSION['path'].'&file='.$filename.'">Delete Folder</a>
+                                <a href="?act=manager&act2=view_folder&cpath='.$_SESSION['path'].$filename.'/">View</a> | 
+                                <a href="?act=manager&act2=move_folder&path='.$_SESSION['path'].'&file='.$filename.'">Move</a> | 
+                                <a href="?act=manager&act2=rename_folder&path='.$_SESSION['path'].'&file='.$filename.'">Rename</a> |  
+                                <a href="?act=manager&act2=chmod_folder&path='.$_SESSION['path'].'&file='.$filename.'">CHMOD</a> | 
+                                <a href="?act=manager&act2=delete_folder&path='.$_SESSION['path'].'&file='.$filename.'">Delete Folder</a>
                                 </td>
                                 </tr>';
                             $array_c[0] = '';
@@ -123,14 +123,14 @@ if ($_SESSION['login'] == true){
                                 <a href="' . $_SESSION['path'] . $filename . '" target="_blank">View</a> |';
                             $sometxt = strstr($filename, '.');
                             if($sometxt == '.zip') {
-                                print '<a href="index.php?act=manager&act2=unzip_a&path='.$_SESSION['path'].'&file='.$filename.'">Unzip</a> |';
+                                print '<a href="?act=manager&act2=unzip_a&path='.$_SESSION['path'].'&file='.$filename.'">Unzip</a> |';
                             };
-                            print ' <a href="index.php?act=manager&act2=edit_file&path='.$_SESSION['path'].'&file='.$filename.'">Edit</a> | 
-                                <a href="index.php?act=manager&act2=move_file&path='.$_SESSION['path'].'&file='.$filename.'">Move</a> | 
-                                <a href="index.php?act=manager&act2=copy_file&path='.$_SESSION['path'].'&file='.$filename.'">Copy</a> | 
-                                <a href="index.php?act=manager&act2=rename_file&path='.$_SESSION['path'].'&file='.$filename.'">Rename</a> | 
-                                <a href="index.php?act=manager&act2=chmod_file&path='.$_SESSION['path'].'&file='.$filename.'">CHMOD</a> | 
-                                <a href="index.php?act=manager&act2=delete_file&path='.$_SESSION['path'].'&file='.$filename.'">Delete File</a>
+                            print ' <a href="?act=manager&act2=edit_file&path='.$_SESSION['path'].'&file='.$filename.'">Edit</a> | 
+                                <a href="?act=manager&act2=move_file&path='.$_SESSION['path'].'&file='.$filename.'">Move</a> | 
+                                <a href="?act=manager&act2=copy_file&path='.$_SESSION['path'].'&file='.$filename.'">Copy</a> | 
+                                <a href="?act=manager&act2=rename_file&path='.$_SESSION['path'].'&file='.$filename.'">Rename</a> | 
+                                <a href="?act=manager&act2=chmod_file&path='.$_SESSION['path'].'&file='.$filename.'">CHMOD</a> | 
+                                <a href="?act=manager&act2=delete_file&path='.$_SESSION['path'].'&file='.$filename.'">Delete File</a>
                                 </td>
                                 </tr>';
                             $dir_s = $dir_s+$cunt[$count];
@@ -149,7 +149,7 @@ if ($_SESSION['login'] == true){
             };
             //Create New File Form
             if($act2 == 'create_new_file'){
-                print '<form method="post" action="index.php?act=manager&act2=fix_file&path='.$path.'">
+                print '<form method="post" action="?act=manager&act2=fix_file&path='.$path.'">
                     File Name: <input type="text" name="filename" value="'.$file_name.'"><br />
                     <textarea name="text" cols="75" rows="35">'.$file_data.'</textarea>
                     <br />
@@ -158,7 +158,7 @@ if ($_SESSION['login'] == true){
                     </form> ';
             };
             if($act2 == 'create_new_folder'){
-                print '<form method="post" action="index.php?act=manager&act2=create_folder&path='.$path.'">
+                print '<form method="post" action="?act=manager&act2=create_folder&path='.$path.'">
                     Folder Name: <input type="text" name="foldername" value="'.$folder_name.'"><br />
                     <input type="submit" value="Create Folder"> <br />
                     </form> ';
@@ -169,7 +169,7 @@ if ($_SESSION['login'] == true){
                     //chmod($file_paths,);
                     print ''.$_POST[foldername].' has been created.';
                 }else{
-                    redirect('index.php?act=failed&id=500');
+                    redirect('?act=failed&id=500');
                 };
             };
             if($act2 == 'fix_file'){
@@ -186,7 +186,7 @@ if ($_SESSION['login'] == true){
                 $file_data = fopen($dir.$_SESSION['path'].$file, 'r');
                 $file_read = fread($file_data, filesize($dir.$_SESSION['path'].$file));
                 fclose($file_data);
-                print '<form method="post" action="index.php?act=manager&act2=fix_file&path='.$path.'">
+                print '<form method="post" action="?act=manager&act2=fix_file&path='.$path.'">
                     File Name: <input type="text" name="filename" value="'.$file.'"><br />
                     <textarea name="text" cols="75" rows="35">'.$file_read.'</textarea>
                     <br />
@@ -197,7 +197,7 @@ if ($_SESSION['login'] == true){
             if($act2 == 'chmod_file'){
                 $dirname = $settings['file_path'].$_SESSION['path']."";
                 $file_chmod = substr(sprintf("%o", fileperms($dirname.'/'.$file)), -3);
-                print '<form method="post" action="index.php?act=manager&act2=chmod&path='.$_SESSION['path'].'">
+                print '<form method="post" action="?act=manager&act2=chmod&path='.$_SESSION['path'].'">
                     Folder Name: <input type="text" name="filename" value="'.$file.'"><br />
                     CHMOD: <input type="text" name="file_chmod" value="'.$file_chmod.'">
                     <input type="submit" value="Save File"> <br />
@@ -206,7 +206,7 @@ if ($_SESSION['login'] == true){
             if($act2 == 'chmod_folder'){
                 $dirname = $settings['file_path'].$_SESSION['path']."";
                 $file_chmod = substr(sprintf('%o', fileperms($dirname.'/'.$file)), -3);
-                print '<form method="post" action="index.php?act=manager&act2=chmod&path='.$_SESSION['path'].'">
+                print '<form method="post" action="?act=manager&act2=chmod&path='.$_SESSION['path'].'">
                     Folder Name: <input type="text" name="filename" value="'.$file.'"><br />
                     CHMOD Value: <input type="text" name="file_chmod" value="'.$file_chmod.'">
                     <input type="submit" value="Save Folder"><br />
@@ -218,7 +218,7 @@ if ($_SESSION['login'] == true){
                 print '<strong>'.$_POST[filename].'</strong> has been CHMOD to '.$_POST[file_chmod].'';
             };
             if($act2 == 'rename_file'){
-                print '<form action="index.php?act=manager&act2=rename&path='.$_SESSION['path'].'" method="post">
+                print '<form action="?act=manager&act2=rename&path='.$_SESSION['path'].'" method="post">
                     Current File Name:<input type="text" value="'.$file.'" name="current_name" /><br />
                     NEW File Name: <input type="text" value="" name="new_name" /><br />
                     <input type="submit" value="Rename File" />
@@ -228,17 +228,17 @@ if ($_SESSION['login'] == true){
                 $dir = $settings['file_path'];
                 rename($dir.$_SESSION['path'].$_POST[current_name], $dir.$_SESSION['path'].$_POST[new_name]);
                 print 'File/Folder: '.$_POST[current_name].' has been renamed to '.$_POST[new_name];
-                redirect_time("index.php?act=manager", "100");
+                redirect_time("?act=manager", "100");
             };
             if($act2 == 'rename_folder'){
-                print '<form action="index.php?act=manager&act2=rename&path='.$_SESSION['path'].'" method="post">
+                print '<form action="?act=manager&act2=rename&path='.$_SESSION['path'].'" method="post">
                     Current File Name:<input type="text" value="'.$file.'" name="current_name" /><br />
                     NEW File Name: <input type="text" value="" name="new_name" /><br />
                     <input type="submit" value="Rename File" />
                     </form>';
             };
             if($act2 == 'copy_file'){
-                print '<form action="index.php?act=manager&act2=copy&path='.$_SESSION['path'].'" method="post">
+                print '<form action="?act=manager&act2=copy&path='.$_SESSION['path'].'" method="post">
                     Copy File: b<input type="text" value="'.$_SESSION['path'].$file.'" name="current_name" /><br />
                     New Copied File: <input type="text" value="'.$_SESSION['path'].'COPY_'.$file.'" name="new_name" /><br />
                     <input type="submit" value="Rename File" />
@@ -256,16 +256,16 @@ if ($_SESSION['login'] == true){
                     };
                 };
                 $_SESSION['path'] = $cpath;
-                redirect("index.php?act=manager");
+                redirect("?act=manager");
             };
             if($act2 == 'delete_file'){
-                print '<form action="index.php?act=manager&act2=delete&set=file&path='.$_SESSION['path'].'" method="post">
+                print '<form action="?act=manager&act2=delete&set=file&path='.$_SESSION['path'].'" method="post">
                     Are you sure you want to delete <strong>'.$file.'</strong>?<input type="hidden" value="'.$file.'" name="name" /><br /><br />
                     <input type="submit" value="Yes" /><input type="asdf" value="No" />
                     </form>';
             };
             if($act2 == 'delete_folder'){
-                print '<form action="index.php?act=manager&act2=delete&set=folder&path='.$_SESSION['path'].'" method="post">
+                print '<form action="?act=manager&act2=delete&set=folder&path='.$_SESSION['path'].'" method="post">
                     Are you sure you want to delete <strong>'.$file.'</strong>?<input type="hidden" value="'.$file.'" name="name" /><br /><br />
                     <input type="submit" value="Yes" /><input type="asdf" value="No" />
                     </form>';
@@ -282,7 +282,7 @@ if ($_SESSION['login'] == true){
                     print '<strong>'.$_POST['name'].'</strong> has been deleted.';
                 };};
                 if($act2 == 'unzip_a'){
-                    print '<form method="POST" action="index.php?act=manager&act2=unzip">Zip File path:<input type="text" name="file" value="'.$settings['file_path'].$_SESSION['path'].$file.'" /><br />
+                    print '<form method="POST" action="?act=manager&act2=unzip">Zip File path:<input type="text" name="file" value="'.$settings['file_path'].$_SESSION['path'].$file.'" /><br />
                         Unzip Here:<input type="text" name="to_dir" value="'.$settings['file_path'].$_SESSION['path'].'" /><br />
                         <input type="submit" name="Unzip File" value="Unzip File" />
                         </form>';
@@ -334,7 +334,7 @@ if ($_SESSION['login'] == true){
                     title("Upload File");
                     print '<h1><center>Upload File</center></h1>
                         <hr width="100%" align="center"/>
-                        <form action="index.php?act=manager&act2=upload&path='.$_SESSION['path'].'" method="post" enctype="multipart/form-data">
+                        <form action="?act=manager&act2=upload&path='.$_SESSION['path'].'" method="post" enctype="multipart/form-data">
                         <table class="table" align="center">
                         <tr><td>
                         File Name: <input name="file" type="file" size="50" /><br />

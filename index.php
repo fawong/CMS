@@ -28,8 +28,12 @@ $time = time();
 $local_time = date("l, F d, Y \a\\t h:i:s A");
 global $pagetitle;
 // REQUIRED PHP SCRIPTS
+if (file_exists('settings.php')) {
+    require_once('settings.php');
+} else {
+    die('Please copy the settings.php.sample file to settings.php and make changes.');
+}
 require('version.php');
-require_once('settings.php');
 require_once('connect.php');
 require_once('functions.php');
 

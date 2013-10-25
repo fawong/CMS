@@ -1,7 +1,7 @@
 <?php 
 if($act == 'admin'){
     if($_SESSION['group'] != 'admin'){
-        redirect("index.php?act=failed&amp;id=2");
+        redirect("?act=failed&amp;id=2");
     };
     if($_SESSION['group'] == 'admin'){
         //OVERVIEW
@@ -19,34 +19,34 @@ if($act == 'admin'){
                 <tr><td>
                 <strong>Website Settings:</strong>
                 <br />
-                <a href="index.php?act=admin&amp;act2=website_settings">View Website Settings</a>
+                <a href="?act=admin&amp;act2=website_settings">View Website Settings</a>
                 <br /><br />
                 <strong>News Posts:</strong>
                 <br />
-                <a href="index.php?act=admin&amp;act2=post">Add New News Post</a>
+                <a href="?act=admin&amp;act2=post">Add New News Post</a>
                 <br />
                 <br />
                 <strong>Web Page:</strong>
                 <br />
-                <a href="index.php?act=admin&amp;act2=page">Web Page Control Panel</a>
+                <a href="?act=admin&amp;act2=page">Web Page Control Panel</a>
                 <br />
-                <a href="index.php?act=admin&act2=create_new_webpage">Add New Web Page</a>
+                <a href="?act=admin&act2=create_new_webpage">Add New Web Page</a>
                 <br /><br />
                 <strong>Members:</strong>
                 <br />
-                <a href="index.php?act=admin&amp;act2=edit_users_list">Edit Members List</a>
+                <a href="?act=admin&amp;act2=edit_users_list">Edit Members List</a>
                 <br />
-                <a href="index.php?act=admin&amp;act2=add_member">Add New Member</a>
+                <a href="?act=admin&amp;act2=add_member">Add New Member</a>
                 <br /><br />
                 <strong>Download Database:</strong>
                 <br />
-                <a href="index.php?act=downloadscontrolpanel&act2=overview">Download Database Control Panel</a>
+                <a href="?act=downloadscontrolpanel&act2=overview">Download Database Control Panel</a>
                 <br />
-                <a href="index.php?act=downloadscontrolpanel&amp;act2=overview">Overview</a>
+                <a href="?act=downloadscontrolpanel&amp;act2=overview">Overview</a>
                 <br />
-                <a href="index.php?act=downloadscontrolpanel&amp;act2=new_file">Add a New File</a>
+                <a href="?act=downloadscontrolpanel&amp;act2=new_file">Add a New File</a>
                 <br />
-                <a href="index.php?act=downloadscontrolpanel&amp;act2=new_category">Add a New Category</a>
+                <a href="?act=downloadscontrolpanel&amp;act2=new_category">Add a New Category</a>
                 </td>
                 <td>
                 View and Download Files from Download Database
@@ -73,15 +73,14 @@ if($act == 'admin'){
             title("Add New Post");
             if($set == 'submit'){
                 if($_POST['post'] != ''){
-                    $insert_query = mysql_query("INSERT INTO `news_updates`(`title`, `username` , `date` , `post`) VALUES('$_POST[title]', '$_SESSION[username]', '$current_date', '$_POST[post]')") or die(mysql_error());
+                    $insert_query = mysql_query("INSERT INTO `news_updates`(`title`, `username` , `date` , `post`) VALUES('$_POST[title]', '$username', '$current_date', '$_POST[post]')") or die(mysql_error());
                     print '<strong>New Post Added.</strong>';
-                    redirect("index.php");
                 };
             };
             print '<h1><center>Add New Post</center></h1>
                 <hr width="100%"/>
                 <table class="table"><tr><td>
-                <form action="index.php?act=admin&amp;act2=post&amp;set=submit" method="post">
+                <form action="?act=admin&amp;act2=post&amp;set=submit" method="post">
                 Title: <input name="title" type="text" /><br />
                 Date: '.$current_date.'<br />
                 Poster: '.$_SESSION['username'].'<br />
@@ -97,7 +96,7 @@ if($act == 'admin'){
             title("Edit Post");
             if($id != ''){
                 if($set == 'submit'){
-                    //`date` = '$_POST[date]', `username` = '$_SESSION[username]',
+                    //`date` = '$_POST[date]', `username` = '$username',
                     $update_post = mysql_query("UPDATE `news_updates` SET `title` = '$_POST[title]', `post` = '$_POST[post]' WHERE `id` ='$id'") or die(mysql_error());
                     print '<strong>Post Edited and Saved.</strong>';
                 };
@@ -107,7 +106,7 @@ if($act == 'admin'){
                         <hr width="100%"/>
                         <table class="table">
                         <tr><td>
-                        <form action="index.php?act=admin&amp;act2=edit_post&amp;set=submit&amp;id='.$id.'" method="post">
+                        <form action="?act=admin&amp;act2=edit_post&amp;set=submit&amp;id='.$id.'" method="post">
                         <strong>Title:</strong> <input name="title" type="text" value="'.$row[title].'" /><br />
                         <strong>Date:</strong> '.$row[date].'<br />
                         <strong>Poster:</strong> '.$row[username].'<br />
@@ -129,7 +128,6 @@ if($act == 'admin'){
                     $delete_comments = mysql_query("DELETE FROM news_comments WHERE news_id = '$id'");
                     $delete_query = mysql_query("DELETE FROM news_updates WHERE id = '$id'");
                     print '<strong>Post Deleted.</strong>';
-                    redirect("index.php");
                 };
                 $post_select = mysql_query("SELECT * FROM news_updates WHERE id =$id");
                 while($row = mysql_fetch_array($post_select)){
@@ -139,7 +137,7 @@ if($act == 'admin'){
                         <tr><td>
                         <div>
                         <font size="+2"><strong>'.$row[title].'</strong></font><br />
-                        <font size="+1"><strong>Posted by: <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                        <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                         </div>
                         </td></tr>
@@ -149,7 +147,7 @@ if($act == 'admin'){
                         <table class="table">
                         <tr><td>
                         <strong>Are you sure you want to delete this post?</strong><br />
-                        <form action="index.php?act=admin&amp;act2=delete_post&amp;set=delete&amp;id='.$row[id].'" method="post">
+                        <form action="?act=admin&amp;act2=delete_post&amp;set=delete&amp;id='.$row[id].'" method="post">
                         <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                         </form>
                         </table>';
@@ -173,7 +171,7 @@ if($act == 'admin'){
                     <tr><td>
                     <div>
                     <font size="+2"><strong>'.$row[title].'</strong></font><br />
-                    <font size="+1"><strong>Posted by: <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                    <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                     </div>
                     </td></tr>
@@ -183,7 +181,7 @@ if($act == 'admin'){
                     <table class="table">
                     <tr><td>
                     <strong>Are you sure you want to delete this comment?</strong><br />
-                    <form action="index.php?act=admin&amp;act2=delete_comment&amp;set=delete&amp;id='.$row[id].'" method="post">
+                    <form action="?act=admin&amp;act2=delete_comment&amp;set=delete&amp;id='.$row[id].'" method="post">
                     <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                     </form>
                     </table>';
@@ -241,8 +239,8 @@ if($act == 'admin'){
                 <table class="table">
                 <tr>
                 <td>
-                <a href="index.php?act=admin&amp;act2=add_member">Add a Member</a> |
-                <a href="index.php?act=admin&amp;act2=edit_users_list&amp;set=force_offline">Force All Members Offline</a>
+                <a href="?act=admin&amp;act2=add_member">Add a Member</a> |
+                <a href="?act=admin&amp;act2=edit_users_list&amp;set=force_offline">Force All Members Offline</a>
                 </td>
                 </tr>
                 <tr>
@@ -294,9 +292,9 @@ if($act == 'admin'){
                 {$afm = "No";};
                 print ''.$afm.'</td>
                     <td width="300">
-                    <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">View</a> | 
-                    <a href="index.php?act=admin&amp;act2=edit_user&amp;user_id='.$row[user_id].'">Edit</a> | 
-                    <a href="index.php?act=admin&amp;act2=delete_member&amp;username='.$row[username].'">Delete</a>
+                    <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">View</a> | 
+                    <a href="?act=admin&amp;act2=edit_user&amp;user_id='.$row[user_id].'">Edit</a> | 
+                    <a href="?act=admin&amp;act2=delete_member&amp;username='.$row[username].'">Delete</a>
                     </td>
                     </tr>';
             };
@@ -440,7 +438,7 @@ if($act == 'admin'){
             title("Delete Member");
             print '<h1><center>Delete Member</center></h1>
                 <hr width="100%"/>
-                <form action="index.php?act=admin&amp;act2=edit_users_list&amp;set=deletemember&amp;username='.$requestusername.'" method="post">
+                <form action="?act=admin&amp;act2=edit_users_list&amp;set=deletemember&amp;username='.$requestusername.'" method="post">
                 <table class="table"><tr><td>
                 <strong>Are you sure you want to delete user '.$requestusername.'?</strong>
                 <br />
@@ -466,7 +464,7 @@ if($act == 'admin'){
             title("$cms_name Website Settings");
             print '<h1><center>'.$cms_name.' Website Settings</center></h1>
                 <hr width="100%"/>
-                <a href="index.php?act=admin&amp;act2=change_website_settings">Change Settings</a>
+                <a href="?act=admin&amp;act2=change_website_settings">Change Settings</a>
                 <table class="table" >';
             while($row = mysql_fetch_array($all_settings)){
                 print'<tr><td>'.$row[displayname].'</td>
@@ -511,7 +509,7 @@ if($act == 'admin'){
                     $publiccheckbox = '1';
                 };
                 if ($set2 == 'create_page'){
-                    $add_query = mysql_query("INSERT INTO `pages` (`id`, `page`, `page_title`, `header`, `body`, `footer`, `css`, `views`, `hidden`, `admin`, `member`, `basic`, `public`, `username`, `password`) VALUES ('$random_id', '$_POST[urlkey]', '$_POST[title]', '$_POST[head]', '$_POST[body]', '$_POST[footer]', '$_POST[css]', '0', '0', '$admincheckbox', '$membercheckbox', '$basicmembercheckbox', '$publiccheckbox', '$_SESSION[username]', '$_POST[pass]')") or die(mysql_error());
+                    $add_query = mysql_query("INSERT INTO `pages` (`id`, `page`, `page_title`, `header`, `body`, `footer`, `css`, `views`, `hidden`, `admin`, `member`, `basic`, `public`, `username`, `password`) VALUES ('$random_id', '$_POST[urlkey]', '$_POST[title]', '$_POST[head]', '$_POST[body]', '$_POST[footer]', '$_POST[css]', '0', '0', '$admincheckbox', '$membercheckbox', '$basicmembercheckbox', '$publiccheckbox', '$username', '$_POST[pass]')") or die(mysql_error());
                     print '<strong>'.$_POST[title].'</strong> has been created successfully.';
                 };
                 //SAVE EDITED PAGE
@@ -520,7 +518,7 @@ if($act == 'admin'){
                         $page_edit = mysql_query("UPDATE `pages` SET `page` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admincheckbox', `member` = '$membercheckbox', `basic` = '$basicmembercheckbox', `public` = '$publiccheckbox', `password` = '$_POST[pass]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$id'") or die(mysql_error());
                     };
                     if($_SESSION['group'] != 'admin'){
-                        $page_edit = mysql_query("UPDATE `pages` SET `page` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admincheckbox', `member` = '$membercheckbox', `basic` = '$basicmembercheckbox', `public` = '$publiccheckbox', `password` = '$_POST[pass]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$id' AND `username` = '$_SESSION[username]'") or die(mysql_error());
+                        $page_edit = mysql_query("UPDATE `pages` SET `page` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admincheckbox', `member` = '$membercheckbox', `basic` = '$basicmembercheckbox', `public` = '$publiccheckbox', `password` = '$_POST[pass]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$id' AND `username` = '$username'") or die(mysql_error());
                     };
                     print '<strong>'.$_POST[title].'</strong> has been successfully saved.';
                 };
@@ -537,7 +535,7 @@ if($act == 'admin'){
             title("Web Page Control Panel");
             page_header('Web Page Control Panel');
 ?>
-                <a href="index.php?act=admin&amp;act2=create_new_webpage">Add a New Web Page</a><br />
+                <a href="?act=admin&amp;act2=create_new_webpage">Add a New Web Page</a><br />
 
                 <table class="table" width="100%" >
                 <tr>
@@ -580,9 +578,9 @@ if($act == 'admin'){
                 print '<td><center>'.$pa.'</center></td>
                     <td>'.$row[views].'</td>
                     <td>
-                    <a href="index.php?page='.$row[page].'" target="_blank">View</a> | 
-                    <a href="index.php?act=admin&amp;act2=edit_page&amp;id='.$row[id].'">Edit</a> | 
-                    <a href="index.php?act=admin&amp;act2=delete_webpage&amp;id='.$row[id].'">Delete</a>
+                    <a href="?page='.$row[page].'" target="_blank">View</a> | 
+                    <a href="?act=admin&amp;act2=edit_page&amp;id='.$row[id].'">Edit</a> | 
+                    <a href="?act=admin&amp;act2=delete_webpage&amp;id='.$row[id].'">Delete</a>
                     </td>
                     </tr>';
             };
@@ -594,7 +592,7 @@ if($act == 'admin'){
             print '<h1><center>Create New Web Page</center></h1>
                 <hr width="100%"/>
                 <table class="table"><tr><td>
-                <form action="index.php?act=admin&amp;act2=page&amp;set=save_page&amp;set2=create_page" method="post">
+                <form action="?act=admin&amp;act2=page&amp;set=save_page&amp;set2=create_page" method="post">
                 Page Title: <input type="text" name="title" />
                 <br />
                 URL Key (Page): <input type="text" name="urlkey" />
@@ -651,7 +649,7 @@ if($act == 'admin'){
                                                     $publiccheckboxchecked = '/';};
                                                     page_header('Edit Web Page');
 ?>
-<form class="form-horizontal" role="form" action="index.php?act=admin&amp;act2=page&amp;set=save_page&amp;set2=save_edited_page&amp;id=<?php print $row[id] ?>" method="post">
+<form class="form-horizontal" role="form" action="?act=admin&amp;act2=page&amp;set=save_page&amp;set2=save_edited_page&amp;id=<?php print $row[id] ?>" method="post">
     <div class="form-group">
         <label>Page Title:</label>
         <input type="text" class="form-control" name="title" value="<?php print $row['page_title'] ?>" placeholder="<?php print $row['page_title'] ?>" />
@@ -734,7 +732,7 @@ if($act == 'admin'){
                         <table class="table">
                         <tr><td>
                         <strong>Are you sure you want to delete this page?</strong><br />
-                        <form action="index.php?act=admin&amp;act2=page&amp;set=delete&amp;id='.$row[id].'" method="post">
+                        <form action="?act=admin&amp;act2=page&amp;set=delete&amp;id='.$row[id].'" method="post">
                         <input type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="button" onclick="history.go(-1)" value="No" />
                         </form>

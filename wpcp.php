@@ -1,15 +1,15 @@
 <?php 
 if ($act == 'wpcp'){
-$check_sql = mysql_query("SELECT * FROM users WHERE username = '$_SESSION[username]'");
+$check_sql = mysql_query("SELECT * FROM users WHERE username = '$username'");
 $check_row = mysql_num_rows($check_sql);
 if ($check_row == 1){
-$select = mysql_query("SELECT * FROM users WHERE username = '$_SESSION[username]'");
+$select = mysql_query("SELECT * FROM users WHERE username = '$username'");
 while ($row = mysql_fetch_array($select)){
 $_SESSION['is_online'] = $row[online];
 };};
 if($_SESSION[is_online] == 1){
 if ($_SESSION['group'] != 'member'){
-redirect("index.php?act=failed&id=2");
+redirect("?act=failed&id=2");
 };
 if ($_SESSION['group'] == 'member'){
 //WEB PAGE FUNCTIONS
@@ -46,11 +46,11 @@ $publiccheckbox = '1';
 };
 if ($set2 == 'create_page'){
 $random_id = rand(000, 9999);
-$add_query = mysql_query("INSERT INTO `pages` (`id`, `page`, `page_title`, `header`, `body`, `footer`, `css`, `views`, `hidden`, `admin`, `member`, `basic`, `public`, `username`, `password`) VALUES ($random_id, '$_POST[urlkey]', '$_POST[title]', '$_POST[head]', '$_POST[body]', '$_POST[footer]', '$_POST[css]', '0', '0', '$admincheckbox', '$membercheckbox', '$basicmembercheckbox', '$publiccheckbox', '$_SESSION[username]', '$_POST[password]')") or die(mysql_error());
+$add_query = mysql_query("INSERT INTO `pages` (`id`, `page`, `page_title`, `header`, `body`, `footer`, `css`, `views`, `hidden`, `admin`, `member`, `basic`, `public`, `username`, `password`) VALUES ($random_id, '$_POST[urlkey]', '$_POST[title]', '$_POST[head]', '$_POST[body]', '$_POST[footer]', '$_POST[css]', '0', '0', '$admincheckbox', '$membercheckbox', '$basicmembercheckbox', '$publiccheckbox', '$username', '$_POST[password]')") or die(mysql_error());
 print '<strong>'.$_POST[title].'</strong> has been created successfully.';
 };
 if($set2 == 'save_edited_page'){
-$page_edit = mysql_query("UPDATE `pages` SET `page` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admincheckbox', `member` = '$membercheckbox', `basic` = '$basicmembercheckbox', `public` = '$publiccheckbox', `password` = '$_POST[password]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$id' AND `username` = '$_SESSION[username]'") or die(mysql_error());
+$page_edit = mysql_query("UPDATE `pages` SET `page` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admincheckbox', `member` = '$membercheckbox', `basic` = '$basicmembercheckbox', `public` = '$publiccheckbox', `password` = '$_POST[password]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$id' AND `username` = '$username'") or die(mysql_error());
 print '<strong>'.$_POST[title].'</strong> has been successfully saved.';
 };
 };
@@ -67,7 +67,7 @@ print '<h1><center>Web Page Control Panel</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center">
 <tr><td>
-<a href="index.php?act=wpcp&act2=create_new_webpage">Add a New Web Page</a><br />
+<a href="?act=wpcp&act2=create_new_webpage">Add a New Web Page</a><br />
 </td></tr>
 </table><br />
 <table class="table" width="100%">
@@ -82,7 +82,7 @@ print '<h1><center>Web Page Control Panel</center></h1>
 <td align="center" width="1"><strong>Views</strong></td>
 <td align="center" width="129"><strong>View | Edit | Delete</strong></td>
 </tr>';
-$select_page_query = mysql_query("SELECT * FROM `pages` WHERE `username` = '$_SESSION[username]'");
+$select_page_query = mysql_query("SELECT * FROM `pages` WHERE `username` = '$username'");
 while($row = mysql_fetch_array($select_page_query)){
 print '<tr>
 <td align="center">'.sprintf('%04s', $row[id]).'</td>
@@ -110,9 +110,9 @@ if($row['public'] == 1)
 print '<td><center>'.$pa.'</center></td>
 <td align="center">'.$row[views].'</td>
 <td align="center">
-<a href="index.php?page='.$row[page].'" target="_blank">View</a> | 
-<a href="index.php?act=wpcp&act2=edit_page&id='.$row[id].'">Edit</a> | 
-<a href="index.php?act=wpcp&act2=delete_webpage&id='.$row[id].'">Delete</a>
+<a href="?page='.$row[page].'" target="_blank">View</a> | 
+<a href="?act=wpcp&act2=edit_page&id='.$row[id].'">Edit</a> | 
+<a href="?act=wpcp&act2=delete_webpage&id='.$row[id].'">Delete</a>
 </td>
 </tr>';
 };
@@ -124,7 +124,7 @@ title("Create New Web Page");
 print '<h1><center>Create New Web Page</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center"><tr><td>
-<form action="index.php?act=wpcp&act2=page&set=save_page&set2=create_page" method="post">
+<form action="?act=wpcp&act2=page&set=save_page&set2=create_page" method="post">
 Page Title: <input type="text" name="title" />
 <br />
 URL Key (Set): <input type="text" name="urlkey" />
@@ -161,7 +161,7 @@ Leave blank for NO password<br />
 if ($act2 == 'edit_page'){
 title("Edit Web Page");
 if ($id != ''){
-$selectwebpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND `username` = '$_SESSION[username]'") or die (mysql_error());
+$selectwebpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND `username` = '$username'") or die (mysql_error());
 while ($row = mysql_fetch_array($selectwebpage)){
 if($row[member] == 1){
 $membercheckboxchecked = 'checked="checked" /';};
@@ -178,7 +178,7 @@ $publiccheckboxchecked = '/';};
 print '<h1><center>Edit Web Page</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center"><tr><td>
-<form action="index.php?act=wpcp&act2=page&set=save_page&set2=save_edited_page&id='.$row[id].'" method="post">
+<form action="?act=wpcp&act2=page&set=save_page&set2=save_edited_page&id='.$row[id].'" method="post">
 Page Title: <input type="text" name="title" value="'.$row[page_title].'"/>
 <br />
 URL Key (Set): <input type="text" name="urlkey" value="'.$row[page].'"/>
@@ -215,7 +215,7 @@ Leave blank for NO password<br />
 if ($act2== 'delete_webpage'){
 title("Delete Web Page");
 if ($id != ''){
-$select_kill = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND username = '$_SESSION[username]'");
+$select_kill = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND username = '$username'");
 while ($row = mysql_fetch_array($select_kill)){
 print '<h1><center>Delete Web Page</center></h1>
 <hr width="100%" align="center"/>
@@ -237,7 +237,7 @@ print '<h1><center>Delete Web Page</center></h1>
 <table class="table" align="center">
 <tr><td>
 <strong>Are you sure you want to delete this page?</strong><br />
-<form action="index.php?act=wpcp&act2=page&set=delete&id='.$row[id].'" method="post">
+<form action="?act=wpcp&act2=page&set=delete&id='.$row[id].'" method="post">
 <input type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" onclick="history.go(-1)" value="No" />
 </form>
@@ -249,7 +249,7 @@ print '<h1><center>Delete Web Page</center></h1>
 };
 }//if($_SESSION[is_online] == 1)
 else{
-redirect("index.php?act=logout");
+redirect("?act=logout");
 };
 };
 ?>

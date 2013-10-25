@@ -34,31 +34,31 @@ check_inbox();
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="index.php?act=account&amp;act2=members_list">View Members List</a></li>
-                <li><a href="index.php?act=profile&amp;act2=options">Options</a></li>
+                <li><a href="?act=account&amp;act2=members_list">View Members List</a></li>
+                <li><a href="?act=profile&amp;act2=options">Options</a></li>
 <?php
         if ($_SESSION['group'] == 'member') {
 ?>
-                <li><a href="index.php?act=wpcp&amp;act2=page">Web Page Control Panel</a></li>
+                <li><a href="?act=wpcp&amp;act2=page">Web Page Control Panel</a></li>
 <?php
         };
         if ($_SESSION['group'] == 'admin' || ($_SESSION['access_file_manager'] == 1 && $settings['force_block'] == 0)) {
 ?>
-                <li><a href="index.php?act=manager">File Manager</a></li>
+                <li><a href="?act=manager">File Manager</a></li>
 <?php
         };
 ?>
-                <li><a href="index.php?act=inbox">Inbox</a></li>
+                <li><a href="?act=inbox">Inbox</a></li>
 <?php
         if ($_SESSION['group'] == 'admin' && $settings['force_block'] == 0) {
 ?>
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator Control Panel</li>
-                <li><a href="index.php?act=admin&amp;act2=overview"><?php print $cms_name ?> Overview</a></li>
-                <li><a href="index.php?act=admin&amp;act2=post">Add New Post</a></li>
-                <li><a href="index.php?act=admin&amp;act2=page">Web Page Control Panel</a></li>
-                <li><a href="index.php?act=admin&amp;act2=edit_users_list">Edit Members List</a></li>
-                <li><a href="index.php?act=downloadscontrolpanel&amp;act2=overview">Downloads Control Panel</a></li>
+                <li><a href="?act=admin&amp;act2=overview"><?php print $cms_name ?> Overview</a></li>
+                <li><a href="?act=admin&amp;act2=post">Add New Post</a></li>
+                <li><a href="?act=admin&amp;act2=page">Web Page Control Panel</a></li>
+                <li><a href="?act=admin&amp;act2=edit_users_list">Edit Members List</a></li>
+                <li><a href="?act=downloadscontrolpanel&amp;act2=overview">Downloads Control Panel</a></li>
               </ul>
 <?php
         };
@@ -72,12 +72,12 @@ check_inbox();
             <li><a href="?act=login">Login</a></li>
             <li><a href="?act=register">Register</a></li>
 <?php
-        //<a href="index.php?act=forgot_username/password">Forgot Username and/or Password?</a>';
+        //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
     } //if($_SESSION['login'] != true)
     else {
 ?>
             <li><a href="?act=profile&act2=view"><?php print $_SESSION['username']; ?></a></li>
-            <li><a href="index.php?act=logout">Logout</a></li>
+            <li><a href="?act=logout">Logout</a></li>
 <?php
     };
 ?>

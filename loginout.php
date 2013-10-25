@@ -40,11 +40,10 @@ if ($act == 'login'){
                         $_SESSION['choice'] = 'agree';
                     }; //while ($row = mysql_fetch_array($select))
                     $_SESSION['login'] = true;
-                    $sql = "UPDATE users SET last_log_on = '$local_time', ip = '$ip' WHERE username = '$_SESSION[username]'";
+                    $sql = "UPDATE users SET last_log_on = '$local_time', ip = '$ip' WHERE username = '$username'";
                     $result2 = mysql_query($sql) or die (mysql_error());
-                    $sql2 = "UPDATE users SET online = '1' WHERE username = '$_SESSION[username]'";
+                    $sql2 = "UPDATE users SET online = '1' WHERE username = '$username'";
                     $result3 = mysql_query($sql2) or die (mysql_error());
-                    redirect(".");
                 } //if ($check_row == 1)
                 else{
                     redirect("?act=failed&id=1");
@@ -65,8 +64,7 @@ if ($act == 'login'){
 }; //if ($act == 'login')
 //LOGOUT SCRIPT
 if ($act == 'logout'){
-    $result = mysql_query("UPDATE users SET `online` = '0' WHERE `username` = '$_SESSION[username]'") or die (mysql_error());
+    $result = mysql_query("UPDATE users SET `online` = '0' WHERE `username` = '$username'") or die (mysql_error());
     $_SESSION['login'] = false;
-    redirect(".");
 }; //if ($act == 'logout')
 ?>
