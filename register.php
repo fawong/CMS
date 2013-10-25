@@ -39,8 +39,6 @@ if ($act == 'create_account') {
                                                     $hashedpass = sha1(md5($password));
                                                     $mysql_add_text = "INSERT INTO `users` (`first_name`, `last_name`, `user_id`, `group`, `username`, `password`, `date_joined`, `date_of_birth`, `email`, `ip`, `activation_code`, `access_file_manager`, `access_dlcp`) VALUES ('$first_name', '$last_name', '$new_user_id', 'member', '$user_name', '$hashedpass', '$local_time', '$date_of_birth', '$email', '$ip', '$activation_code', '0' ,'0')";
                                                     $mysql_add_query_bu = mysql_query($mysql_add_text) or die(mysql_error());
-                                                    //"INSERT INTO `users` VALUES ('$new_user_id', 'member', 'member', '$requestusername', '$password', '$local_time', '$date_of_birth', '$email', '', '', '$ip', '0', '', '$activate_code', '0', '', '', '', '', '', '', '', '', '', '', 'default', '0', '0', '0', '0', '0', '0', '0')";
-                                                    //$msysql_add = "INSERT INTO `users` ( `id`, `username`, `tag`, `password`, `date_joined`, `date_of_birth`, `email`, `activate_code`) VALUES ( `$new_user_id`, '$requestusername`, `$name_tag`, `$password`, `$date`, `$date_of_birth`, `$email`, `$activate_code`) ";
                                                     title("Successful Registration");
                                                     page_header('Successful Registration');
 ?>
@@ -48,51 +46,49 @@ if ($act == 'create_account') {
 <?php
                                                 } else {
                                                     print 'You did not agree to the Terms of Service.';
-                                                };//if ($agree == 'agree')
+                                                }; //if ($agree == 'agree')
                                             } else {
                                                 print 'You did not provide a date of birth.';
-                                            };//if ($date_of_birth != '')
+                                            }; //if ($date_of_birth != '')
                                         } else {
                                             print 'The email does not match.';
-                                        };//if ($password == $confirm_password)
+                                        }; //if ($password == $confirm_password)
                                     } else {
                                         print 'You cannot have an empty email.';
-                                    };//if ($password != '')
+                                    }; //if ($password != '')
                                 } else {
                                     print 'The password does not match.';
-                                };//if ($password == $confirm_password)
+                                }; //if ($password == $confirm_password)
                             } else {
                                 print 'You cannot have an empty password.';
-                            };//if ($password != '')
+                            }; //if ($password != '')
                         } else {
                             print 'You cannot have an empty username.';
-                        };//if ($user_name != '')
+                        }; //if ($user_name != '')
                     } else {
                         print 'You cannot have an empty last name.';
-                    };//if ($last_name != '')
+                    }; //if ($last_name != '')
                 } else {
                     print 'You cannot have an empty first name.';
-                };//if ($last_name != '')
+                }; //if ($last_name != '')
             } else {
                 print 'You cannot create the same username as someone else.';
-            };//if (mysql_num_rows($requestusername_check) == 0)
+            }; //if (mysql_num_rows($requestusername_check) == 0)
         } else {
             print 'You are already logged in.';
-        };//if ($_SESSION['login'] == false || !isset($_SESSION['login']))
+        }; //if ($_SESSION['login'] == false || !isset($_SESSION['login']))
     } else {
 
         title("Wrong Verification Code");
-        print '<center><h1>Wrong Verification Code</h1></center>
-            <hr width="100%" align="center" />
-            <table align="center">
+        page_header('Wrong Verification Code');
+?>
+            <p>You did not enter the correct verification code. Please go back and try again.</p>
+            <p>If you think this is an error, please contact the webmaster with the following error code:
+                <?php print $resp->error ?></p>
 
-            You did not enter the correct verification code. Please go back and try again.<br />
-            If you think this is an error, please contact the webmaster with the following error code:
-                '.$resp->error.'
-
-                </table>';
-    };//if ($resp->is_valid)
-};//if ($act == 'create_account')
+<?php
+    }; //if ($resp->is_valid)
+}; //if ($act == 'create_account')
 //REGISTER
 if ($act == 'register') {
     if($_SESSION['login'] == TRUE) {
@@ -111,9 +107,7 @@ You are already logged in to <?php print $cms_name ?>.
         };
         </script>
 <?php page_header('Register') ?>
-<form role="form" class="form-signin form-horizontal" method="post" action="index.php?act=create_account">
-<p>Please remember to read our Terms of Service.</p>
-<!--Please fill out the form below in order to sign up for <?php print $cms_name ?>.-->
+<form role="form" class="form-signin form-horizontal" method="post" action="?act=create_account">
 <p>* = Required Item</p>
 <div class="form-group">
 <label>*First Name:</label>
@@ -182,7 +176,7 @@ You are already logged in to <?php print $cms_name ?>.
 </select>
 </div>
 <div class="form-group">
-<label>*I agree to and understand the <a href="index.php?page=tos" target="_blank">Terms of Service</a></label>.
+<label>*I agree to and understand the <a href=?page=tos" target="_blank">Terms of Service</a></label>.
 <input type="checkbox" name="agree" value="agree" />
 </div>
 <div class="form-group">

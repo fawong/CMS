@@ -9,12 +9,12 @@ if ($act == 'comments') {
 ?>
                 <h2><?php print $row['title'] ?></h2>
                 <br />
-                <strong>Posted by: <a href="index.php?act=profile&amp;act2=view&amp;username=<?php print $row[username] ?>"><?php print $row[username] ?></a>
+                <strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username=<?php print $row['username'] ?>"><?php print $row['username'] ?></a>
                 <br />
                 Date: <?php print $row[date] ?></strong>
                 <p><?php print $row[post] ?></p>
 <?php
-        };//while ($row = mysql_fetch_array($select_story))
+        }; //while ($row = mysql_fetch_array($select_story))
 ?>
             <h3>Comments</h3>
 <?php
@@ -24,42 +24,37 @@ if ($act == 'comments') {
 ?>
             <strong>There are no comments for this post.</strong>
 <?php
-        }//if(mysql_num_rows($select_comment) == 0)
+        } //if(mysql_num_rows($select_comment) == 0)
         else{
             while($row = mysql_fetch_array($select_comment)) {
-                $post = wordwrap($row[comment], "100%", "<br />\n", false);
+                $post = wordwrap($row['comment'], "100%", "<br />\n", false);
 ?>
-<strong>Comment # <?php print $count ?></strong>
-<br />
-<strong>Author Username:</strong> <a href="index.php?act=profile&amp;act2=view&amp;username=<?php print $row[username] ?>"><?php print $row[username] ?></a>
-<br />
-<strong>Date:</strong> <?php print $row[date] ?>
+<h4>Comment # <?php print $count ?></h4>
+<p><strong>Post author:</strong> <a href="?act=profile&amp;act2=view&amp;username=<?php print $row['username'] ?>"><?php print $row['username'] ?></a></p>
+<p><strong>Date:</strong> <?php print $row[date] ?></p>
 <p><?php print $post ?></p>
 <?php
                 if ($_SESSION['group'] == 'admin') {
 ?>
-                    $admin = '<div align="center">
-                        <a href="index.php?act=admin&amp;act2=edit_comment&amp;id='.$row[id].'">Edit Comment</a> &mdash;
-                    <a href="index.php?act=admin&amp;act2=delete_comment&amp;id='.$row[id].'">Delete Comment</a>
-                        </div>';
-                    </table><br />';
+                    <a href="?act=admin&amp;act2=edit_comment&amp;id=<?php print $row['id'] ?>">Edit Comment</a> &mdash;
+                    <a href="?act=admin&amp;act2=delete_comment&amp;id=<?php print $row['id'] ?>">Delete Comment</a>
 <?php
                 };
                 $count++;
-            };//while($row = mysql_fetch_array($select_comment))
-        };//else
-    };//if ($act2 == 'view_comments')
+            }; //while($row = mysql_fetch_array($select_comment))
+        }; //else
+    }; //if ($act2 == 'view_comments')
     //ADD COMMENTS
     if ($act2 == 'add_comments') {
         // ADD POSTED COMMENT
-        if ($act22== 'post_comment') {
+        if ($act2 == 'post_comment') {
             if ($_POST['comment'] != '') {
-                $insert_query = mysql_query("INSERT INTO `news_comments` (`news_id`, `username`, `date`, `comment`) VALUES ('$_POST[news_id]', '$_SESSION[username]', '$current_date', '$_POST[comment]')") or die (mysql_error());
+                $insert_query = mysql_query("INSERT INTO `news_comments` (`news_id`, `username`, `date`, `comment`) VALUES ('$_POST[news_id]', '$username', '$current_date', '$_POST[comment]')") or die (mysql_error());
                 print '<strong>Comment Edited and Saved.</strong>';
                 $id = $_POST['news_id'];
             }
             else{
-                redirect("index.php?act=failed&amp;id=1");
+                redirect("?act=failed&amp;id=1");
             };
         };
         title("Add Comments");
@@ -71,7 +66,7 @@ if ($act == 'comments') {
                 <tr><td>
                 <div align="center">
                 <font size="+2"><strong>'.$row[title].'</strong></font><br />
-                <font size="+1"><strong>Posted by: <a href="index.php?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row['username'].'">'.$row['username'].'</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                 </div>
                 </td></tr>
@@ -87,7 +82,7 @@ if ($act == 'comments') {
         if ($_SESSION['login'] == true) {
             print '<table class="table" align="center">
                 <tr><td>
-                <form action="index.php?act=add_comments&amp;act2=post_comment" method="post">
+                <form ="?action=?act=add_comments&amp;act2=post_comment" method="post">
                 <h1><div align="center">Add Comment</div></h1>
                 <input type="hidden" name="news_id" value="'.$id.'" />
                 <textarea name="comment" cols="50" rows="10"></textarea><br />
