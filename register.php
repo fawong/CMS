@@ -111,10 +111,10 @@ You are already logged in to <?php print $cms_name ?>.
         };
         </script>
 <?php page_header('Register') ?>
-Please remember to read our Terms of Service.<br />
-Please fill out the form below in order to sign up for <?php print $cms_name ?>.<br /><br />
-* = Required Item
-<form role="form" class="form-horizontal" method="post" action="index.php?act=create_account">
+<form role="form" class="form-signin form-horizontal" method="post" action="index.php?act=create_account">
+<p>Please remember to read our Terms of Service.</p>
+<!--Please fill out the form below in order to sign up for <?php print $cms_name ?>.-->
+<p>* = Required Item</p>
 <div class="form-group">
 <label>*First Name:</label>
 <input type="text" class="form-control" name="first_name" size="65" />
@@ -192,7 +192,7 @@ Please fill out the form below in order to sign up for <?php print $cms_name ?>.
         echo recaptcha_get_html($publickey, NULL, true);
 ?>
 </div>
-<input type="submit" value="Create My Account" />
+<button type="submit" class="btn btn-primary btn-lg">Create My Account</button>
 </form>
 <?php
     };

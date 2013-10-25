@@ -29,17 +29,17 @@ print $cms_name;print $GLOBALS["ptitle"];?></title>
 <script src="sifr-addons.js" type="text/javascript"></script>
 <?php
     };
-if ($act == 'login') {
+if ($act == 'login' || $act == 'register') {
 ?>
-<link rel="stylesheet" type="text/css" href="themes/default/signin.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="themes/default/css/signin.css" media="screen" />
 <?php
 };
 ?>
 <style type="text/css">
 <?php print $row['css'] ?>
 </style>
-<link href="themes/default/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="themes/default/navbar.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="themes/default/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="themes/default/css/navbar.css" media="screen" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" />
 <link rel="icon" type="image/ico" href="/favicon.ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-ico" />

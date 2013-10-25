@@ -4,7 +4,7 @@ if ($act == 'login'){
         title("Login to $cms_name");
         page_header("Sign in to $cms_name");
 ?>
-      <form class="form-signin" method="post" action="index.php?act=login&act2=authenticate" name="login">
+      <form class="form-signin" method="post" action="index.php?act=login&amp;act2=authenticate" name="login">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" class="form-control" placeholder="Username" name="inputusername" autofocus>
         <input type="password" class="form-control" placeholder="Password" name="inputpassword">
