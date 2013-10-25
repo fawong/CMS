@@ -1,7 +1,7 @@
 <?php 
 if ($act == 'profile'){
     if ($_SESSION['login'] != true){
-        redirect("?act=failed&id=2");
+        redirect("failed.php?id=2");
     };
     if ($_SESSION['login'] == true){
         //VIEW PROFILE
@@ -15,14 +15,14 @@ if ($act == 'profile'){
                 while ($row = mysql_fetch_array($view_user_query)){
                     if ($row[online] == '1'){
                         $status = 'themes/'.$_SESSION[theme].'/images/online.gif';
-                    };//if ($row[online] == '1')
+                    }; //if ($row[online] == '1')
                     if ($row[online] == '0'){
                         $status = 'themes/'.$_SESSION[theme].'/images/offline.gif';
-                    };//if ($row[online] == '0')
+                    }; //if ($row[online] == '0')
                     $update_views = mysql_query("UPDATE users SET views = views+1 WHERE `username` = '$row[username]'");
                     if ($row[avatar] == ''){ //|| !valid_url($row[avatar])){
                         $avatar = 'themes/'.$_SESSION[theme].'/images/no_avatar.gif';
-                    }//if ($row[avatar] == '')
+                    } //if ($row[avatar] == '')
                     else{
                         $avatar = ''.$row[avatar].'';
                     };
@@ -34,8 +34,7 @@ if ($act == 'profile'){
 <strong>Member Group:</strong> <?php print $row['group'] ?><br />
 <strong>Date Joined:</strong> <?php print $row['date_joined'] ?><br />
 <strong>Online Status: </strong><img src="<?php print $status ?>" /><br /><br />
-<font size="+1"><strong><center>Statistics:</center></strong></font>
-<hr width="100%" align="center"/>
+<h2>Statistics:</h2>
 <strong>Views:</strong> <?php print $row['views'] ?> <br />
 <strong>Comments:</strong> <?php print $comment_count ?><br />
 <strong>Positive (+) Reputation:</strong> <?php print $row['kpos'] ?><br />
@@ -48,59 +47,56 @@ if ($act == 'profile'){
 <strong>Website:</strong> <a href="<?php print $row['website'] ?>" target="_blank"><?php print $row['website'] ?></a><br />
 <strong>Email:</strong> <a href="mailto:<?php print $row['email'] ?>"><?php print $row['email'] ?></a>
 <?php
-                };//if ($_GET['username'] == '')
+                }; //if ($_GET['username'] == '')
             };
             if ($_GET['username'] != '' && $username != 'Guest'){
                 $view_user_query = mysql_query("SELECT * FROM `users` WHERE `username` = '$_GET[username]' LIMIT 1") or die(mysql_error());
                 if(mysql_num_rows($view_user_query) == 0){
                     title("Member Does Not Exist");
                     print '<h1><center>Member Does Not Exist</center></h1>
-                        <hr width="100%" align="center"/>
                         <center><strong>This member does not exist.</strong></center>';
-                }//if(mysql_num_rows($view_user_query) == 0)
+                } //if(mysql_num_rows($view_user_query) == 0)
                 else{
                     title("View Profile");
-                    print '<h1><center>View Profile</center></h1>
-                        <hr width="100%" align="center"/>';
+                    page_header('View Profile');
                     while ($row = mysql_fetch_array($view_user_query)){
                         if ($row[online] == '1'){
                             $status = 'themes/'.$_SESSION[theme].'/images/online.gif';
-                        };//if ($row[online] == '1')
+                        }; //if ($row[online] == '1')
                         if ($row[online] == '0'){
                             $status = 'themes/'.$_SESSION[theme].'/images/offline.gif';
-                        };//if ($row[online] == '0')
-                        print '<table class="table" align="center"><tr><td>
-                            <center><img src="'.$avatar.'"></center><br />';
-                        print '<strong>Member User Name:</strong> '.$row[username].'<br />
-                            <strong>Member First Name:</strong> '.$row[first_name].'<br />
-                            <strong>Member Last Name:</strong> '.$row[last_name].'<br />
-                            <strong>Member Rank:</strong> '.$row[rank].'<br />
-                            <strong>Member Group:</strong> '.$row[group].'<br />
-                            <strong>Date Joined:</strong> '.$row[date_joined].'<br />
-                            <img src="'.$status.'"  /><br /><br />
-                            <font size="+1"><strong><center>Statistics:</center></strong></font>
-                            <hr width="100%" align="center"/>
-                            <strong>Profile Views:</strong> '.$row[views].' <br />
-                            <strong>Number of Comments:</strong> '.$comment_count.'<br />
-                            <strong>Positive (+) Reputation:</strong> '.$row[kpos].'<br />
-                            <strong>Negative (-) Reputation:</strong> '.$row[kneg].'<br />
-                            <a href="?act=profile&amp;act2=reputation&amp;username='.$_GET[username].'">Change '.$_GET[username].'\'s Reputation</a><br />
-                            <a href="?act=inbox&amp;act2=compose&amp;to='.$row[username].'">Compose New Message</a><br />
-                            <strong>AIM User Name:</strong> '.$row[aim].'<br />
-                            <strong>About:</strong> '.$row[about].'<br />
-                            <strong>Interests:</strong> '.$row[interests].'<br />
-                            <strong>Website:</strong> <a href="'.$row[website].'" target="_blank">'.$row[website].'</a><br />
-                            <strong>Email:</strong> <a href="mailto:"'.$row[email].'">'.$row[email].'</a><br /><br />
-                            <font size="+1"><strong><center>Add a New Comment:</center></strong></font>
-                            <hr width="100%" align="center"/>
-                            <form action="?act=profile&amp;act2=comment&amp;set=add_new_comment&amp;username='.$_GET[username].'" method="post">
-                            <textarea name="comment" cols="50" rows="10"></textarea><br />
-                            <input type="submit" value="Submit New Comment" /></form><br /><br /><br />
-                            </td></tr></table>';
-                    };//while ($row = mysql_fetch_array($view_user_query))
+                        }; //if ($row[online] == '0')
+?>
+<center><img src="<?php print $avatar ?>"></center><br />
+<strong>Member Username:</strong> <?php print $row[username] ?><br />
+<strong>Member First Name:</strong> <?php print $row[first_name] ?><br />
+<strong>Member Last Name:</strong> <?php print $row[last_name] ?><br />
+<strong>Member Rank:</strong> <?php print $row[rank] ?><br />
+<strong>Member Group:</strong> <?php print $row[group] ?><br />
+<strong>Date Joined:</strong> <?php print $row[date_joined] ?><br />
+<img src="<?php print $status ?>"  /><br /><br />
+<h2>Statistics:</h2>
+<strong>Profile Views:</strong> <?php print $row[views] ?> <br />
+<strong>Number of Comments:</strong> <?php print $comment_count ?><br />
+<strong>Positive (+) Reputation:</strong> <?php print $row[kpos] ?><br />
+<strong>Negative (-) Reputation:</strong> <?php print $row[kneg] ?><br />
+<a href="?act=profile&amp;act2=reputation&amp;username=<?php print $_GET[username] ?>">Change <?php print $_GET[username] ?>'s Reputation</a><br />
+<a href="?act=inbox&amp;act2=compose&amp;to=<?php print $row[username] ?>">Compose New Message</a><br />
+<strong>AIM User Name:</strong> <?php print $row[aim] ?><br />
+<strong>About:</strong> <?php print $row[about] ?><br />
+<strong>Interests:</strong> <?php print $row[interests] ?><br />
+<strong>Website:</strong> <a href="<?php print $row[website] ?>" target="_blank"><?php print $row[website] ?></a><br />
+<strong>Email:</strong> <a href="mailto:<?php print $row[email] ?>"><?php print $row[email] ?></a><br /><br />
+<h2>Add a New Comment:</h2>
+<form role="form" class="form-horizontal" action="?act=profile&amp;act2=comment&amp;set=add_new_comment&amp;username=<?php print $_GET[username] ?>" method="post">
+<textarea name="comment" class="form-control"></textarea><br />
+<button type="submit" class="btn">Submit New Comment</button>
+</form>
+<?php
+                    }; //while ($row = mysql_fetch_array($view_user_query))
                 };
-            };//if ($_GET[username] != '' && $username != 'Guest')
-        };//if($act2 == 'view')
+            }; //if ($_GET[username] != '' && $username != 'Guest')
+        }; //if($act2 == 'view')
         //ACCOUNT OVERVIEW
         if ($act2 == 'options'){
             title("Options");
@@ -210,7 +206,7 @@ if ($act == 'profile'){
                             else{
                                 $avatar = $row[avatar];
                             };
-                        };//while($row = mysql_fetch_array($find_avatar))
+                        }; //while($row = mysql_fetch_array($find_avatar))
                         while($row = mysql_fetch_array($find_new_comments)){
                             $set_read = mysql_query("UPDATE `user_comments` SET `read` = '1' WHERE `username` = '$username' AND `read` = '0'");
                             print '<table class="table" align="center"><tr>
@@ -226,15 +222,15 @@ if ($act == 'profile'){
                                 </div></td></tr>
                                 </tr></table>';
                             $add_to_count = mysql_query("UPDATE `user_comments` SET count = count+1 WHERE `username` = '$username'") or die(mysql_error());
-                        };//while($row = mysql_fetch_array($find_new_comments))
-                    };//if($set3 == 'delete' || $id== '')
-                }//if(mysql_num_rows($find_new_comments) == 0){
+                        }; //while($row = mysql_fetch_array($find_new_comments))
+                    }; //if($set3 == 'delete' || $id== '')
+                } //if(mysql_num_rows($find_new_comments) == 0){
                 else{
                     print '<h1><center>No Comments</center></h1>
                         <hr width="100%" align="center"/>
                         <center><strong>You have no comments.</strong></center>';
                 }
-            };//if ($act2 == 'view_comments')
+            }; //if ($act2 == 'view_comments')
             //EDIT COMMENTS
             if($set == 'edit_comment'){
                 title("Edit Comment");
@@ -293,7 +289,7 @@ if ($act == 'profile'){
                     <a href="?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
                     </td></tr></table>';
             };
-        };//if ($act2 == 'change_reputation')
+        }; //if ($act2 == 'change_reputation')
         //EDIT PROFILE
         if ($act2 == 'edit_profile'){
             if ($set == 'fix'){
@@ -301,7 +297,7 @@ if ($act == 'profile'){
                 $_SESSION['firstname'] = $_POST['fname'];
                 $_SESSION['lastname'] = $_POST['lname'];
                 print '<strong>Your profile has been updated.</strong>';
-            };//if ($act2 == 'fix')
+            }; //if ($act2 == 'fix')
             title("Edit Profile");
             print '<h1><center>Edit Profile</center></h1>
                 <hr width="100%" align="center"/>';
@@ -335,8 +331,8 @@ if ($act == 'profile'){
                     </form>
                     </td></tr>
                     </table>';
-            };//while ($row = mysql_fetch_array($edit_query))
-        };//if ($act2 == 'edit_profile')
+            }; //while ($row = mysql_fetch_array($edit_query))
+        }; //if ($act2 == 'edit_profile')
         //CHANGE PASSWORD
         if ($act2 == 'change_password'){
             title("Change Password");
@@ -388,7 +384,7 @@ if ($act == 'profile'){
                                 </td></tr>
                                 </table>';
                         };
-                    }//if ($_POST[new_password] != '')
+                    } //if ($_POST[new_password] != '')
                     else{
                         title("New Password Cannot be Blank");
                         print '<h1><center>New Password Cannot be Blank</center></h1>
@@ -409,7 +405,7 @@ if ($act == 'profile'){
                         </td></tr>
                         </table>';
                 };
-            }//if (mysql_num_rows($query) == 1)
+            } //if (mysql_num_rows($query) == 1)
             else{
                 title("Current Password is Incorrect");
                 print '<h1><center>Current Password is Incorrect</center></h1>
@@ -420,7 +416,7 @@ if ($act == 'profile'){
                     </td></tr>
                     </table>';
             };
-        };//if ($act2 == 'submit_change_password')
+        }; //if ($act2 == 'submit_change_password')
     };
 };
 ?>

@@ -2,7 +2,7 @@
 if ($act == 'gallery'){
 if ($_SESSION['login'] != true){
 $_SESSION[error] = 'Error: Not Enough Access';
-redirect("?act=failed");
+redirect("failed.php");
 };
 if ($_SESSION['login'] == true){
 print '<h1>Gallery</h1>

@@ -2,7 +2,7 @@
 if ($act == 'dldb'){
 if ($_SESSION['login'] != true){
 $_SESSION[error] = 'Error: Not Enough Access';
-redirect("?act=failed");
+redirect("failed.php");
 };
 if ($_SESSION['login'] == true){
 $find_all = mysql_query("SELECT * FROM `files` ORDER BY `id` DESC");

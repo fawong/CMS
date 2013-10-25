@@ -21,11 +21,11 @@ check_inbox();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href=".">Not A CMS</a>
+          <a class="navbar-brand" href="<?php print $settings['homepage'] ?>"><img src="<?php print $settings['logo'] ?>" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="."><?php print $cms_name ?> Home</a></li>
+            <li class="active"><a href="newsandupdates.php">News and Updates</a></li>
             <li><a href="?page=contact">Contact Us</a></li>
             <li><a href="?page=about">About <?php print $cms_name ?></a></li>
 <?php
@@ -54,7 +54,7 @@ check_inbox();
 ?>
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator Control Panel</li>
-                <li><a href="?act=admin&amp;act2=overview"><?php print $cms_name ?> Overview</a></li>
+                <li><a href="overview.php"><?php print $cms_name ?> Overview</a></li>
                 <li><a href="?act=admin&amp;act2=post">Add New Post</a></li>
                 <li><a href="?act=admin&amp;act2=page">Web Page Control Panel</a></li>
                 <li><a href="?act=admin&amp;act2=edit_users_list">Edit Members List</a></li>
@@ -69,15 +69,15 @@ check_inbox();
 <?php
     if($_SESSION['login'] != true) {
 ?>
-            <li><a href="?act=login">Login</a></li>
-            <li><a href="?act=register">Register</a></li>
+            <li><a href="loginout.php?action=login">Login</a></li>
+            <li><a href="register.php">Register</a></li>
 <?php
         //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
     } //if($_SESSION['login'] != true)
     else {
 ?>
             <li><a href="?act=profile&act2=view"><?php print $_SESSION['username']; ?></a></li>
-            <li><a href="?act=logout">Logout</a></li>
+            <li><a href="loginout.php?action=logout">Logout</a></li>
 <?php
     };
 ?>
@@ -91,10 +91,7 @@ check_inbox();
       <div class="page-header">
 
 <?
-};//if ($settings['force_block'] == 0)
-if (($page == '') && ($settings['force_block'] == 0 || $_SESSION['group'] == 'admin')) {
-    require_once('newsandupdates.php');
-};
+}; //if ($settings['force_block'] == 0)
 if ($_SESSION['group'] != 'admin' && $settings['force_block'] == 1){
     title("Website Under Maintainance");
     print '<h1><center>Website Under Maintainance</center></h1>

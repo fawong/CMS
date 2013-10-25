@@ -54,7 +54,7 @@ if ($act == 'comments') {
                 $id = $_POST['news_id'];
             }
             else{
-                redirect("?act=failed&amp;id=1");
+                redirect("failed.php?amp;id=1");
             };
         };
         title("Add Comments");

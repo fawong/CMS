@@ -58,7 +58,7 @@ if ($act == '') {
                         };//if ($row[$_SESSION[group]] == 1)
                     };//while ($row = mysql_fetch_array($find_page))
                 } else {
-                    redirect("?act=failed&amp;id=3");
+                    redirect("failed.php?amp;id=3");
                 };//if ($row = mysql_fetch_array($find_page))
             };//if ($page != '')
         };//if ($cmd == '')

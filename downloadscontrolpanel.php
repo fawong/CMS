@@ -1,7 +1,7 @@
 <?php 
 if ($act == 'downloadscontrolpanel'){
 if ($_SESSION['group'] != 'admin' || $access['downloadscontrolpanel'] = '0'){
-redirect("?act=failed&amp;id=2");
+redirect("failed.php?amp;id=2");
 };
 if ($_SESSION['group'] == 'admin' || $access['downloadscontrolpanel'] == '1'){
 if ($act2 == 'overview'){

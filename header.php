@@ -13,12 +13,7 @@
 <meta name="distribution" content="GLOBAL" />
 <meta name="resource-type" content="document" />
 -->
-<title><?php
-function title($pagetitle) {
-    $GLOBALS["ptitle"] = $pagetitle;
-}
-//print var_dump($GLOBALS);
-print $cms_name;print $GLOBALS["ptitle"];?></title>
+<title><?php print $cms_name ?></title>
 <?php
     if ($settings['text_style'] == 1){
 ?>

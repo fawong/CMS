@@ -1,7 +1,7 @@
 <?php 
 if ($act == 'account'){
 if ($_SESSION['login'] != true){
-redirect("?act=failed&amp;id=2");
+redirect("failed.php?amp;id=2");
 };
 if ($_SESSION['login'] == true){
 //DISPLAY MEMBERS LIST

@@ -9,7 +9,7 @@ $_SESSION['is_online'] = $row[online];
 };};
 if($_SESSION[is_online] == 1){
 if ($_SESSION['group'] != 'member'){
-redirect("?act=failed&id=2");
+redirect("failed.php?id=2");
 };
 if ($_SESSION['group'] == 'member'){
 //WEB PAGE FUNCTIONS

@@ -1,12 +1,12 @@
 <?php 
 if ($_SESSION['login'] != true){
-    redirect("?act=failed&id=2");
+    redirect("failed.php?id=2");
 };
 if ($_SESSION['login'] == true){
     if($act == 'manager'){
         title("File Manager");
         if($_SESSION['access_file_manager'] == 0){
-            redirect("?act=failed&id=2");
+            redirect("failed.php?id=2");
         };
         if($_SESSION['access_file_manager'] == 1){
             function size_file($size){
@@ -169,7 +169,7 @@ if ($_SESSION['login'] == true){
                     //chmod($file_paths,);
                     print ''.$_POST[foldername].' has been created.';
                 }else{
-                    redirect('?act=failed&id=500');
+                    redirect('failed.php?id=500');
                 };
             };
             if($act2 == 'fix_file'){
