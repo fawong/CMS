@@ -17,7 +17,7 @@
 <?php
 if ($action == 'login' || $action == 'register') {
 ?>
-    <link rel="stylesheet" type="text/css" href="<?php print $settings['url'] ?>/themes/default/css/signin.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="//<?php print $settings['url'] ?>/themes/default/css/signin.css" media="screen" />
 <?php
 };
 ?>

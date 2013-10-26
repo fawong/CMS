@@ -1,6 +1,7 @@
 <?php
 require_once('functions.php');
 
+// VIEW COMMENTS
 if ($action == 'view_comments') {
     title("View Comments");
     $select_story = mysql_query("SELECT * FROM `posts` WHERE `id` = '$id'") or die(mysql_error());
@@ -46,51 +47,45 @@ if ($action == 'view_comments') {
     };
 };
 
-//ADD COMMENTS
-if ($action == 'add_comments') {
+if ($_SESSION['login'] != true) {
+    redirect('failed.php?id=2');
+} else {
     // ADD POSTED COMMENT
     if ($action == 'post_comment') {
+        print_r($_POST);
         if ($_POST['comment'] != '') {
-            $insert_query = mysql_query("INSERT INTO `comments` (`post_id`, `post_author`, `date`, `comment`) VALUES ('$_POST[id]', '$username', '$current_date', '$_POST[comment]')") or die (mysql_error());
-            print '<strong>Comment Edited and Saved.</strong>';
-            $id = $_POST['id'];
-        }
-        else{
-            redirect("failed.php?amp;id=1");
+            $insert_query = mysql_query("INSERT INTO `comments` (`post_id`, `post_author`, `date`, `comment`) VALUES ('" . $_POST['id'] . "', '$username', '$current_date', '" . $_POST['comment'] . "')") or die (mysql_error());
+            page_header('Comment Saved');
+?>
+Comment Edited and Saved.
+<?php
+        } else {
+            page_header('Comment Empty');
+?>
+Comment is empty.
+<?php
         };
     };
-    title("Add Comments");
-    $select_story = mysql_query("SELECT * FROM `posts` WHERE `id` = '$id'");
-    while ($row = mysql_fetch_array($select_story)) {
-        print '<center><h1>Add New Comment</h1></center>
-            <hr width="100%" align="center" />
-            <table class="table" align="center">
-            <tr><td>
-            <div align="center">
-            <font size="+2"><strong>'.$row[title].'</strong></font><br />
-            <font size="+1"><strong>Posted by: <a href="?act=profile&amp;action=view&amp;username='.$row['username'].'">'.$row['username'].'</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
-            </div>
-            </td></tr>
-            <tr><td>
-            <div align="center">'.$row[post].'</div>
-            </td></tr>
-            </table>';
-    };
-    print '<hr width="100%" align="center" />';
-    if ($_SESSION['login'] != true) {
-        print '<strong>ERROR</strong>';
-    };
-    if ($_SESSION['login'] == true) {
-        print '<table class="table" align="center">
-            <tr><td>
-            <form ="?action=?act=add_comments&amp;action=post_comment" method="post">
-            <h1><div align="center">Add Comment</div></h1>
-            <input type="hidden" name="id" value="'.$id.'" />
-            <textarea name="comment" cols="50" rows="10"></textarea><br />
-            <input type="submit" value="Submit" /></form>
-            </td></tr>
-            </table>';
+    // ADD COMMENTS
+    if ($action == 'add_comments') {
+        title("Add Comments");
+        $select_story = mysql_query("SELECT * FROM `posts` WHERE `id` = '$id'");
+        page_header('Add New Comment');
+        while ($row = mysql_fetch_array($select_story)) {
+?>
+<h2><?php print $row['title'] ?></h2>
+<p><strong>Posted by:</strong> <a href="profile.php?action=view&amp;username=<?php print $row['username'] ?>"><?php print $row['username'] ?></a></p>
+<p><strong>Date:</strong> <?php print $row[date] ?></p>
+<?php print $row['post'] ?>
+<?php
+        };
+?>
+<form action="//<?php print $settings['url'] ?>/comments.php?action=post_comment" method="post">
+<input type="hidden" name="id" value="<?php print $id ?>" />
+<textarea name="comment" class="form-control"></textarea>
+<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+</form>
+<?php
     };
 };
 require_once('footer.php');

@@ -25,9 +25,9 @@ Date: <?php print $row['date'] ?>
         if ($_SESSION['group'] == 'admin') {
 ?>
 <br /><br />
-<a href="?act=admin&amp;action=edit_post&amp;id=<?php print $row['id'] ?>">Edit Post</a>
+<a href="admin/posts.php?action=edit_post&amp;id=<?php print $row['id'] ?>">Edit Post</a>
 <br />
-<a href="?act=admin&amp;action=delete_post&amp;id=<?php print $row['id'] ?>">Delete Post</a>
+<a href="admin/posts.php?action=delete_post&amp;id=<?php print $row['id'] ?>">Delete Post</a>
 <?php
         };
     };

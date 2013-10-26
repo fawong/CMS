@@ -15,7 +15,7 @@ check_inbox();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?php print $settings['homepage'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
+          <a class="navbar-brand" href="//<?php print $settings['url'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -48,7 +48,7 @@ check_inbox();
 ?>
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator Control Panel</li>
-                <li><a href="overview.php"><?php print $cms_name ?> Overview</a></li>
+                <li><a href="admin/overview.php"><?php print $cms_name ?> Overview</a></li>
                 <li><a href="?act=admin&amp;action=post">Add New Post</a></li>
                 <li><a href="?act=admin&amp;action=page">Web Page Control Panel</a></li>
                 <li><a href="?act=admin&amp;action=edit_users_list">Edit Members List</a></li>
@@ -72,8 +72,8 @@ check_inbox();
     } //if($_SESSION['login'] != true)
     else {
 ?>
-            <li><a href="profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
-            <li><a href="loginout.php?action=logout">Logout</a></li>
+            <li><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
+            <li><a href="//<?php print $settings['url'] ?>/loginout.php?action=logout">Logout</a></li>
 <?php
     };
 ?>
@@ -88,15 +88,4 @@ check_inbox();
 
 <?
 }; //if ($settings['force_block'] == 0)
-if ($_SESSION['group'] != 'admin' && $settings['force_block'] == 1){
-    title("Website Under Maintainance");
-    print '<h1><center>Website Under Maintainance</center></h1>
-        <table class="table">
-        <h3><center><strong>
-        It will be back up as soon as the maintainance and/or upgrades are done.<br />
-        <br />
-        Thank you for your patience.</font>
-        </strong></center></h3>
-        </table>';
-};
 ?>
