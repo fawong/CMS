@@ -1,6 +1,5 @@
 <?php 
 require_once('functions.php');
-print_r($_SESSION);
 if($_SESSION['group'] != 'admin'){
     //redirect("failed.php?id=2");
 };

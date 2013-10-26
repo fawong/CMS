@@ -4,15 +4,15 @@ include_once('functions.php');
 if ($action == '') {
     if ($cmd == '') {
         if ($page != '') {
-            $find_page = mysql_query("SELECT * FROM `pages` WHERE `page` = '$page'");
+            $find_page = mysql_query("SELECT * FROM `pages` WHERE `page_name` = '$page'");
             if (mysql_num_rows($find_page) == 1) {
                 while ($row = mysql_fetch_array($find_page)) {
                     title("$row[page_title]");
                     $password_protected = $row['password'];
                     $_SESSION['page_lock'] = false;
-                    if ($row[$_SESSION['group']] == 1) {
+                    if ($row[$_SESSION['group']] == 1 || $row['public'] == 1) {
+                        mysql_query("UPDATE `pages` SET `views` = views + 1 WHERE `page_name` = '$page'") or die(mysql_error());
                         if ($password_protected == '') {
-                            mysql_query("UPDATE `pages` SET `views` = views + 1 WHERE `page` = '$page'") or die(mysql_error());
 ?>
 <?php page_header($row['page_title']) ?>
 <?php print $row['body'] ?>
@@ -23,7 +23,6 @@ if ($action == '') {
                                 if ($tick == 'tock') {
                                     $password_find = mysql_query("SELECT * FROM `pages` WHERE `password` ='$_POST[pass]' AND `page` ='$page'");
                                     if (mysql_num_rows($password_find) == 1) {
-                                        mysql_query("UPDATE `pages` SET views = views+1 WHERE `page` ='$page'") or die(mysql_error());
                                         page_header($row['page_title']);
                                         print $row['body'];
 ?>
@@ -63,5 +62,5 @@ if ($action == '') {
         }; //if ($page != '')
     }; //if ($cmd == '')
 };
-    include_once('footer.php');
+include_once('footer.php');
 ?>

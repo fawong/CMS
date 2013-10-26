@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // GLOBAL VARIABLES
 $currentusername = $_SESSION['username'];
 $currentfirstname = $_SESSION['firstname'];
@@ -9,7 +10,6 @@ $user_id = $_GET['user_id'];
 $requestid = $_GET['id'];
 $page = $_GET['page'];
 $act = $_GET['act'];
-$action = $_GET['action'];
 $action = $_GET['action'];
 $set = $_GET['set'];
 $set2 = $_GET['set2'];

@@ -3,7 +3,7 @@
 ###############################################################
 # File Download 1.3
 ###############################################################
-# Visit http://www.zubrag.com/scripts/ for updates
+# Visit http://www.zubrag.com/scripts/ for posts
 ###############################################################
 # Sample call:
 #    download.php?f=phptutorial.zip

@@ -9,7 +9,6 @@ if ($act == 'create_account') {
             $user_name = $_POST['username'];
             $username_check = mysql_query("SELECT * FROM users WHERE username = '$user_name'");
             if (mysql_num_rows($username_check) == 0) {
-                //print 'debug: '.print_r(mysql_fetch_array($username_check)) or die("you failed").'';
                 $first_name = $_POST['first_name'];
                 if ($first_name != '') {
                     $last_name = $_POST['last_name'];

@@ -2,12 +2,6 @@
 <?php
 global $error_message;
 if($settings['force_block'] == 0) {
-    if ($_SESSION['login'] == false) {
-        $_SESSION['group'] = 'public';
-        $_SESSION['rank'] = 'public';
-        $_SESSION['username'] = 'Guest';
-        $_SESSION['theme'] = 'default';
-    };
 check_inbox();
 ?>
 <div id="wrap">
@@ -25,7 +19,7 @@ check_inbox();
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="newsandupdates.php">News and Updates</a></li>
+            <li class="active"><a href="posts.php">Posts</a></li>
             <li><a href="page.php?page=contact">Contact Us</a></li>
             <li><a href="page.php?page=about">About <?php print $cms_name ?></a></li>
 <?php
@@ -59,9 +53,11 @@ check_inbox();
                 <li><a href="?act=admin&amp;action=page">Web Page Control Panel</a></li>
                 <li><a href="?act=admin&amp;action=edit_users_list">Edit Members List</a></li>
                 <li><a href="?act=downloadscontrolpanel&amp;action=overview">Downloads Control Panel</a></li>
-              </ul>
 <?php
         };
+?>
+              </ul>
+<?php
     };
 ?>
           </ul>
