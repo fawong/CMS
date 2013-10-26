@@ -4,7 +4,7 @@ if($act == 'admin'){
         redirect("failed.php?amp;id=2");
     };
         //ADD NEW POST
-        if($act2 == 'post'){
+        if($action == 'post'){
             title("Add New Post");
             if($set == 'submit'){
                 if($_POST['post'] != ''){
@@ -15,7 +15,7 @@ if($act == 'admin'){
             print '<h1><center>Add New Post</center></h1>
                 <hr width="100%"/>
                 <table class="table"><tr><td>
-                <form action="?act=admin&amp;act2=post&amp;set=submit" method="post">
+                <form action="?act=admin&amp;action=post&amp;set=submit" method="post">
                 Title: <input name="title" type="text" /><br />
                 Date: '.$current_date.'<br />
                 Poster: '.$_SESSION['username'].'<br />
@@ -27,7 +27,7 @@ if($act == 'admin'){
                 </td></tr></table>';
         };
         // EDIT POST
-        if($act2 == 'edit_post'){
+        if($action == 'edit_post'){
             title("Edit Post");
             if($id != ''){
                 if($set == 'submit'){
@@ -41,7 +41,7 @@ if($act == 'admin'){
                         <hr width="100%"/>
                         <table class="table">
                         <tr><td>
-                        <form action="?act=admin&amp;act2=edit_post&amp;set=submit&amp;id='.$id.'" method="post">
+                        <form action="?act=admin&amp;action=edit_post&amp;set=submit&amp;id='.$id.'" method="post">
                         <strong>Title:</strong> <input name="title" type="text" value="'.$row[title].'" /><br />
                         <strong>Date:</strong> '.$row[date].'<br />
                         <strong>Poster:</strong> '.$row[username].'<br />
@@ -56,7 +56,7 @@ if($act == 'admin'){
             }else {print 'NO ID';};
         };
         //DELETE POST
-        if($act2 == 'delete_post'){
+        if($action == 'delete_post'){
             title("Delete Post");
             if($id != ''){
                 if($set == 'delete'){
@@ -72,7 +72,7 @@ if($act == 'admin'){
                         <tr><td>
                         <div>
                         <font size="+2"><strong>'.$row[title].'</strong></font><br />
-                        <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                        <font size="+1"><strong>Posted by: <a href="?act=profile&amp;action=view&amp;username='.$row[username].'">'.$row[username].'</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                         </div>
                         </td></tr>
@@ -82,7 +82,7 @@ if($act == 'admin'){
                         <table class="table">
                         <tr><td>
                         <strong>Are you sure you want to delete this post?</strong><br />
-                        <form action="?act=admin&amp;act2=delete_post&amp;set=delete&amp;id='.$row[id].'" method="post">
+                        <form action="?act=admin&amp;action=delete_post&amp;set=delete&amp;id='.$row[id].'" method="post">
                         <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                         </form>
                         </table>';
@@ -91,7 +91,7 @@ if($act == 'admin'){
                 print 'YOU HAVE FAILED';
             };
         };
-        if ($act2 == 'delete_comment') {
+        if ($action == 'delete_comment') {
             if ($set == 'delete') {
                 title("Comment Deleted");
                 $delete_comment = mysql_query("DELETE FROM news_comments WHERE id = '$id'") or die(mysql_error());
@@ -106,7 +106,7 @@ if($act == 'admin'){
                     <tr><td>
                     <div>
                     <font size="+2"><strong>'.$row[title].'</strong></font><br />
-                    <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                    <font size="+1"><strong>Posted by: <a href="?act=profile&amp;action=view&amp;username='.$row[username].'">'.$row[username].'</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                     </div>
                     </td></tr>
@@ -116,14 +116,14 @@ if($act == 'admin'){
                     <table class="table">
                     <tr><td>
                     <strong>Are you sure you want to delete this comment?</strong><br />
-                    <form action="?act=admin&amp;act2=delete_comment&amp;set=delete&amp;id='.$row[id].'" method="post">
+                    <form action="?act=admin&amp;action=delete_comment&amp;set=delete&amp;id='.$row[id].'" method="post">
                     <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                     </form>
                     </table>';
             }
         };
         //EDIT MEMBERS LIST
-        if($act2 == 'edit_users_list'){
+        if($action == 'edit_users_list'){
             if($set == 'force_offline'){
                 $find_people = mysql_query("SELECT * FROM users");
                 while($row = mysql_fetch_array($find_people)){
@@ -174,8 +174,8 @@ if($act == 'admin'){
                 <table class="table">
                 <tr>
                 <td>
-                <a href="?act=admin&amp;act2=add_member">Add a Member</a> |
-                <a href="?act=admin&amp;act2=edit_users_list&amp;set=force_offline">Force All Members Offline</a>
+                <a href="?act=admin&amp;action=add_member">Add a Member</a> |
+                <a href="?act=admin&amp;action=edit_users_list&amp;set=force_offline">Force All Members Offline</a>
                 </td>
                 </tr>
                 <tr>
@@ -227,16 +227,16 @@ if($act == 'admin'){
                 {$afm = "No";};
                 print ''.$afm.'</td>
                     <td width="300">
-                    <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">View</a> | 
-                    <a href="?act=admin&amp;act2=edit_user&amp;user_id='.$row[user_id].'">Edit</a> | 
-                    <a href="?act=admin&amp;act2=delete_member&amp;username='.$row[username].'">Delete</a>
+                    <a href="?act=profile&amp;action=view&amp;username='.$row[username].'">View</a> | 
+                    <a href="?act=admin&amp;action=edit_user&amp;user_id='.$row[user_id].'">Edit</a> | 
+                    <a href="?act=admin&amp;action=delete_member&amp;username='.$row[username].'">Delete</a>
                     </td>
                     </tr>';
             };
             print '</table>';
         };
         //ADD NEW MEMBER
-        if($act2 == 'add_member'){
+        if($action == 'add_member'){
             title("Add New Member");
             $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
@@ -244,7 +244,7 @@ if($act == 'admin'){
                 <hr width="100%"/>
                 <table class="table">
                 <tr><td>
-                <form method="post" action="?act=admin&amp;act2=edit_users_list&amp;set=add">
+                <form method="post" action="?act=admin&amp;action=edit_users_list&amp;set=add">
                 <table class="table" width="100%">
                 <tr>
                 <td>
@@ -300,7 +300,7 @@ if($act == 'admin'){
                 </td></tr></table>';
         };
         //EDIT MEMBER
-        if($act2 == 'edit_user'){
+        if($action == 'edit_user'){
             title("Edit Member");
             $edit_query = mysql_query("SELECT * FROM users WHERE user_id = '$user_id'");
             while($row = mysql_fetch_array($edit_query)){
@@ -308,7 +308,7 @@ if($act == 'admin'){
                     <hr width="100%"/>
                     <table class="table">
                     <tr><td>
-                    <form method="post" action="?act=admin&amp;act2=edit_users_list&amp;set=save_member&amp;username='.$row[username].'&amp;user_id='.$user_id.'">
+                    <form method="post" action="?act=admin&amp;action=edit_users_list&amp;set=save_member&amp;username='.$row[username].'&amp;user_id='.$user_id.'">
                     <table class="table" width="100%">
                     <tr>
                     <td>
@@ -369,11 +369,11 @@ if($act == 'admin'){
                     </td></tr></table>';
             };
         };
-        if($act2 == 'delete_member'){
+        if($action == 'delete_member'){
             title("Delete Member");
             print '<h1><center>Delete Member</center></h1>
                 <hr width="100%"/>
-                <form action="?act=admin&amp;act2=edit_users_list&amp;set=deletemember&amp;username='.$requestusername.'" method="post">
+                <form action="?act=admin&amp;action=edit_users_list&amp;set=deletemember&amp;username='.$requestusername.'" method="post">
                 <table class="table"><tr><td>
                 <strong>Are you sure you want to delete user '.$requestusername.'?</strong>
                 <br />
@@ -382,7 +382,7 @@ if($act == 'admin'){
                 </form>';
         };
         //WEBSITE SETTINGS
-        if($act2 == 'website_settings'){
+        if($action == 'website_settings'){
             $all_settings = mysql_query("SELECT * FROM settings") or die(mysql_error());
             //SAVE WEBSITE SETTINGS
             if($set == "save_website_settings"){
@@ -399,7 +399,7 @@ if($act == 'admin'){
             title("$cms_name Website Settings");
             print '<h1><center>'.$cms_name.' Website Settings</center></h1>
                 <hr width="100%"/>
-                <a href="?act=admin&amp;act2=change_website_settings">Change Settings</a>
+                <a href="?act=admin&amp;action=change_website_settings">Change Settings</a>
                 <table class="table" >';
             while($row = mysql_fetch_array($all_settings)){
                 print'<tr><td>'.$row[displayname].'</td>
@@ -408,11 +408,11 @@ if($act == 'admin'){
             print '</table>';
         };
         //CHANGE WEBSITE SETTINGS
-        if($act2 == 'change_website_settings'){
+        if($action == 'change_website_settings'){
             title("Change $cms_name Website Setting");
             print '<h1><center>Change '.$cms_name.' Website Settings</center></h1>
                 <hr width="100%"/>
-                <form method="post" action="?act=admin&amp;act2=website_settings&amp;set=save_website_settings">
+                <form method="post" action="?act=admin&amp;action=website_settings&amp;set=save_website_settings">
                 <table class="table" >';
             $settings = mysql_query("SELECT * FROM settings") or die(mysql_error());
             while($row = mysql_fetch_array($settings)){
@@ -423,7 +423,7 @@ if($act == 'admin'){
                 </form>';
         };
         //WEB PAGE FUNCTIONS
-        if($act2 == 'page'){
+        if($action == 'page'){
             //SAVE EDITED WEB PAGE
             if ($set == 'save_page'){
                 $random_id = rand(000, 9999);
@@ -470,7 +470,7 @@ if($act == 'admin'){
             title("Web Page Control Panel");
             page_header('Web Page Control Panel');
 ?>
-                <a href="?act=admin&amp;act2=create_new_webpage">Add a New Web Page</a><br />
+                <a href="?act=admin&amp;action=create_new_page">Add a New Web Page</a><br />
 
                 <table class="table" width="100%" >
                 <tr>
@@ -514,20 +514,20 @@ if($act == 'admin'){
                     <td>'.$row[views].'</td>
                     <td>
                     <a href="?page='.$row[page].'" target="_blank">View</a> | 
-                    <a href="?act=admin&amp;act2=edit_page&amp;id='.$row[id].'">Edit</a> | 
-                    <a href="?act=admin&amp;act2=delete_webpage&amp;id='.$row[id].'">Delete</a>
+                    <a href="?act=admin&amp;action=edit_page&amp;id='.$row[id].'">Edit</a> | 
+                    <a href="?act=admin&amp;action=delete_page&amp;id='.$row[id].'">Delete</a>
                     </td>
                     </tr>';
             };
             print '</table>';
         };
         //CREATE NEW WEB PAGE
-        if ($act2 == 'create_new_webpage'){
+        if ($action == 'create_new_page'){
             title("Create New Web Page");
             print '<h1><center>Create New Web Page</center></h1>
                 <hr width="100%"/>
                 <table class="table"><tr><td>
-                <form action="?act=admin&amp;act2=page&amp;set=save_page&amp;set2=create_page" method="post">
+                <form action="?act=admin&amp;action=page&amp;set=save_page&amp;set2=create_page" method="post">
                 Page Title: <input type="text" name="title" />
                 <br />
                 URL Key (Page): <input type="text" name="urlkey" />
@@ -561,11 +561,11 @@ if($act == 'admin'){
                 </td></tr></table>';
         };
         //EDIT WEB PAGE
-        if ($act2 == 'edit_page'){
+        if ($action == 'edit_page'){
             title("Edit Web Page");
             if ($id != ''){
-                $selectwebpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id'") or die (mysql_error());
-                while ($row = mysql_fetch_array($selectwebpage)){
+                $selectpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id'") or die (mysql_error());
+                while ($row = mysql_fetch_array($selectpage)){
                     if($row[admin] == 1){
                         $admincheckboxchecked = 'checked="checked" /';};
                         if($row[admin] == 0){
@@ -584,7 +584,7 @@ if($act == 'admin'){
                                                     $publiccheckboxchecked = '/';};
                                                     page_header('Edit Web Page');
 ?>
-<form class="form-horizontal" role="form" action="?act=admin&amp;act2=page&amp;set=save_page&amp;set2=save_edited_page&amp;id=<?php print $row[id] ?>" method="post">
+<form class="form-horizontal" role="form" action="?act=admin&amp;action=page&amp;set=save_page&amp;set2=save_edited_page&amp;id=<?php print $row[id] ?>" method="post">
     <div class="form-group">
         <label>Page Title:</label>
         <input type="text" class="form-control" name="title" value="<?php print $row['page_title'] ?>" placeholder="<?php print $row['page_title'] ?>" />
@@ -638,11 +638,11 @@ if($act == 'admin'){
     <button type="submit" class="btn">Edit Webpage</button>
 </form>
 <?php
-                };//while ($row = mysql_fetch_array($selectwebpage))
+                };//while ($row = mysql_fetch_array($selectpage))
             };//if ($id != '')
-        };//if ($act2 == 'edit_page')
+        };//if ($action == 'edit_page')
         //DELETE WEB PAGE
-        if ($act2== 'delete_webpage'){
+        if ($action== 'delete_page'){
             title("Delete Web Page");
             if ($id != ''){
                 $select_kill = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id'");
@@ -667,7 +667,7 @@ if($act == 'admin'){
                         <table class="table">
                         <tr><td>
                         <strong>Are you sure you want to delete this page?</strong><br />
-                        <form action="?act=admin&amp;act2=page&amp;set=delete&amp;id='.$row[id].'" method="post">
+                        <form action="?act=admin&amp;action=page&amp;set=delete&amp;id='.$row[id].'" method="post">
                         <input type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="button" onclick="history.go(-1)" value="No" />
                         </form>

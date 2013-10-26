@@ -21,25 +21,25 @@ check_inbox();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?php print $settings['homepage'] ?>"><img src="<?php print $settings['logo'] ?>" /></a>
+          <a class="navbar-brand" href="<?php print $settings['homepage'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="newsandupdates.php">News and Updates</a></li>
-            <li><a href="?page=contact">Contact Us</a></li>
-            <li><a href="?page=about">About <?php print $cms_name ?></a></li>
+            <li><a href="page.php?page=contact">Contact Us</a></li>
+            <li><a href="page.php?page=about">About <?php print $cms_name ?></a></li>
 <?php
     if ($_SESSION['login'] == true && $settings['force_block'] == 0) {
 ?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="?act=account&amp;act2=members_list">View Members List</a></li>
-                <li><a href="?act=profile&amp;act2=options">Options</a></li>
+                <li><a href="?act=account&amp;action=members_list">View Members List</a></li>
+                <li><a href="?act=profile&amp;action=options">Options</a></li>
 <?php
         if ($_SESSION['group'] == 'member') {
 ?>
-                <li><a href="?act=wpcp&amp;act2=page">Web Page Control Panel</a></li>
+                <li><a href="?act=wpcp&amp;action=page">Web Page Control Panel</a></li>
 <?php
         };
         if ($_SESSION['group'] == 'admin' || ($_SESSION['access_file_manager'] == 1 && $settings['force_block'] == 0)) {
@@ -55,10 +55,10 @@ check_inbox();
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator Control Panel</li>
                 <li><a href="overview.php"><?php print $cms_name ?> Overview</a></li>
-                <li><a href="?act=admin&amp;act2=post">Add New Post</a></li>
-                <li><a href="?act=admin&amp;act2=page">Web Page Control Panel</a></li>
-                <li><a href="?act=admin&amp;act2=edit_users_list">Edit Members List</a></li>
-                <li><a href="?act=downloadscontrolpanel&amp;act2=overview">Downloads Control Panel</a></li>
+                <li><a href="?act=admin&amp;action=post">Add New Post</a></li>
+                <li><a href="?act=admin&amp;action=page">Web Page Control Panel</a></li>
+                <li><a href="?act=admin&amp;action=edit_users_list">Edit Members List</a></li>
+                <li><a href="?act=downloadscontrolpanel&amp;action=overview">Downloads Control Panel</a></li>
               </ul>
 <?php
         };
@@ -76,7 +76,7 @@ check_inbox();
     } //if($_SESSION['login'] != true)
     else {
 ?>
-            <li><a href="?act=profile&act2=view"><?php print $_SESSION['username']; ?></a></li>
+            <li><a href="?act=profile&action=view"><?php print $_SESSION['username']; ?></a></li>
             <li><a href="loginout.php?action=logout">Logout</a></li>
 <?php
     };

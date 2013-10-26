@@ -17,34 +17,34 @@ page_header($cms_name . ' Overview');
 <tr><td>
 <strong>Website Settings:</strong>
 <br />
-<a href="?act=admin&amp;act2=website_settings">View Website Settings</a>
+<a href="?act=admin&amp;action=website_settings">View Website Settings</a>
 <br /><br />
 <strong>News Posts:</strong>
 <br />
-<a href="?act=admin&amp;act2=post">Add New News Post</a>
+<a href="?act=admin&amp;action=post">Add New News Post</a>
 <br />
 <br />
 <strong>Web Page:</strong>
 <br />
-<a href="?act=admin&amp;act2=page">Web Page Control Panel</a>
+<a href="?act=admin&amp;action=page">Web Page Control Panel</a>
 <br />
-<a href="?act=admin&act2=create_new_webpage">Add New Web Page</a>
+<a href="?act=admin&action=create_new_page">Add New Web Page</a>
 <br /><br />
 <strong>Members:</strong>
 <br />
-<a href="?act=admin&amp;act2=edit_users_list">Edit Members List</a>
+<a href="?act=admin&amp;action=edit_users_list">Edit Members List</a>
 <br />
-<a href="?act=admin&amp;act2=add_member">Add New Member</a>
+<a href="?act=admin&amp;action=add_member">Add New Member</a>
 <br /><br />
 <strong>Download Database:</strong>
 <br />
-<a href="?act=downloadscontrolpanel&act2=overview">Download Database Control Panel</a>
+<a href="?act=downloadscontrolpanel&action=overview">Download Database Control Panel</a>
 <br />
-<a href="?act=downloadscontrolpanel&amp;act2=overview">Overview</a>
+<a href="?act=downloadscontrolpanel&amp;action=overview">Overview</a>
 <br />
-<a href="?act=downloadscontrolpanel&amp;act2=new_file">Add a New File</a>
+<a href="?act=downloadscontrolpanel&amp;action=new_file">Add a New File</a>
 <br />
-<a href="?act=downloadscontrolpanel&amp;act2=new_category">Add a New Category</a>
+<a href="?act=downloadscontrolpanel&amp;action=new_category">Add a New Category</a>
 </td>
 <td>
 View and Download Files from Download Database

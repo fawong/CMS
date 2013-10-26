@@ -10,7 +10,7 @@ $requestid = $_GET['id'];
 $page = $_GET['page'];
 $act = $_GET['act'];
 $action = $_GET['action'];
-$act2 = $_GET['act2'];
+$action = $_GET['action'];
 $set = $_GET['set'];
 $set2 = $_GET['set2'];
 $id = $_GET['id'];
@@ -95,7 +95,7 @@ function check_inbox(){
         $check_count_comment = mysql_num_rows($check_comment_query);
         if ($check_count_comment > 0){
             $important .= '<center><span class="important">
-                <a href="?act=profile&act2=comment&set=view_comments">NEW COMMENT(S)</a>
+                <a href="?act=profile&action=comment&set=view_comments">NEW COMMENT(S)</a>
                 </span></center>';
         };
         print ''.$important.'';

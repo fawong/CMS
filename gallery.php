@@ -8,7 +8,7 @@ if ($_SESSION['login'] == true){
 print '<h1>Gallery</h1>
 		<hr width="250" align="left"/>';
 
-		if ($act2 == ''){
+		if ($action == ''){
 $count = 1;
 $find_newest = mysql_query("SELECT * FROM images WHERE `date` ='$date' ORDER BY `date` DESC LIMIT 8");
 print '<table class="table" width="'.$settings[table_size].'"><tr><td><b>Newsest Uploaded Images</b></td></tr>';
@@ -16,7 +16,7 @@ while ($row = mysql_fetch_array($find_newsest)){
 if ($count == '1' ){
 print '<tr>';
 };
-print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&action=view&id='.$row[id].'"><img width="200" height="200" src="img/'.$row[filename].'"></a></td>';
 if ($count == '4'){
 print '</tr>';
 print '<tr>';
@@ -77,10 +77,10 @@ Sukisho()<br></td>
 		</tr></table>
 		
 		</td></tr>'.$shota_gallery.'<tr><td><b>Search Gallery</b></td></tr>
-		<tr><td><form action="?act=gallery&act2=search" method="post">Quick Search:<input name="query" type="text" size="50" />
+		<tr><td><form action="?act=gallery&action=search" method="post">Quick Search:<input name="query" type="text" size="50" />
 <input type="submit" value="Search"><br><br>
 		</form></td></tr><tr><td><b>Advance Search</b></td></tr><tr><td>
-		<!-- <form action="?act=gallery&act2=search_adv" method="post" name="adv_search">
+		<!-- <form action="?act=gallery&action=search_adv" method="post" name="adv_search">
 		Search:<input name="search" type="text" size="50" /><br>
 		Search By:
 		<select name="search_by">
@@ -99,7 +99,7 @@ Sukisho()<br></td>
 		</form> --></td></tr></table>';
 };
 
-if ($act2 == 'cat'){
+if ($action == 'cat'){
 if ($cat != ''){
 
 
@@ -118,7 +118,7 @@ while ($row = mysql_fetch_array($getdata)){
 if ($counta == 1){
 print '<tr>';
 };
-print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="200" height="200" src="/gallery/img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&action=view&id='.$row[id].'"><img width="200" height="200" src="/gallery/img/'.$row[filename].'"></a></td>';
 if ($counta == 4){
 print '</tr>';
 $counta = 0;
@@ -133,7 +133,7 @@ $total_pages = ceil($counttotal / $max); // dive the total, by the maximum resul
  print '<table class="table" width="250" align="center"><tr><td>';
 if($page > 1){ // is the page number more than 1?
                 $prev = ($page - 1); // if so, do the following. take 1 away from the current page number
-                echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $prev . '">« Previous</a>'; // echo a previous page link
+                echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $prev . '">« Previous</a>'; // echo a previous page link
                 }
  
 for($i = 1; $i <= $total_pages; $i++) // for each page number
@@ -142,20 +142,20 @@ for($i = 1; $i <= $total_pages; $i++) // for each page number
                         {
                             echo'<b>[' . $i .']</b> '; // echo the page number bold
                                 } else {
-                            echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $i . '">' . $i . '</a> '; // echo a link to the page
+                            echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $i . '">' . $i . '</a> '; // echo a link to the page
                         }
                 }
  
 if($page < $total_pages){ // is there a next page?
                     $next = ($page + 1); // if so, add 1 to the current
-                echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $next . '">Next »</a>'; // echo the next page link
+                echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $next . '">Next »</a>'; // echo the next page link
                     } 
 print '</td></tr></table>';
 
 };
 };
 
-if ($act2 == 'view'){
+if ($action == 'view'){
 if ($id != ''){
 $getimg = mysql_query("SELECT * FROM `images` WHERE `id` ='$id'");
 while($row = mysql_fetch_array($getimg)){
@@ -166,13 +166,13 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 					<center><img src="'.$row[file_path].'" width="'.$frow[file_L].'" height="'.$row[file_H].'"/></center>
 					</td></tr>
 					<tr><td>
-					<center>					  <a href="?act=gallery&act2=report&id='.$row[id].'">Report Image</a> |<a href="index.php?act=gallery&amp;act2=add_fave&amp;id='.$row[id].'"> Add To Favorites</a> </center>
+					<center>					  <a href="?act=gallery&action=report&id='.$row[id].'">Report Image</a> |<a href="index.php?act=gallery&amp;action=add_fave&amp;id='.$row[id].'"> Add To Favorites</a> </center>
 					</td></tr>
 					<tr><td>
 					Information:
 					<table class="table" width="500"><tr><Td>
 					Name: '.$row[name].'<br />
-					Submitted by: <a href="?act=profile&act2=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
+					Submitted by: <a href="?act=profile&action=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
 					Author: '.$row[author].'<br />
 					File Size: '.$row[file_size].'<br />
 					File Type: '.$row[file_type].'<br />
@@ -195,13 +195,13 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 					$abs[$count][avatar] = $row[avatar];
 					};
 					print '
-					<tr><td><center><a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
+					<tr><td><center><a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
 					$count++;
 					};
 					print '
 					</table>
 					<br />
-					<form action="?act=gallery&act2=comment&id='.$row[id].'" method="post">
+					<form action="?act=gallery&action=comment&id='.$row[id].'" method="post">
 					<center><strong>Add a Comment</strong> <br />
 					<textarea name="comment" rows="8" cols="50">
 					</textarea>
@@ -212,8 +212,8 @@ print '<table class="table" width="'.$settings[table_size].'"><tr><td>
 };
 };
 };
-if ($act2 == 'upload_file'){
-print '<form action="?act=gallery&act2=upload&path='.$_SESSION[path].'" method="post" enctype="multipart/form-data">
+if ($action == 'upload_file'){
+print '<form action="?act=gallery&action=upload&path='.$_SESSION[path].'" method="post" enctype="multipart/form-data">
 Title: <input name="title" type="text" size="30">
 
 <br>
@@ -242,7 +242,7 @@ while ($row = mysql_fetch_array($find_cat)){
 print '<option value="'.$row[id].'">'.$row[name].'</option>';
 };
 };
-if($act2 == 'upload' && $_FILES['file']['name'] != ""){
+if($action == 'upload' && $_FILES['file']['name'] != ""){
 $path_parts = pathinfo($_FILES['file']['name']);
 $set_to = '0';
  if($path_parts['extension'] != 'jpg'){
@@ -289,7 +289,7 @@ $set_to = '0';
 	   //$save = mysql_query("INSERT INTO `images` VALUES ('', '$file_id', '$_POST[name]', '$_POST[author]', '$username', '$_FILES['file']['name']', '$_FILES['file']['size']', '$path_parts['extension']', '/img/$_FILES['file']['name']', '/home/yaoidhs/public_html/yaoiboys/img/$_FILES['file']['name']', '0', '$local_time', '0', '$_POST[description]', '0', '$_POST[cat]', '1', `file_L`, `file_H`)");
 	    if ($save){
 		 $find = mysql_query("SELECT * FROM `images` WHERE `username` =$username AND `author` ='$_POST[author]' AND `title` ='$_POST[title]' AND `file_name` ='$_FILES[file][name]' ");
-		print '<a href="?act=gallery&act2=view&id=">Click here to view your sumbited image.</a>';
+		print '<a href="?act=gallery&action=view&id=">Click here to view your sumbited image.</a>';
 		};
    }
 
@@ -299,15 +299,15 @@ $set_to = '0';
    };
    }else{ print 'Error: Unexceptable File Extension.';};
 };
-if ($act2 == 'comment'){
+if ($action == 'comment'){
  if ($id != ''){
  $save_comment = mysql_query("INSERT INTO 'img_comment' VALUES ('', '$id', '$username, '$_SESSION[user_id], '$_POST[comment]')");
  $_SESSION[saved] = "Your comment has been saved correctly.<br>";
- redirect("?act=gallery&act2=view&id=$id");
+ redirect("?act=gallery&action=view&id=$id");
  };
 };
 
-if ($act2 == 'search'){
+if ($action == 'search'){
 if ($_POST[query] != ''){
 $think = mysql_query("SELECT * FROM `images` WHERE `title` LIKE '%$_POST[query]%' AND `text` LIKE '$_POST[query]'");
 print '<table class="table" width="'.$settings[table_size].'">';
@@ -326,7 +326,7 @@ while ($row = mysql_fetch_array($getdata)){
 if ($counta == 1){
 print '<tr>';
 };
-print '<td><a href="?act=gallery&act2=view&id='.$row[id].'"><img width="100" height="100" src="/gallery/img/'.$row[filename].'"></a></td>';
+print '<td><a href="?act=gallery&action=view&id='.$row[id].'"><img width="100" height="100" src="/gallery/img/'.$row[filename].'"></a></td>';
 if ($counta == 5){
 print '</tr>';
 $counta = 0;
@@ -341,7 +341,7 @@ $total_pages = ceil($counttotal / $max); // dive the total, by the maximum resul
  print '<table class="table" width="'.$settings[table_size].'" align="center"><tr><td>';
 if($page > 1){ // is the page number more than 1?
                 $prev = ($page - 1); // if so, do the following. take 1 away from the current page number
-                echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $prev . '">« Previous</a>'; // echo a previous page link
+                echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $prev . '">« Previous</a>'; // echo a previous page link
                 }
  
 for($i = 1; $i <= $total_pages; $i++) // for each page number
@@ -350,13 +350,13 @@ for($i = 1; $i <= $total_pages; $i++) // for each page number
                         {
                             echo'<b>[' . $i .']</b> '; // echo the page number bold
                                 } else {
-                            echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $i . '">' . $i . '</a> '; // echo a link to the page
+                            echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $i . '">' . $i . '</a> '; // echo a link to the page
                         }
                 }
  
 if($page < $total_pages){ // is there a next page?
                     $next = ($page + 1); // if so, add 1 to the current
-                echo '<a href="?act=gallery&act2=cat&cat='.$cat.'&page=' . $next . '">Next »</a>'; // echo the next page link
+                echo '<a href="?act=gallery&action=cat&cat='.$cat.'&page=' . $next . '">Next »</a>'; // echo the next page link
                     } 
 print '</td></tr></table>';
 

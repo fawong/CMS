@@ -125,7 +125,7 @@ $next_link .= mktime(0,0,0,($month +1),$day,$year);
 $next_link .= '">Next >></a>'; 
 
 if ($_SESSION['group'] == 'admin' || $_SESSION['access_calendar'] == 1){
-print '<a href="?act=calendar&act2=add_event&date='.$date.'">[Add Event to Current Date]</a>';
+print '<a href="?act=calendar&action=add_event&date='.$date.'">[Add Event to Current Date]</a>';
 };
 
 
@@ -275,18 +275,18 @@ print $font;*/
 <table class="table" width='500' align='center' bordercolor='#0066CC'>
 <?php 
 
-if ($act2 == ''){
+if ($action == ''){
 
 /*$find = mysql_query('SELECT * FROM calendar WHERE `date` = '$date'');
 while ($row = mysql_fetch_array($find)){
 if ($_SESSION[group] == 'admin' || $_SESSION['access_calendar'] == 1){
-$admin_funcs = '<div align='right'><a href='?act=calendar&act2=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&act2=event_delete&id='.$row[id].''> Delete Post
+$admin_funcs = '<div align='right'><a href='?act=calendar&action=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&action=event_delete&id='.$row[id].''> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
 };
 print '<tr bordercolor='#0066CC'><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href='?act=profile&act2=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
+&nbsp;&nbsp;&nbsp;-posted by: <a href='?act=profile&action=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
 </td>
 </tr><tr bordercolor='#0066CC'><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -300,13 +300,13 @@ $kadate = mktime(0,0,0,$month,$day+$count_dj,$year);
 $find = mysql_query("SELECT * FROM calendar WHERE `date` = '$kadate' LIMIT 1");
 while ($row = mysql_fetch_array($find)){
 if ($_SESSION['group'] == 'admin' || $_SESSION['access_calendar'] == 1){
-$admin_funcs = '<div align="right"><a href="?act=calendar&act2=event_edit&id='.$row[id].'">Edit Post</a> -<a href="index.php?act=calendar&act2=event_delete&id='.$row[id].'"> Delete Post
+$admin_funcs = '<div align="right"><a href="?act=calendar&action=event_edit&id='.$row[id].'">Edit Post</a> -<a href="index.php?act=calendar&action=event_delete&id='.$row[id].'"> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
 };
 print '<tr bordercolor="#0066CC"><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
+&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
 </td>
 </tr><tr bordercolor="#0066CC"><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -319,10 +319,10 @@ $fastd--;
 
 };
 
-if ($act2 == 'add_event'){
+if ($action == 'add_event'){
 print '<tr><td>';
 print '<h1>Add an Event</h1><br />';
-print '<form action="?act=calendar&act2=save_event" method="post">
+print '<form action="?act=calendar&action=save_event" method="post">
 Title: <input type="text" name="title" value="" /><br />
 Date: <input type="text" disabled="disabled" name="fun" value="".$month."-".$day."-".$year."" /> <input name="date" type="hidden" value="'.$date.'"/><br />
 Description:<br />
@@ -332,19 +332,19 @@ Description:<br />
 print '</td></tr>';
 };
 
-if ($act2 == 'save_event'){
+if ($action == 'save_event'){
 print '<tr><td>';
 $save = mysql_query("INSERT INTO `calendar` VALUES ('', '$_POST[title]', '$_POST[date]', '$username', '$_POST[text]')") or die ('Mysql Error: '.mysql_error());
 print '<strong>Event:'.$_POST[title].' on '.$month.'-'.$day.'-'.$year.' has been saved.</strong>';
 print '</td></tr>';
 };
 
-if ($act2 == 'event_edit'){
+if ($action == 'event_edit'){
 print '<tr><td>';
 print '<h1>Edit Event</h1><br />';
 $find = mysql_query("SELECT * FROM calendar WHERE `id` ='$id'");
 while ($row = mysql_fetch_array($find)){
-print '<form action="?act=calendar&act2=event_save&id=".$id."" method="post">
+print '<form action="?act=calendar&action=event_save&id=".$id."" method="post">
 Title: <input type="text" name="title" value="'.$row[title].'" /><br />
 Date:<input type="text" disabled="disabled" name="fun" value="'.date("m-d-Y", $row[date]).'" />
 <input name="date" type="hidden" value="'.$row[date].'"/><br />
@@ -356,14 +356,14 @@ Description:<br />
 };
 print '</td></tr>';
 };
-if ($act2 == 'event_save'){
+if ($action == 'event_save'){
 print '<tr><td>';
 $save = mysql_query("UPDATE `calendar` SET `title` ='$_POST[title]', `text` ='$_POST[text]' WHERE `id` ='$id'") or die ('Mysql Error: '.mysql_error());
 print '<strong>Event:'.$_POST[title].' on '.date('m-d-Y', $_POST[date]).' has been saved.</strong>';
 print '</td></tr>';
 };
 
-if ($act2 == 'event_delete'){
+if ($action == 'event_delete'){
 
 $find = mysql_query("SELECT * FROM calendar WHERE `id` ='$id' LIMIT 1");
 while ($row = mysql_fetch_array($find)){
@@ -371,17 +371,17 @@ print '<tr><td>
 <strong>Are you sure you want to delete this event?</strong>
 <br />
 '.$row[title].'
-&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&act2=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
+&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
 </td>
 </tr><tr><td>
 <p>&nbsp;&nbsp;'.$row[post].'</p>'.$admin_funcs.'
 </td></tr>';
-print '<form action="?act=calendar&act2=delete_event&id='.$id.'" method="post">
+print '<form action="?act=calendar&action=delete_event&id='.$id.'" method="post">
 <input type="submit" name="Delete Event" value="Delete Event" />
 </form>';
 };
 };
-if ($act2 == 'delete_event'){
+if ($action == 'delete_event'){
 print '<tr><td>';
 $delete = mysql_query("DELETE FROM `calendar` WHERE `id` ='$id'") or die (mysql_error());
 print 'Event: '.$id.' has been deleted.';

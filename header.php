@@ -24,7 +24,7 @@
 <script src="sifr-addons.js" type="text/javascript"></script>
 <?php
     };
-if ($act == 'login' || $act == 'register') {
+if ($action == 'login' || $action == 'register') {
 ?>
 <link rel="stylesheet" type="text/css" href="themes/default/css/signin.css" media="screen" />
 <?php

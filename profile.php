@@ -5,7 +5,7 @@ if ($act == 'profile'){
     };
     if ($_SESSION['login'] == true){
         //VIEW PROFILE
-        if($act2 == 'view'){
+        if($action == 'view'){
             $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$username'");
             $comment_count = mysql_num_rows($count_comment);
             if ($_GET['username'] == ''){
@@ -39,8 +39,8 @@ if ($act == 'profile'){
 <strong>Comments:</strong> <?php print $comment_count ?><br />
 <strong>Positive (+) Reputation:</strong> <?php print $row['kpos'] ?><br />
 <strong>Negative (-) Reputation:</strong> <?php print $row['kneg'] ?><br />
-<a href="?act=profile&amp;act2=reputation&amp;username=<?php print $row['username'] ?>">Change <?php print $currentusername ?>'s Reputation</a><br />
-<a href="?act=inbox&amp;act2=compose&amp;to=<?php print $row['username'] ?>">Compose New Message</a><br />
+<a href="?act=profile&amp;action=reputation&amp;username=<?php print $row['username'] ?>">Change <?php print $currentusername ?>'s Reputation</a><br />
+<a href="?act=inbox&amp;action=compose&amp;to=<?php print $row['username'] ?>">Compose New Message</a><br />
 <strong>AIM User Name:</strong> <?php print $row['aim'] ?><br />
 <strong>About:</strong> <?php print $row['about'] ?><br />
 <strong>Interests:</strong> <?php print $row['interests'] ?><br />
@@ -80,15 +80,15 @@ if ($act == 'profile'){
 <strong>Number of Comments:</strong> <?php print $comment_count ?><br />
 <strong>Positive (+) Reputation:</strong> <?php print $row[kpos] ?><br />
 <strong>Negative (-) Reputation:</strong> <?php print $row[kneg] ?><br />
-<a href="?act=profile&amp;act2=reputation&amp;username=<?php print $_GET[username] ?>">Change <?php print $_GET[username] ?>'s Reputation</a><br />
-<a href="?act=inbox&amp;act2=compose&amp;to=<?php print $row[username] ?>">Compose New Message</a><br />
+<a href="?act=profile&amp;action=reputation&amp;username=<?php print $_GET[username] ?>">Change <?php print $_GET[username] ?>'s Reputation</a><br />
+<a href="?act=inbox&amp;action=compose&amp;to=<?php print $row[username] ?>">Compose New Message</a><br />
 <strong>AIM User Name:</strong> <?php print $row[aim] ?><br />
 <strong>About:</strong> <?php print $row[about] ?><br />
 <strong>Interests:</strong> <?php print $row[interests] ?><br />
 <strong>Website:</strong> <a href="<?php print $row[website] ?>" target="_blank"><?php print $row[website] ?></a><br />
 <strong>Email:</strong> <a href="mailto:<?php print $row[email] ?>"><?php print $row[email] ?></a><br /><br />
 <h2>Add a New Comment:</h2>
-<form role="form" class="form-horizontal" action="?act=profile&amp;act2=comment&amp;set=add_new_comment&amp;username=<?php print $_GET[username] ?>" method="post">
+<form role="form" class="form-horizontal" action="?act=profile&amp;action=comment&amp;set=add_new_comment&amp;username=<?php print $_GET[username] ?>" method="post">
 <textarea name="comment" class="form-control"></textarea><br />
 <button type="submit" class="btn">Submit New Comment</button>
 </form>
@@ -96,9 +96,9 @@ if ($act == 'profile'){
                     }; //while ($row = mysql_fetch_array($view_user_query))
                 };
             }; //if ($_GET[username] != '' && $username != 'Guest')
-        }; //if($act2 == 'view')
+        }; //if($action == 'view')
         //ACCOUNT OVERVIEW
-        if ($act2 == 'options'){
+        if ($action == 'options'){
             title("Options");
             $count_comment = mysql_query("SELECT * FROM user_comments WHERE `username` = '$username'");
             $comment_count = mysql_num_rows($count_comment);
@@ -119,18 +119,18 @@ if ($act == 'profile'){
                     </tr>
                     <tr><td>
                     <strong>Profile Settings:</strong><br />
-                    <a href="?act=profile&amp;act2=view">View My Profile </a> |
-                    <a href="?act=profile&amp;act2=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
-                    <a href="?act=profile&amp;act2=edit_profile">Edit Profile</a> |
-                    <a href="?act=profile&amp;act2=change_password">Change Password</a>
+                    <a href="?act=profile&amp;action=view">View My Profile </a> |
+                    <a href="?act=profile&amp;action=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
+                    <a href="?act=profile&amp;action=edit_profile">Edit Profile</a> |
+                    <a href="?act=profile&amp;action=change_password">Change Password</a>
                     </td></tr>
                     </table> ';
             };
         };
-/*<a href="?act=profile&amp;act2=upload_photo">Upload Photo</a> |
-<a href="?act=profile&amp;act2=view_album&amp;username='.$username.'">View Photo Album</a> |*/
+/*<a href="?act=profile&amp;action=upload_photo">Upload Photo</a> |
+<a href="?act=profile&amp;action=view_album&amp;username='.$username.'">View Photo Album</a> |*/
         //COMMENT FUNCTIONS
-        if ($act2 == 'comment'){
+        if ($action == 'comment'){
             //ADD NEW COMMENT
             if ($set == 'add_new_comment'){
                 if ($_POST[comment] != ''){
@@ -141,7 +141,7 @@ if ($act == 'profile'){
                         <table class="table" align="center">
                         <tr><td>
                         The comment has been saved.<br />
-                        <a href="?act=profile&amp;act2=view&amp;username='.$currentusername.'">Back to <strong>'.$currentusername.'\'s</strong> profile</a>
+                        <a href="?act=profile&amp;action=view&amp;username='.$currentusername.'">Back to <strong>'.$currentusername.'\'s</strong> profile</a>
                         </td></tr>
                         </table>';
                 }else{
@@ -167,7 +167,7 @@ if ($act == 'profile'){
                                 <table class="table" align="center">
                                 <tr><td>
                                 <div align="center">
-                                <font size="+1"><strong>Posted by: <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'</a>
+                                <font size="+1"><strong>Posted by: <a href="?act=profile&amp;action=view&amp;username='.$row[username].'">'.$row[username].'</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row[date].'</strong></font>
                                 </div>
                                 </td></tr>
@@ -179,7 +179,7 @@ if ($act == 'profile'){
                                 <table class="table" align="center">
                                 <tr><td>
                                 <strong>Are you sure you want to delete this comment?</strong><br />
-                                <form action="?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;set3=delete&amp;id='.$row[id].'" method="post">
+                                <form action="?act=profile&amp;action=comment&amp;set=view_comments&amp;set2=delete_comment&amp;set3=delete&amp;id='.$row[id].'" method="post">
                                 <input type="submit" value="Yes" /><input type="button" onclick="history.go(-1)" value="No" />
                                 </form>
                                 </td></tr>
@@ -211,14 +211,14 @@ if ($act == 'profile'){
                             $set_read = mysql_query("UPDATE `user_comments` SET `read` = '1' WHERE `username` = '$username' AND `read` = '0'");
                             print '<table class="table" align="center"><tr>
                                 <td><center>
-                                <a href="?act=profile&amp;act2=view&amp;username='.$row[username].'">'.$row[username].'<br />
+                                <a href="?act=profile&amp;action=view&amp;username='.$row[username].'">'.$row[username].'<br />
                                 <img src="'.$avatar.'" /></a>
                                 </center></td></tr>
                                 <tr><td>Posted on '.$row[date].' at '.$row[time].'</td>
                                 <tr><td>'.$row[post].'</td></tr>
                                 <tr><td><div align="right">
-                                <a href="?act=profile&amp;act2=comment&amp;set=edit_comment&amp;id='.$row[id].'">Edit Comment</a> –
-                                <a href="?act=profile&amp;act2=comment&amp;set=view_comments&amp;set2=delete_comment&amp;id='.$row[id].'">Delete Comment</a>
+                                <a href="?act=profile&amp;action=comment&amp;set=edit_comment&amp;id='.$row[id].'">Edit Comment</a> –
+                                <a href="?act=profile&amp;action=comment&amp;set=view_comments&amp;set2=delete_comment&amp;id='.$row[id].'">Delete Comment</a>
                                 </div></td></tr>
                                 </tr></table>';
                             $add_to_count = mysql_query("UPDATE `user_comments` SET count = count+1 WHERE `username` = '$username'") or die(mysql_error());
@@ -230,7 +230,7 @@ if ($act == 'profile'){
                         <hr width="100%" align="center"/>
                         <center><strong>You have no comments.</strong></center>';
                 }
-            }; //if ($act2 == 'view_comments')
+            }; //if ($action == 'view_comments')
             //EDIT COMMENTS
             if($set == 'edit_comment'){
                 title("Edit Comment");
@@ -245,7 +245,7 @@ if ($act == 'profile'){
                             <hr width="100%" align="center"/>
                             <table class="table" align="center">
                             <tr><td>
-                            <form action="?act=profile&amp;act2=comment&amp;set=edit_comment&amp;set2=submit&amp;id='.$requestid.'" method="post">
+                            <form action="?act=profile&amp;action=comment&amp;set=edit_comment&amp;set2=submit&amp;id='.$requestid.'" method="post">
                             Username: '.$row[username].'<br />
                             Date: '.$row[date].'<br />
                             Post:<br />
@@ -257,18 +257,18 @@ if ($act == 'profile'){
                 } else {print 'NO ID';};
             };
         };
-        if ($act2 =='reputation'){
+        if ($action =='reputation'){
             title("Reputation");
             print '<h1><center>Reputation</center></h1>
                 <hr width="100%" align="center"/>
                 <table class="table" align="center">
                 <tr><td>Would you like to add +rep or -rep?
-                <form action="?act=profile&amp;act2=change_reputation&amp;username='.$_GET[username].'" method="post">
+                <form action="?act=profile&amp;action=change_reputation&amp;username='.$_GET[username].'" method="post">
                 <select name="rep"><option value="+rep">Add One (+1) to Reputation</option><option value="-rep">Subtract One (-1) to Reputation</option></select>
                 <input type="submit" value="Submit Change in Reputation" />
                 </form></td></tr></table>';
         };
-        if ($act2 == 'change_reputation'){
+        if ($action == 'change_reputation'){
             if ($_POST['rep'] == '+rep'){
                 $prep = mysql_query("UPDATE users SET `kpos` = kpos + 1 WHERE `username` = '$_GET[username]'");
                 title("Positive (+1) Reputation Given");
@@ -276,7 +276,7 @@ if ($act == 'profile'){
                     <hr width="100%" align="center"/>
                     <table class="table" align="center">
                     <tr><td>Positive reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                    <a href="?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+                    <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
                     </td></tr></table>';
             };
             if ($_POST['rep'] == '-rep'){
@@ -286,18 +286,18 @@ if ($act == 'profile'){
                     <hr width="100%" align="center"/>
                     <table class="table" align="center">
                     <tr><td>Negative reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                    <a href="?act=profile&amp;act2=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+                    <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
                     </td></tr></table>';
             };
-        }; //if ($act2 == 'change_reputation')
+        }; //if ($action == 'change_reputation')
         //EDIT PROFILE
-        if ($act2 == 'edit_profile'){
+        if ($action == 'edit_profile'){
             if ($set == 'fix'){
                 $fix_query = mysql_query("UPDATE `users` SET `first_name` = '$_POST[fname]', `last_name` = '$_POST[lname]', `about` = '$_POST[about]', `website` = '$_POST[website]', `signature` = '$_POST[signature]', `interests` = '$_POST[interests]', `email`='$_POST[email]', `aim` = '$_POST[aim]', `avatar`= '$_POST[avatar]' WHERE `username` = '$currentusername' LIMIT 1") or die(mysql_error());
                 $_SESSION['firstname'] = $_POST['fname'];
                 $_SESSION['lastname'] = $_POST['lname'];
                 print '<strong>Your profile has been updated.</strong>';
-            }; //if ($act2 == 'fix')
+            }; //if ($action == 'fix')
             title("Edit Profile");
             print '<h1><center>Edit Profile</center></h1>
                 <hr width="100%" align="center"/>';
@@ -305,7 +305,7 @@ if ($act == 'profile'){
             while ($row = mysql_fetch_array($edit_query)){
                 print '<table class="table" align="center">
                     <tr><td>
-                    <form method="post" action="?act=profile&amp;act2=edit_profile&amp;set=fix">
+                    <form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
                     <strong>Username:</strong> '.$row[username].'<br />
                     <strong>First Name:</strong><br />
                     <input type="text" name="fname" size="65" value="'.$row[first_name].'" /><br />
@@ -332,15 +332,15 @@ if ($act == 'profile'){
                     </td></tr>
                     </table>';
             }; //while ($row = mysql_fetch_array($edit_query))
-        }; //if ($act2 == 'edit_profile')
+        }; //if ($action == 'edit_profile')
         //CHANGE PASSWORD
-        if ($act2 == 'change_password'){
+        if ($action == 'change_password'){
             title("Change Password");
             print '<h1><center>Change Password</center></h1>
                 <hr width="100%" align="center"/>
                 <table class="table" align="center">
                 <tr><td>
-                <form action="?act=profile&amp;act2=submit_change_password" method="post">
+                <form action="?act=profile&amp;action=submit_change_password" method="post">
                 Current Password: <input type="password" name="current_password" value="" /><br />
                 New Password: <input type="password" name="new_password" value="" /><br />
                 Re-Enter New Password: <input type="password" name="reenter_new_password" value="" /><br />
@@ -349,7 +349,7 @@ if ($act == 'profile'){
                 </td></tr></table>';
         };
         //SUBMIT CHANGE PASSWORD
-        if ($act2 == 'submit_change_password'){
+        if ($action == 'submit_change_password'){
             $currentpass = sha1(md5($_POST[current_password]));
             $query = mysql_query("SELECT * FROM users WHERE `username` = '$username' AND `password` = '$currentpass' LIMIT 1");
             if (mysql_num_rows($query) == 1){
@@ -416,7 +416,7 @@ if ($act == 'profile'){
                     </td></tr>
                     </table>';
             };
-        }; //if ($act2 == 'submit_change_password')
+        }; //if ($action == 'submit_change_password')
     };
 };
 ?>

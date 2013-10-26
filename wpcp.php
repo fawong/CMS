@@ -13,7 +13,7 @@ redirect("failed.php?id=2");
 };
 if ($_SESSION['group'] == 'member'){
 //WEB PAGE FUNCTIONS
-if ($act2 == 'page'){
+if ($action == 'page'){
 //SAVE EDITED WEB PAGE
 if ($set == 'save_page'){
 $admincheckbox = '1';
@@ -67,7 +67,7 @@ print '<h1><center>Web Page Control Panel</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center">
 <tr><td>
-<a href="?act=wpcp&act2=create_new_webpage">Add a New Web Page</a><br />
+<a href="?act=wpcp&action=create_new_page">Add a New Web Page</a><br />
 </td></tr>
 </table><br />
 <table class="table" width="100%">
@@ -111,20 +111,20 @@ print '<td><center>'.$pa.'</center></td>
 <td align="center">'.$row[views].'</td>
 <td align="center">
 <a href="?page='.$row[page].'" target="_blank">View</a> | 
-<a href="?act=wpcp&act2=edit_page&id='.$row[id].'">Edit</a> | 
-<a href="?act=wpcp&act2=delete_webpage&id='.$row[id].'">Delete</a>
+<a href="?act=wpcp&action=edit_page&id='.$row[id].'">Edit</a> | 
+<a href="?act=wpcp&action=delete_page&id='.$row[id].'">Delete</a>
 </td>
 </tr>';
 };
 print '</table>';
 };
 //CREATE NEW WEB PAGE
-if ($act2 == 'create_new_webpage'){
+if ($action == 'create_new_page'){
 title("Create New Web Page");
 print '<h1><center>Create New Web Page</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center"><tr><td>
-<form action="?act=wpcp&act2=page&set=save_page&set2=create_page" method="post">
+<form action="?act=wpcp&action=page&set=save_page&set2=create_page" method="post">
 Page Title: <input type="text" name="title" />
 <br />
 URL Key (Set): <input type="text" name="urlkey" />
@@ -158,11 +158,11 @@ Leave blank for NO password<br />
 </td></tr></table>';
 };
 //EDIT WEB PAGE
-if ($act2 == 'edit_page'){
+if ($action == 'edit_page'){
 title("Edit Web Page");
 if ($id != ''){
-$selectwebpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND `username` = '$username'") or die (mysql_error());
-while ($row = mysql_fetch_array($selectwebpage)){
+$selectpage = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND `username` = '$username'") or die (mysql_error());
+while ($row = mysql_fetch_array($selectpage)){
 if($row[member] == 1){
 $membercheckboxchecked = 'checked="checked" /';};
 if($row[member] == 0){
@@ -178,7 +178,7 @@ $publiccheckboxchecked = '/';};
 print '<h1><center>Edit Web Page</center></h1>
 <hr width="100%" align="center"/>
 <table class="table" align="center"><tr><td>
-<form action="?act=wpcp&act2=page&set=save_page&set2=save_edited_page&id='.$row[id].'" method="post">
+<form action="?act=wpcp&action=page&set=save_page&set2=save_edited_page&id='.$row[id].'" method="post">
 Page Title: <input type="text" name="title" value="'.$row[page_title].'"/>
 <br />
 URL Key (Set): <input type="text" name="urlkey" value="'.$row[page].'"/>
@@ -212,7 +212,7 @@ Leave blank for NO password<br />
 </td></tr></table>';
 };};};
 //DELETE WEB PAGE
-if ($act2== 'delete_webpage'){
+if ($action== 'delete_page'){
 title("Delete Web Page");
 if ($id != ''){
 $select_kill = mysql_query("SELECT * FROM `pages` WHERE `id` = '$id' AND username = '$username'");
@@ -237,7 +237,7 @@ print '<h1><center>Delete Web Page</center></h1>
 <table class="table" align="center">
 <tr><td>
 <strong>Are you sure you want to delete this page?</strong><br />
-<form action="?act=wpcp&act2=page&set=delete&id='.$row[id].'" method="post">
+<form action="?act=wpcp&action=page&set=delete&id='.$row[id].'" method="post">
 <input type="submit" value="Yes" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" onclick="history.go(-1)" value="No" />
 </form>
