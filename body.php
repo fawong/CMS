@@ -19,9 +19,9 @@ check_inbox();
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="posts.php">Posts</a></li>
-            <li><a href="page.php?page=contact">Contact Us</a></li>
-            <li><a href="page.php?page=about">About <?php print $cms_name ?></a></li>
+            <li class="active"><a href="//<?php print $settings['url'] ?>/posts.php">Posts</a></li>
+            <li><a href="//<?php print $settings['url'] ?>/page.php?page=contact">Contact Us</a></li>
+            <li><a href="//<?php print $settings['url'] ?>/page.php?page=about">About <?php print $cms_name ?></a></li>
 <?php
     if ($_SESSION['login'] == true && $settings['force_block'] == 0) {
 ?>
@@ -72,7 +72,7 @@ check_inbox();
     } //if($_SESSION['login'] != true)
     else {
 ?>
-            <li><a href="?act=profile&action=view"><?php print $_SESSION['username']; ?></a></li>
+            <li><a href="profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
             <li><a href="loginout.php?action=logout">Logout</a></li>
 <?php
     };

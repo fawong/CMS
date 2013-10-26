@@ -15,26 +15,17 @@
 -->
 <title><?php print $cms_name ?></title>
 <?php
-    if ($settings['text_style'] == 1){
-?>
-<link rel="stylesheet" type="text/css" href="default.css" media="screen" />
-<link rel="stylesheet" href="sIFR-screen.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="sIFR-print.css" type="text/css" media="print" />
-<script src="sifr.js" type="text/javascript"></script>
-<script src="sifr-addons.js" type="text/javascript"></script>
-<?php
-    };
 if ($action == 'login' || $action == 'register') {
 ?>
-<link rel="stylesheet" type="text/css" href="themes/default/css/signin.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php print $settings['url'] ?>/themes/default/css/signin.css" media="screen" />
 <?php
 };
 ?>
 <style type="text/css">
 <?php print $row['css'] ?>
 </style>
-<link href="themes/default/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="themes/default/css/navbar.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="//<?php print $settings['url'] ?>/themes/default/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="//<?php print $settings['url'] ?>/themes/default/css/navbar.css" media="screen" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" />
 <link rel="icon" type="image/ico" href="/favicon.ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-ico" />

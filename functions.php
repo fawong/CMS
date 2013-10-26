@@ -29,8 +29,8 @@ $time = time();
 $local_time = date("l, F d, Y \a\\t h:i:s A");
 
 // REQUIRED PHP SCRIPTS
-if (file_exists('settings.php')) {
-    require('settings.php');
+if (file_exists(dirname(__FILE__) . '/settings.php')) {
+    require(dirname(__FILE__) . '/settings.php');
 } else {
     die('Please copy the settings.php.sample file to settings.php and make changes.');
 }
