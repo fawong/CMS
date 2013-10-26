@@ -10,6 +10,12 @@ $ftp_server = 'localhost'; // FTP server address (exclude ftp://); localhost for
 $ftp_username = 'ftp_username'; // FTP server username
 $ftp_password = 'ftp_password'; // FTP server password
 
+// Logo
+$settings['logo'] = 'http://example/logo.png';
+
+// URL of CMS (without http://)
+$settings['url'] = 'http://example.com/path/to/cms';
+
 // Agree before entering the site
 $settings['agree_page'] = 1;
 
