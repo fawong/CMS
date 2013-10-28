@@ -33,7 +33,7 @@ if (!isset($id)){
     $error_message_title = 'Function Not Defined';
     $error_message = 'This function is not defined.';
 };
-if($settings['force_block'] == 0 && ($error_message_title != '' || $error_message != '')){
+if ($error_message_title != '' || $error_message != '') {
     title($error_message_title);
     page_header($error_message_title);
     print $error_message;

@@ -20,7 +20,7 @@ if ($action == 'login') {
 <?php
 };
 
-if ($action == 'authenticate' && $settings['force_block'] == 0) {
+if ($action == 'authenticate') {
     $iun = $_POST['inputusername'];
     $inputp = $_POST['inputpassword'];
     if ($iun != '' || $inputp != '') {
