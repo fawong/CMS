@@ -30,7 +30,7 @@ if ($action == 'authenticate') {
         if ($check_row == 1) {
             $select = mysql_query("SELECT * FROM users WHERE username = '$iun'");
             while ($row = mysql_fetch_array($select)) {
-                $_SESSION['group'] = $row['group'];
+                $_SESSION['group'] = $row['user_group'];
                 $_SESSION['rank'] = $row['rank'];
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['username'] = $row['username'];
@@ -45,9 +45,7 @@ if ($action == 'authenticate') {
             $result = mysql_query($sql) or die (mysql_error());
             $sql = "UPDATE users SET online = '1' WHERE username = '$username'";
             $result = mysql_query($sql) or die (mysql_error());
-?>
-Logged in successfully. No redirect yet.
-<?php
+page_header('Logged in successfully. No redirect yet');
         } else {
             redirect("failed.php?id=1");
         };
@@ -61,9 +59,7 @@ if ($action == 'logout') {
     $result = mysql_query("UPDATE users SET `online` = '0' WHERE `username` = '$username'") or die (mysql_error());
     $_SESSION['login'] = false;
     session_destroy();
-?>
-Logged out successfully. No redirect yet.
-<?php
+page_header('Logged out successfully. No redirect yet');
 }; //if ($act == 'logout')
 require_once('footer.php');
 ?>

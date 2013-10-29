@@ -78,10 +78,10 @@ if ($_SESSION['login'] == true) {
 ?>
 <li class="divider"></li>
 <li class="dropdown-header">Administrator Control Panel</li>
-<li><a href="admin/overview.php"><?php print $cms_name ?> Overview</a></li>
-<li><a href="?act=admin&amp;action=post">Add New Post</a></li>
-<li><a href="?act=admin&amp;action=page">Web Page Control Panel</a></li>
-<li><a href="?act=admin&amp;action=edit_users_list">Edit Members List</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/overview.php"><?php print $cms_name ?> Overview</a></li>
+<li><a href="admin&amp;action=post">Add New Post</a></li>
+<li><a href="admin&amp;action=page">Web Page Control Panel</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/members.php?action=edit_members">Edit Members List</a></li>
 <li><a href="?act=downloadscontrolpanel&amp;action=overview">Downloads Control Panel</a></li>
 <?php
     };
@@ -96,7 +96,7 @@ if ($_SESSION['login'] == true) {
 if($_SESSION['login'] != true) {
 ?>
 <li><a href="loginout.php?action=login">Login</a></li>
-<li><a href="register.php">Register</a></li>
+<li><a href="register.php?action=register">Register</a></li>
 <?php
     //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
 } //if($_SESSION['login'] != true)
@@ -114,4 +114,3 @@ else {
 
 <!-- Begin page content -->
 <div class="container">
-<div class="page-header">

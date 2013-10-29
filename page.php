@@ -54,7 +54,7 @@ if ($action == '') {
 ?>
                                 The page you are looking for does not exist.
 <?php
-                    }; //if ($row[$_SESSION[group]] == 1)
+                    }; //if ($row[$group] == 1)
                 }; //while ($row = mysql_fetch_array($find_page))
             } else {
                 redirect("failed.php?amp;id=3");

@@ -37,7 +37,6 @@ if ($_SESSION['login'] == true){
                 $_SESSION[limit_space] = 'unmetered';
             }else{
                 $thequery = 'SELECT `file_space` FROM `users` WHERE `username` = ' . $_SESSION['username'];
-                $find_s = mysql_query($thequery) or die(mysql_error());
                 while($row = mysql_fetch_array($find_s)){
                     $_SESSION[limit_space] = size_file($row[file_space]);
                 };

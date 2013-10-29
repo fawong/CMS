@@ -6,13 +6,11 @@ $currentusername = $_SESSION['username'];
 $currentfirstname = $_SESSION['firstname'];
 $currentlastname = $_SESSION['lastname'];
 $requestusername = $_GET['username'];
+$group = $_SESSION['group'];
 $user_id = $_GET['user_id'];
 $requestid = $_GET['id'];
 $page = $_GET['page'];
-$act = $_GET['act'];
 $action = $_GET['action'];
-$set = $_GET['set'];
-$set2 = $_GET['set2'];
 $id = $_GET['id'];
 $cmd = $_GET['cmd'];
 $cpath = $_GET['cpath'];
@@ -50,9 +48,10 @@ function title($title) {
 
 // PRINT HEADER
 function page_header($name) {
-    print '<h1>' . $name . '</h1>
-</div>
-';
+    print '<div class="page-header">
+        <h1>' . $name . '</h1>
+        </div>
+        ';
 }
 // VALID URL
 function valid_url($str) {
@@ -66,37 +65,29 @@ function redirect($url) {
 
 // FIND TOTAL STORAGE SPACE
 function total_message() {
-    if($_SESSION[group] == 'admin') {
+    if($group == 'admin') {
         $max = 'unlimited';
-    }; // if($_SESSION[group] == 'admin')
-    if($_SESSION[group] != 'admin') {
+    }; // if($group == 'admin')
+    if($group != 'admin') {
         $max = '100';
-    }; // if($_SESSION[group] != 'admin')
-    $find_total = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$username'") or die(mysql_error());
-    $find_number = mysql_num_rows($find_total);
+    }; // if($group != 'admin')
     print $find_number.'/'.$max;
 };
 
 // CHECK NEW MESSAGES IN "INBOX" AND NEW COMMENTS IN "USER_COMMENTS"
 function check_inbox() {
     if ($_SESSION['login'] == true) {
-        $check_new_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$username' AND `read` = '0'") or die(mysql_error());
-        $check_count = mysql_num_rows($check_new_query);
         $important = 'Nothing important right now.';
         if ($check_count > 0) {
             $important = '<center><strong>
                 <a href="?act=inbox">NEW MESSAGE(S)</a>
                 </strong></center>';
         };
-        $check_import_query = mysql_query("SELECT * FROM `inbox` WHERE `to` = '$username' AND `read` ='0' AND `important` ='1'");
-        $check_count_import = mysql_num_rows($check_import_query);
         if ($check_count_import > 0) {
             $important .= '<center><span class="important">
                 <a href="?act=inbox">IMPORTANT MESSAGE(S)</a>
                 </span></center>';
         };
-        $check_comment_query = mysql_query("SELECT * FROM `user_comments` WHERE `username` = '$username' AND `read` = '0'");
-        $check_count_comment = mysql_num_rows($check_comment_query);
         if ($check_count_comment > 0) {
             $important .= '<center><span class="important">
                 <a href="?act=profile&action=comment&set=view_comments">NEW COMMENT(S)</a>
@@ -114,15 +105,6 @@ function relink($url, $name, $target) {
         if ($target != '') {
             print '<a href="'.$url.'">'.$name.'</a>';
         };
-    };
-};
-if (!isset($_SESSION['dead_time'])) {
-    $_SESSION['dead_time'] = time() + 1440;
-};
-if (time() >= $_SESSION['dead_time']) {
-    $find_people = mysql_query("SELECT * FROM members WHERE `online` = '1'");
-    while ($row = mysql_fetch_array($find_people)) {
-        $update_stats = mysql_query("UPDATE members SET `online` = '0' WHERE `username` ='$row[username]'");
     };
 };
 ?>

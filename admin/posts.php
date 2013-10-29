@@ -30,32 +30,52 @@ if($_SESSION['group'] != 'admin') {
 <?php
     };
 
+    // SUBMIT EDIT POST
+    if($action == 'submit_edit_post') {
+        if($id != '') {
+            $update_post = mysql_query("UPDATE `posts` SET `title` = '$_POST[title]', `post` = '$_POST[post]' WHERE `id` ='$id'") or die(mysql_error());
+            page_header('Post Saved');
+?>
+Post edited and saved.
+<?php
+        } else {
+            page_header('No Post ID given');
+?>
+No post ID given.
+<?php
+        };
+    };
+
     // EDIT POST
     if($action == 'edit_post') {
         title("Edit Post");
-        if($id != '') {
-            if($set == 'submit') {
-                $update_post = mysql_query("UPDATE `posts` SET `title` = '$_POST[title]', `post` = '$_POST[post]' WHERE `id` ='$id'") or die(mysql_error());
-                print '<strong>Post Edited and Saved.</strong>';
-            };
-            $post_select = mysql_query("SELECT * FROM posts WHERE id ='$id'");
-            while($row = mysql_fetch_array($post_select)) {
-                page_header('Edit Post');
+        $post_select = mysql_query("SELECT * FROM posts WHERE id ='$id'");
+        while($row = mysql_fetch_array($post_select)) {
+            page_header('Edit Post');
 ?>
-<form action="?action=edit_post&amp;set=submit&amp;id=<?php print $id ?>" method="post">
-<strong>Title:</strong> <input name="title" type="text" value="<?php print $row['title'] ?>" /><br />
-<strong>Date:</strong> <?php print $row['date'] ?><br />
-<strong>Poster:</strong> <?php print $row['username'] ?><br />
-<strong>Post:</strong><br />
-<textarea name="post" rows="10" cols="45"><?php print $row[post] ?></textarea>
-<input type="submit" value="Submit" name="Submit" />
+<form action="?action=submit_edit_post&amp;id=<?php print $id ?>" method="post">
+<div class="form-group">
+<label>Title:</label>
+<input name="title" type="text" class="form-control" value="<?php print $row['title'] ?>" />
+</div>
+<div class="form-group">
+<label>Date:</label>
+<?php print $row['date'] ?>
+</div>
+<div class="form-group">
+<label>Poster:</label>
+<?php print $row['username'] ?>
+</div>
+<div class="form-group">
+<label>Post:</label>
+<textarea name="post" class="form-control"><?php print $row[post] ?></textarea>
+</div>
+<button type="submit" class="btn btn-primary btn-lg">Submit</button>
 </form>
 <?php
-            };
-        } else {
-            print 'NO ID';
         };
     };
+
     //DELETE POST
     if($action == 'delete_post') {
         title("Delete Post");

@@ -279,7 +279,7 @@ if ($action == ''){
 
 /*$find = mysql_query('SELECT * FROM calendar WHERE `date` = '$date'');
 while ($row = mysql_fetch_array($find)){
-if ($_SESSION[group] == 'admin' || $_SESSION['access_calendar'] == 1){
+if ($group == 'admin' || $_SESSION['access_calendar'] == 1){
 $admin_funcs = '<div align='right'><a href='?act=calendar&action=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&action=event_delete&id='.$row[id].''> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
