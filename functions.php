@@ -2,29 +2,25 @@
 session_start();
 
 // GLOBAL VARIABLES
-$currentusername = $_SESSION['username'];
-$currentfirstname = $_SESSION['firstname'];
-$currentlastname = $_SESSION['lastname'];
-$requestusername = $_GET['username'];
+$username = $_SESSION['username'];
+$firstname = $_SESSION['firstname'];
+$lastname = $_SESSION['lastname'];
 $group = $_SESSION['group'];
-$user_id = $_GET['user_id'];
-$requestid = $_GET['id'];
-$page = $_GET['page'];
-$action = $_GET['action'];
-$id = $_GET['id'];
-$cmd = $_GET['cmd'];
-$cpath = $_GET['cpath'];
-$file_name = $_GET['filename'];
-$dir = $_GET['dir'];
-$file = $_GET['file'];
+
+$request_username = $_GET['username'];
+$request_user_id = $_GET['user_id'];
+$request_id = $_GET['id'];
+$request_page = $_GET['page'];
+$request_action = $_GET['action'];
+$request_id = $_GET['id'];
+$request_path = $_GET['path'];
+$request_file_name = $_GET['filename'];
+$request_dir = $_GET['dir'];
+$request_file = $_GET['file'];
+
 $ip = $_SERVER['REMOTE_ADDR'];
-$tick = $_GET['tick'];
-$timestamp = date("r");
-$current_date = date('F j, Y');
-$current_time = date('g:i:s A');
-$local_timezone = date("O"); 
-$time = time(); 
-$local_time = date("l, F d, Y \a\\t h:i:s A");
+
+$timestamp = time();
 
 // REQUIRED PHP SCRIPTS
 if (file_exists(dirname(__FILE__) . '/settings.php')) {

@@ -7,7 +7,7 @@ if ($group != 'admin') {
     if($action == 'force_offline') {
         $find_people = mysql_query("SELECT * FROM users");
         while($row = mysql_fetch_array($find_people)) {
-            if($local_time > $row['last_logged_on']) {
+            if($timestamp > $row['last_logged_on']) {
                 $force_offline = mysql_query("UPDATE users SET `online` = '0'");
             };
         };
@@ -95,64 +95,66 @@ if ($group != 'admin') {
         title("Add New Member");
         $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
-        print '<h1><center>Add New Member</center></h1>
-            <hr width="100%"/>
-            <table class="table">
-            <tr><td>
-            <form method="post" action="?act=admin&amp;action=edit_users_list&amp;set=add">
-            <table class="table" width="100%">
-            <tr>
-            <td>
-            <strong>First Name:</strong><br />
-            <input type="text" name="first_name" size="65" /><br />
-            <strong>Last Name:</strong><br />
-            <input type="text" name="last_name" size="65" /><br />
-            <strong>Username:</strong><br />
-            <input type="text" name="username" size="65" /><br />
-            <strong>Password:</strong><br />
-            <input type="password" name="password" size="65" /><br />
-            <strong>Date Created:</strong><br />
-            '.$current_date.'<br />
-            <strong>Group:</strong><br />
-            <select>
-            <option>oiklkjljdf</option>
-            <option>ljdf</option>
-            <option>egraergerjggerdregf</option>
-            <option>ajdf</option>
-            </select>
-            <input type="text" name="group" /><br /> 
-            <strong>Activation Code:</strong><br />
-            <input type="text" name="activationcode" value="'.$activation_code.'" maxlength="15" readonly="readonly" /><br />
-            <strong>Activated Account:</strong><br />
-            <input type="text" name="activatedaccount" /><br />  
-            <strong>About:</strong><br />
-            <textarea name="about" rows="10" cols="50"></textarea><br /> 
-            <strong>Interests:</strong><br /> 
-            <textarea name="interests" rows="10" cols="50"></textarea><br />
-            <strong>Signature:</strong><br /> 
-            <textarea name="signature" rows="10" cols="50"></textarea><br />
-            <strong>AIM:</strong><br />
-            <input type="text" name="aim" size="65" /><br /> 
-            <strong>Email:</strong><br />
-            <input type="text" name="email" size="65"/><br />
-            <strong>Website:</strong><br />
-            <input type="text" name="website" size="65" /><br /> 
-            <strong>Avatar:</strong><br />
-            <input type="text" name="avatar" size="65" /><br />
-            <strong>Date of Birth (mm/dd/yyyy):</strong><br />
-            <input type="text" name="dateofbirth" maxlength="10" size="10"/><br />
-            <!--<strong>Website Theme:</strong><br />
-            <input type="text" name="theme" value="default" /> *DISABLED<br />-->
-            <strong>Access File Manager:</strong><br />
-            <input type="radio" name="yesno" value="access_file_manager_yes"/>Yes<br />
-            <input type="radio" name="yesno" value="access_file_manager_no"/>No<br />
-            IP: '.$ip.'<br />
-            <input type="submit" name="submit" value="Create Member" />
-            </td>
-            </tr>
-            </table>
-            </form>
-            </td></tr></table>';
+?>
+<h1><center>Add New Member</center></h1>
+<hr width="100%"/>
+<table class="table">
+<tr><td>
+<form method="post" action="?act=admin&amp;action=edit_users_list&amp;set=add">
+<table class="table" width="100%">
+<tr>
+<td>
+<strong>First Name:</strong><br />
+<input type="text" name="first_name" size="65" /><br />
+<strong>Last Name:</strong><br />
+<input type="text" name="last_name" size="65" /><br />
+<strong>Username:</strong><br />
+<input type="text" name="username" size="65" /><br />
+<strong>Password:</strong><br />
+<input type="password" name="password" size="65" /><br />
+<strong>Date Created:</strong><br />
+<?php print $timestamp ?><br />
+<strong>Group:</strong><br />
+<select>
+<option>oiklkjljdf</option>
+<option>ljdf</option>
+<option>egraergerjggerdregf</option>
+<option>ajdf</option>
+</select>
+<input type="text" name="group" /><br /> 
+<strong>Activation Code:</strong><br />
+<input type="text" name="activationcode" value="<?php print $activation_code ?>" maxlength="15" readonly="readonly" /><br />
+<strong>Activated Account:</strong><br />
+<input type="text" name="activatedaccount" /><br />  
+<strong>About:</strong><br />
+<textarea name="about" rows="10" cols="50"></textarea><br /> 
+<strong>Interests:</strong><br /> 
+<textarea name="interests" rows="10" cols="50"></textarea><br />
+<strong>Signature:</strong><br /> 
+<textarea name="signature" rows="10" cols="50"></textarea><br />
+<strong>AIM:</strong><br />
+<input type="text" name="aim" size="65" /><br /> 
+<strong>Email:</strong><br />
+<input type="text" name="email" size="65"/><br />
+<strong>Website:</strong><br />
+<input type="text" name="website" size="65" /><br /> 
+<strong>Avatar:</strong><br />
+<input type="text" name="avatar" size="65" /><br />
+<strong>Date of Birth (mm/dd/yyyy):</strong><br />
+<input type="text" name="dateofbirth" maxlength="10" size="10"/><br />
+<!--<strong>Website Theme:</strong><br />
+<input type="text" name="theme" value="default" /> *DISABLED<br />-->
+<strong>Access File Manager:</strong><br />
+<input type="radio" name="yesno" value="access_file_manager_yes"/>Yes<br />
+<input type="radio" name="yesno" value="access_file_manager_no"/>No<br />
+IP: <?php print $ip ?><br />
+<input type="submit" name="submit" value="Create Member" />
+</td>
+</tr>
+</table>
+</form>
+</td></tr></table>';
+<?php
     };
 
     // EDIT MEMBER

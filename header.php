@@ -79,10 +79,10 @@ if ($_SESSION['login'] == true) {
 <li class="divider"></li>
 <li class="dropdown-header">Administrator Control Panel</li>
 <li><a href="//<?php print $settings['url'] ?>/admin/overview.php"><?php print $cms_name ?> Overview</a></li>
-<li><a href="admin&amp;action=post">Add New Post</a></li>
-<li><a href="admin&amp;action=page">Web Page Control Panel</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/posts.php?action=new_post">Add New Post</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/page.php?action=page">Web Page Control Panel</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/members.php?action=edit_members">Edit Members List</a></li>
-<li><a href="?act=downloadscontrolpanel&amp;action=overview">Downloads Control Panel</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/dcp.php?action=overview">Downloads Control Panel</a></li>
 <?php
     };
 ?>

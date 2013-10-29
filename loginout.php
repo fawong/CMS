@@ -41,7 +41,7 @@ if ($action == 'authenticate') {
                 $_SESSION['choice'] = 'agree';
             };
             $_SESSION['login'] = true;
-            $sql = "UPDATE users SET last_log_on = '$local_time', ip = '$ip' WHERE username = '$username'";
+            $sql = "UPDATE users SET last_log_on = '$timestamp', ip = '$ip' WHERE username = '$username'";
             $result = mysql_query($sql) or die (mysql_error());
             $sql = "UPDATE users SET online = '1' WHERE username = '$username'";
             $result = mysql_query($sql) or die (mysql_error());
