@@ -22,6 +22,10 @@ $settings['url'] = 'http://example.com/path/to/cms';
 // Agree before registering for site
 $settings['agree_page'] = true;
 
+// reCAPTCHA keys
+$settings['recaptcha_public_key'] = 'PUBLIC_KEY_HERE';
+$settings['recaptcha_private_key'] = 'PRIVATE_KEY_HERE'; 
+
 // Email address
 $settings['email'] = 'email@example.com';
 

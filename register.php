@@ -5,8 +5,7 @@ require_once("recaptcha/recaptchalib.php");
 // CREATE ACCOUNT
 if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
     if ($action == 'create_account') {
-        $privatekey = "6LcDRr8SAAAAAEMroogFsKj7hFf-rodx2cCsMUVl"; 
-        $resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
+        $resp = recaptcha_check_answer($setting['recaptcha_private_key'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
         if ($resp->is_valid) {
             $user_name = $_POST['username'];
             $username_check = mysql_query("SELECT * FROM users WHERE username = '$user_name'");
@@ -184,8 +183,7 @@ You are already logged in to <?php print $cms_name ?>.
 <div class="form-group">
 <label>*Are you human?</label>
 <?php
-            $publickey = "6LcDRr8SAAAAAFxRSd_AIC-7H_qBikZMZ5u_9JBc";
-            echo recaptcha_get_html($publickey, NULL, true);
+            echo recaptcha_get_html($settings['recaptcha_public_key'], NULL, true);
 ?>
 </div>
 <button type="submit" class="btn btn-primary btn-lg">Create My Account</button>
