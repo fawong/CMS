@@ -7,16 +7,16 @@ $firstname = $_SESSION['firstname'];
 $lastname = $_SESSION['lastname'];
 $group = $_SESSION['group'];
 
-$request_username = $_GET['username'];
-$request_user_id = $_GET['user_id'];
-$request_id = $_GET['id'];
-$request_page = $_GET['page'];
-$request_action = $_GET['action'];
-$request_id = $_GET['id'];
-$request_path = $_GET['path'];
-$request_file_name = $_GET['filename'];
-$request_dir = $_GET['dir'];
-$request_file = $_GET['file'];
+$username = $_GET['username'];
+$user_id = $_GET['user_id'];
+$id = $_GET['id'];
+$page = $_GET['page'];
+$action = $_GET['action'];
+$id = $_GET['id'];
+$path = $_GET['path'];
+$file_name = $_GET['filename'];
+$dir = $_GET['dir'];
+$file = $_GET['file'];
 
 $ip = $_SERVER['REMOTE_ADDR'];
 
