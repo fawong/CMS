@@ -45,7 +45,7 @@ if ($action == 'authenticate') {
             $result = mysql_query($sql) or die (mysql_error());
             $sql = "UPDATE users SET online = '1' WHERE username = '$username'";
             $result = mysql_query($sql) or die (mysql_error());
-page_header('Logged in successfully. No redirect yet');
+            redirect('posts.php');
         } else {
             redirect("failed.php?id=1");
         };
@@ -59,7 +59,7 @@ if ($action == 'logout') {
     $result = mysql_query("UPDATE users SET `online` = '0' WHERE `username` = '$username'") or die (mysql_error());
     $_SESSION['login'] = false;
     session_destroy();
-page_header('Logged out successfully. No redirect yet');
+    redirect('posts.php');
 }; //if ($act == 'logout')
 require_once('footer.php');
 ?>

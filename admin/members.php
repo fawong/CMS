@@ -16,14 +16,11 @@ if ($group != 'admin') {
 
     // SUBMIT SAVE MEMBER
     if($action == 'save_member') {
-        $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
-        $fixmysqldatabase = mysql_query("UPDATE `users` SET `first_name` = '$_POST[first_name]', `last_name` = '$_POST[last_name]', `user_group` = '$_POST[group]', `aim` = '$_POST[aim]', `about` = '$_POST[about]', `website` = '$_POST[website]', `signature` = '$_POST[signature]', `interests` = '$_POST[interests]', `activation_code` = '$activation_code', `activated_account` = '$_POST[activatedaccount]', `theme` = '$_POST[theme]', `access_file_manager` = '$_POST[access_file_manager]',  `username`='$_POST[username]', `date_of_birth`='$_POST[date_of_birth]', `email`='$_POST[email]', `avatar`='$_POST[avatar]' WHERE `users`.`user_id` = '$user_id' LIMIT 1") or die(mysql_error());
         print 'Member <strong>'.$requestusername.'</strong> has been updated.';
     };
 
     // SUBMIT ADD NEW MEMBER
-    if($action == 'add') {
+    if($action == 'submit_add_member') {
         if ($_REQUEST['yesno'] == 'access_file_manager_yes')
         {
             $access_file_manager_yesorno = 1;
@@ -35,8 +32,6 @@ if ($group != 'admin') {
         $new_user_id = rand(00000, 99999);
         $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
-        $mysql_add_text = "INSERT INTO `users` (`first_name`, `last_name`, `user_id`, `user_group`, `username`, `password`, `activation_code`, `access_file_manager`, `date_of_birth` , `ip`, `activated_account`, `date_joined`, `email`, `about`, `website`, `interests`, `aim`, `signature`, `avatar`, `last_log_on`) VALUES ('$first_name', '$last_name', '$new_user_id', '$_POST[group]', '$_POST[username]', '$_POST[password]', '$activation_code', '$access_file_manager_yesorno', '$_POST[dateofbirth]' , '$ip', '$_POST[activatedaccount]', '$local_time', '$_POST[email]', '$_POST[about]', '$_POST[website]', '$_POST[interests]', '$_POST[aim]', '$_POST[signature]', '$_POST[avatar]', 'never')";
-        $mysql_add_query_bu = mysql_query($mysql_add_text) or die(mysql_error()); 
         print 'Member <strong>'.$_POST[username].'</strong> has been added.';
         if($access_file_manager_yesorno == '1') {
             mkdir('/home/waf/public_html/st/files/'.$requestusername, 0755);
@@ -48,8 +43,8 @@ if ($group != 'admin') {
     if($action == 'edit_members') {
         $select_all_members = mysql_query("SELECT * FROM `users` ORDER BY `user_group` ASC, `username` ASC") or die (mysql_error());
         $totalnumberofmembers = mysql_num_rows($select_all_members) or die (mysql_error());
-        title("Edit Members");
-        page_header('Edit Members');
+        title("Members");
+        page_header('Members');
 ?>
 <p><a href="?act=admin&amp;action=add_member">Add a Member</a></p>
 <p><a href="?act=admin&amp;action=edit_users_list&amp;set=force_offline">Force All Members Offline</a></p>
@@ -84,7 +79,7 @@ if ($group != 'admin') {
 </td>
 <td>
 <a href="?act=profile&amp;action=view&amp;username=<?php print$row['username'] ?>">View</a> | 
-<a href="?action=edit_user&amp;user_id=<?php print$row['user_id'] ?>">Edit</a> | 
+<a href="?action=edit_member&amp;user_id=<?php print$row['user_id'] ?>">Edit</a> | 
 <a href="?action=delete_member&amp;username=<?php print$row['username'] ?>">Delete</a>
 </td>
 </tr>
@@ -161,73 +156,100 @@ if ($group != 'admin') {
     };
 
     // EDIT MEMBER
-    if($action == 'edit_user') {
+    if($action == 'edit_member') {
         title("Edit Member");
         $edit_query = mysql_query("SELECT * FROM users WHERE user_id = '$user_id'");
         while($row = mysql_fetch_array($edit_query)) {
-            print '<h1><center>Edit Member</center></h1>
-                <hr width="100%"/>
-                <table class="table">
-                <tr><td>
-                <form method="post" action="?act=admin&amp;action=edit_users_list&amp;set=save_member&amp;username='.$row[username].'&amp;user_id='.$user_id.'">
-                <table class="table" width="100%">
-                <tr>
-                <td>
-                <strong>First Name:</strong><br />
-                <input type="text" name="first_name" size="65" value="'.$row[first_name].'" /><br />
-                <strong>Last Name:</strong><br />
-                <input type="text" name="last_name" size="65" value="'.$row[last_name].'" /><br />
-                <strong>Username:</strong><br />
-                <input type="text" name="username" size="65" value="'.$row[username].'" /><br />
-                <strong>Date Joined:</strong><br />'.$row[date_joined].' <br />
-                <strong>Group:</strong><br />
-                <input type="text" name="group" value="'.$row[group].'" /><br /> 
-                <strong>Activation Code:</strong><br />
-                '.$row[activation_code].'<br />
-                <strong>Activated Account:</strong> ';
-            if($row[activated_account] == 1) {
-                $aa = "Yes";
-            };
-            if($row[activated_account] == 0) {
-                $aa = "No";
-            };
-            print ''.$aa.'<br />  
-                <strong>About:</strong><br />
-                <textarea name="about" rows="10" cols="50">'.$row[about].'</textarea><br /> 
-                <strong>Interests:</strong><br />
-                <textarea name="interests" rows="10" cols="50">'.$row[interests].'</textarea><br />
-                <strong>Signature:</strong><br />
-                <textarea name="signature" rows="10" cols="50">'.$row[signature].'</textarea><br />
-                <strong>AIM:</strong><br />
-                <input type="text" name="aim" size="65" value="'.$row[aim].'" /><br /> 
-                <strong>Email:</strong><br />
-                <input type="text" name="email" size="65" value="'.$row[email].'" /><br />
-                <strong>Website:</strong><br />
-                <input type="text" name="website" size="65" value="'.$row[website].'" /><br /> 
-                <strong>Avatar:</strong><br />
-                <input type="text" name="avatar" size="65" value="'.$row[avatar].'" /><br />
-                <strong>Date of Birth:</strong><br />
-                <input type="text" name="date_of_birth" maxlength="10" value="'.$row[date_of_birth].'" /><br />
-                <strong>Website Theme:</strong><br />
-                <input type="text" name="theme" value="'.$row[theme].'" /><br />
-                <strong>Access File Manager:</strong> ';
-            if($row[access_file_manager] == 1) {
-                $afm = "Yes";
-            };
-            if($row[access_file_manager] == 0) {
-                $afm = "No";
-            };
-            print ''.$afm.' <br />
-                1 = Yes<br />
-                0 = No<br />
-                Last Log On: '.$row[last_log_on].'<br />
-                IP: '.$row[ip].'<br />
-                <input type="submit" name="submit" value="Edit Member"/>
-                </td>
-                </tr>
-                </table>
-                </form>
-                </td></tr></table>';
+            page_header('Edit Member');
+?>
+<form method="post" action="?action=save_member&amp;username=<?php print $row['username'] ?>&amp;user_id=<?php print $user_id ?>">
+<div class="form-group">
+<label>Username:</label>
+<input type="text" name="username" class="form-control" value="<?php print $row['username'] ?>" disabled/>
+</div>
+<div class="form-group">
+<label>First Name:</label>
+<input type="text" name="first_name" class="form-control" value="<?php print $row['first_name'] ?>" />
+</div>
+<div class="form-group">
+<label>Last Name:</label>
+<input type="text" name="last_name" class="form-control" value="<?php print $row['last_name'] ?>" />
+</div>
+<div class="form-group">
+<label>Date Joined:</label>
+<?php print $row['date_joined'] ?> 
+</div>
+<div class="form-group">
+<label>Group:</label>
+<div class="checkbox">
+<label>
+<input name="group" type="radio" value="<?php print $row['user_group'] ?>" checked/> 
+<?php print $row['user_group'] ?>
+</label>
+</div>
+</div>
+<div class="form-group">
+<label>Activation Code:</label>
+<?php print $row['activation_code'] ?>
+</div>
+<div class="form-group">
+<label>Activated Account:</label>
+<?php print $row['activated_account'] ?>
+</div>
+<div class="form-group">
+<label>About:</label>
+<textarea name="about" class="form-control"><?php print $row['about'] ?></textarea> 
+</div>
+<div class="form-group">
+<label>Interests:</label>
+<textarea name="interests" class="form-control"><?php print $row['interests'] ?></textarea>
+</div>
+<div class="form-group">
+<label>Signature:</label>
+<textarea name="signature" class="form-control"><?php print $row['signature'] ?></textarea>
+</div>
+<div class="form-group">
+<label>AIM:</label>
+<input type="text" name="aim" class="form-control" value="<?php print $row['aim'] ?>" /> 
+</div>
+<div class="form-group">
+<label>Email:</label>
+<input type="text" name="email" class="form-control" value="<?php print $row['email'] ?>" />
+</div>
+<div class="form-group">
+<label>Website:</label>
+<input type="text" name="website" class="form-control" value="<?php print $row['website'] ?>" /> 
+</div>
+<div class="form-group">
+<label>Avatar:</label>
+<input type="text" name="avatar" class="form-control" value="<?php print $row['avatar'] ?>" />
+</div>
+<div class="form-group">
+<label>Date of Birth:</label>
+<input type="text" name="date_of_birth" class="form-control" value="<?php print $row['date_of_birth'] ?>" />
+</div>
+<div class="form-group">
+<label>Website Theme:</label>
+<select class="form-control">
+<option name="theme" value="<?php print $row['theme'] ?>"><?php print $row['theme'] ?></option>
+</select>
+</div>
+<div class="form-group">
+<label>Access File Manager:</label>
+<?php print $row['access_file_manager'] ?>
+</div>
+<div class="form-group">
+<label>Last Log On:</label>
+<?php print $row['last_log_on'] ?>
+</div>
+<div class="form-group">
+<label>IP:</label>
+<?php print $row['ip'] ?>
+</div>
+<button type="submit" name="submit" class="btn btn-lg btn-primary">Edit Member</button>
+</div>
+</form>
+<?php
         };
     };
 
@@ -246,7 +268,7 @@ if ($group != 'admin') {
 
     // SUBMIT DELETE MEMBER
     if($action == 'submit_delete_member') {
-        $query = mysql_query("DELETE FROM `users` WHERE `username` = '$requestusername'") or die(mysql_error());
+        mysql_query("DELETE FROM `users` WHERE `username` = '$requestusername'") or die(mysql_error());
         page_header('Member deleted');
 ?>
 Member <strong><?php print $requestusername ?></strong> has been deleted.

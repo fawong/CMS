@@ -47,14 +47,13 @@ if ($action == 'view_comments') {
     };
 };
 
-if ($_SESSION['login'] != true) {
+if ($_SESSION['login'] != true && $action != 'view_comments') {
     redirect('failed.php?id=2');
 } else {
     // ADD POSTED COMMENT
     if ($action == 'post_comment') {
-        print_r($_POST);
         if ($_POST['comment'] != '') {
-            $insert_query = mysql_query("INSERT INTO `comments` (`post_id`, `post_author`, `date`, `comment`) VALUES ('" . $_POST['id'] . "', '$username', '$current_date', '" . $_POST['comment'] . "')") or die (mysql_error());
+            $insert_query = mysql_query("INSERT INTO `comments` (`post_id`, `post_author`, `comment`) VALUES ('" . $_POST['id'] . "', '$username', '" . $_POST['comment'] . "')") or die (mysql_error());
             page_header('Comment Saved');
 ?>
 Comment Edited and Saved.
@@ -66,6 +65,7 @@ Comment is empty.
 <?php
         };
     };
+
     // ADD COMMENTS
     if ($action == 'add_comments') {
         title("Add Comments");
@@ -75,12 +75,12 @@ Comment is empty.
 ?>
 <h2><?php print $row['title'] ?></h2>
 <p><strong>Posted by:</strong> <a href="profile.php?action=view&amp;username=<?php print $row['username'] ?>"><?php print $row['username'] ?></a></p>
-<p><strong>Date:</strong> <?php print $row[date] ?></p>
+<p><strong>Date:</strong> <?php print $row['date'] ?></p>
 <?php print $row['post'] ?>
 <?php
         };
 ?>
-<form action="//<?php print $settings['url'] ?>/comments.php?action=post_comment" method="post">
+<form action="?action=post_comment" method="post">
 <input type="hidden" name="id" value="<?php print $id ?>" />
 <textarea name="comment" class="form-control"></textarea>
 <button type="submit" class="btn btn-lg btn-primary">Submit</button>
