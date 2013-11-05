@@ -3,31 +3,30 @@ require_once('functions.php');
 
 title("News and Updates");
 page_header("News and Updates");
-$sql = mysql_query("SELECT * FROM posts ORDER BY id DESC");
-while ($row = mysql_fetch_array($sql)) {
+foreach ($db->get_results("SELECT * FROM posts ORDER BY id DESC") as $post) {
 ?>
-<h2><?php print $row['title'] ?></h2>
-Posted by: <a href="?act=profile&amp;action=view&amp;username=<?php print $row['post_author'] ?>"><?php print $row['username'] ?></a>
+<h2><?php print $post->title ?></h2>
+Posted by: <a href="?act=profile&amp;action=view&amp;username=<?php print $post->post_author ?>"><?php print $post->username ?></a>
 <br />
-Date: <?php print $row['date'] ?>
-<p><?php print $row['post'] ?></p>
+Date: <?php print $post->date ?>
+<p><?php print $post->post ?></p>
 <?php
     if ($settings['comments'] == 1) {
 ?>
-<a href="comments.php?action=view_comments&amp;id=<?php print $row['id'] ?>">View Comments</a>
+<a href="comments.php?action=view_comments&amp;id=<?php print $post->id ?>">View Comments</a>
 <?php
         if ($_SESSION['group'] == 'admin' || $_SESSION['group'] == 'member') {
 ?>
 <br />
-<a href="comments.php?action=add_comments&amp;id=<?php print $row['id'] ?>">Add Comments</a>
+<a href="comments.php?action=add_comments&amp;id=<?php print $post->id ?>">Add Comments</a>
 <?php
         };
         if ($_SESSION['group'] == 'admin') {
 ?>
 <br /><br />
-<a href="admin/posts.php?action=edit_post&amp;id=<?php print $row['id'] ?>">Edit Post</a>
+<a href="admin/posts.php?action=edit_post&amp;id=<?php print $post->id ?>">Edit Post</a>
 <br />
-<a href="admin/posts.php?action=delete_post&amp;id=<?php print $row['id'] ?>">Delete Post</a>
+<a href="admin/posts.php?action=delete_post&amp;id=<?php print $post->id ?>">Delete Post</a>
 <?php
         };
     };

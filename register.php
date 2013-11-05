@@ -4,12 +4,11 @@ require_once("includes/recaptcha/recaptchalib.php");
 
 // CREATE ACCOUNT
 if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
-    if ($action == 'create_account') {
+    if ($get_action == 'create_account') {
         $resp = recaptcha_check_answer($settings['recaptcha_private_key'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
         if ($resp->is_valid) {
             $user_name = $_POST['username'];
-            $username_check = mysql_query("SELECT * FROM users WHERE username = '$user_name'");
-            if (mysql_num_rows($username_check) == 0) {
+            if (! $db->get_row("SELECT * FROM users WHERE username = '$user_name'")) {
                 $first_name = $_POST['first_name'];
                 if ($first_name != '') {
                     $last_name = $_POST['last_name'];
@@ -36,8 +35,7 @@ if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
                                                     $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                                                     $activation_code = substr(str_shuffle($alphanumeric), 0, 20);
                                                     $hashedpass = sha1(md5($password));
-                                                    $mysql_add_text = "INSERT INTO `users` (`first_name`, `last_name`, `user_id`, `user_group`, `username`, `password`, `date_of_birth`, `email`, `ip`, `activation_code`, `access_file_manager`, `access_dlcp`) VALUES ('$first_name', '$last_name', '$new_user_id', 'member', '$user_name', '$hashedpass', '$date_of_birth', '$email', '$ip', '$activation_code', '0' ,'0')";
-                                                    mysql_query($mysql_add_text) or die(mysql_error());
+                                                    $db->query("INSERT INTO `users` (`first_name`, `last_name`, `user_id`, `user_group`, `username`, `password`, `date_of_birth`, `email`, `ip`, `activation_code`, `access_file_manager`, `access_dlcp`) VALUES ('$first_name', '$last_name', '$new_user_id', 'member', '$user_name', '$hashedpass', '$date_of_birth', '$email', '$ip', '$activation_code', '0' ,'0')");
                                                     title("Successful Registration");
                                                     page_header('Successful Registration');
 ?>
@@ -84,7 +82,7 @@ You have successfully register for <?php print $cms_name ?>.
     };
 
     // REGISTER
-    if ($action == 'register') {
+    if ($get_action == 'register') {
         if($_SESSION['login'] == TRUE) {
             title("Registration Error");
             page_header('You Are Already Logged In');
@@ -104,31 +102,31 @@ You are already logged in to <?php print $cms_name ?>.
 <p>* = Required Item</p>
 <div class="form-group">
 <label>*First Name:</label>
-<input type="text" class="form-control" name="first_name" size="65" />
+<input type="text" class="form-control" name="first_name" />
 </div>
 <div class="form-group">
 <label>*Last Name:</label>
-<input type="text" class="form-control" name="last_name" size="65" />
+<input type="text" class="form-control" name="last_name" />
 </div>
 <div class="form-group">
 <label>*Username:</label>
-<input type="text"  class="form-control" name="username" size="65" />
+<input type="text"  class="form-control" name="username" />
 </div>
 <div class="form-group">
 <label>*Password:</label>
-<input type="password"  class="form-control" name="password" size="65" />
+<input type="password"  class="form-control" name="password" />
 </div>
 <div class="form-group">
 <label>*Confirm Password:</label>
-<input type="password"  class="form-control" name="confirm_password" size="65" />
+<input type="password"  class="form-control" name="confirm_password" />
 </div>
 <div class="form-group">
 <label>*Email Address:</label>
-<input type="text"  class="form-control" name="email" size="65" />
+<input type="text"  class="form-control" name="email" />
 </div>
 <div class="form-group">
 <label>*Confirm Email Address:</label>
-<input type="text"  class="form-control" name="confirm_email" size="65" />
+<input type="text"  class="form-control" name="confirm_email" />
 </div>
 <div class="form-group">
 <label>*Date of Birth:</label>

@@ -6,21 +6,21 @@ $username = $_SESSION['username'];
 $firstname = $_SESSION['firstname'];
 $lastname = $_SESSION['lastname'];
 $group = $_SESSION['group'];
+$login = $_SESSION['login'];
+$theme = $_SESSION['theme'];
 
-$username = $_GET['username'];
-$user_id = $_GET['user_id'];
-$id = $_GET['id'];
-$page = $_GET['page'];
-$action = $_GET['action'];
-$id = $_GET['id'];
-$path = $_GET['path'];
-$file_name = $_GET['filename'];
-$dir = $_GET['dir'];
-$file = $_GET['file'];
+$get_username = $_GET['username'];
+$get_user_id = $_GET['user_id'];
+$get_id = $_GET['id'];
+$get_page = $_GET['page'];
+$get_action = $_GET['action'];
+$get_id = $_GET['id'];
+$get_path = $_GET['path'];
+$get_file_name = $_GET['filename'];
+$get_dir = $_GET['dir'];
+$get_file = $_GET['file'];
 
 $ip = $_SERVER['REMOTE_ADDR'];
-
-$timestamp = time();
 
 // REQUIRED PHP SCRIPTS
 if (file_exists(dirname(__FILE__) . '/settings.php')) {
@@ -56,7 +56,9 @@ function valid_url($str) {
 
 // REDIRECT FUNCTION
 function redirect($url) {
-    header("$url");
+    global $settings;
+    $host = $settings['url'];
+    header("Location: https://$host/$url");
 };
 
 // FIND TOTAL STORAGE SPACE
@@ -72,7 +74,7 @@ function total_message() {
 
 // CHECK NEW MESSAGES IN "INBOX" AND NEW COMMENTS IN "USER_COMMENTS"
 function check_inbox() {
-    if ($_SESSION['login'] == true) {
+    if ($login == true) {
         $important = 'Nothing important right now.';
         if ($check_count > 0) {
             $important = '<center><strong>

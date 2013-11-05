@@ -2,22 +2,19 @@
 include_once('functions.php');
 
 if ($action == '') {
-    $find_page = mysql_query("SELECT * FROM `pages` WHERE `page_name` = '$page'");
-    if (mysql_num_rows($find_page) == 1) {
-        while ($row = mysql_fetch_array($find_page)) {
-            title("$row[page_title]");
-            $password = $row['password'];
-            $_SESSION['page_lock'] = false;
-            if ($row[$_SESSION['group']] == 1 || $row['public'] == 1) {
-                if ($password == '') {
+    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `page_name` = '$get_page'")) {
+        title($page->page_title);
+        $password = $page->password;
+        if ($page->public == 1 || $page->$_SESSION['group'] == 1) {
+            if ($password == '') {
+                page_header($page->page_title)
 ?>
-<?php page_header($row['page_title']) ?>
-<?php print $row['body'] ?>
+<?php print $page->body ?>
 <?php
-                };
-                if ($password != '') {
+            };
+            if ($password != '') {
 ?>
-<form method="post" action="?page=<?php print $page ?>">
+<form method="page" action="?page=<?php print $page ?>">
 <p>This page is password protected.</p>
 <p>You must enter a password to proceed.</p>
 <br /><br />
@@ -25,13 +22,12 @@ Password: <input type="password" name="pass" />
 <button type="submit" class="btn btn-lg btn-primary">Submit</button>
 </form>
 <?php
-                };
-            } else {
-                page_header('Page Does Not Exist');
+            };
+        } else {
+            page_header('Page Does Not Exist');
 ?>
 The page you are looking for does not exist.
 <?php
-            };
         };
     } else {
         redirect("failed.php?id=3");

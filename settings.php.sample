@@ -13,7 +13,7 @@ $ftp_server = 'localhost'; // FTP server address (exclude ftp://); localhost for
 $ftp_username = 'ftp_username'; // FTP server username
 $ftp_password = 'ftp_password'; // FTP server password
 
-// Logo
+// Logo (without http://)
 $settings['logo'] = 'http://example/logo.png';
 
 // URL of CMS (without http://)

@@ -5,95 +5,60 @@ if ($_SESSION['login'] != true) {
     redirect("failed.php?id=2");
 } else {
     // VIEW PROFILE
-    if($action == 'view') {
-        $comment_count = mysql_num_rows($count_comment);
-        if ($_GET['username'] == '') {
+    if($get_action == 'view') {
+        if ($get_username == '') {
+            $un = $username;
             title("View Own Profile");
             page_header('View Own Profile');
-            while ($row = mysql_fetch_array($view_user_query)) {
-                if ($row[online] == '1') {
-                    $status = 'themes/'.$_SESSION[theme].'/images/online.gif';
-                };
-                if ($row[online] == '0') {
-                    $status = 'themes/'.$_SESSION[theme].'/images/offline.gif';
-                };
-                if ($row[avatar] == '') { //|| !valid_url($row[avatar])) {
-                    $avatar = 'themes/'.$_SESSION[theme].'/images/no_avatar.gif';
-                } else {
-                    $avatar = ''.$row[avatar].'';
-                };
-?>
-<center><img src="<?php print $avatar ?>"></center><br />
-<strong>Member User Name:</strong> <?php print $currentusername ?><br />
-<strong>Member First Name:</strong> <?php print $currentfirstname ?><br />
-<strong>Member Last Name:</strong> <?php print $currentlastname ?><br />
-<strong>Member Group:</strong> <?php print $row['group'] ?><br />
-<strong>Date Joined:</strong> <?php print $row['date_joined'] ?><br />
-<strong>Online Status: </strong><img src="<?php print $status ?>" /><br /><br />
-<h2>Statistics:</h2>
-<strong>Views:</strong> <?php print $row['views'] ?> <br />
-<strong>Comments:</strong> <?php print $comment_count ?><br />
-<strong>Positive (+) Reputation:</strong> <?php print $row['kpos'] ?><br />
-<strong>Negative (-) Reputation:</strong> <?php print $row['kneg'] ?><br />
-<a href="?act=profile&amp;action=reputation&amp;username=<?php print $row['username'] ?>">Change <?php print $currentusername ?>'s Reputation</a><br />
-<a href="?act=inbox&amp;action=compose&amp;to=<?php print $row['username'] ?>">Compose New Message</a><br />
-<strong>AIM User Name:</strong> <?php print $row['aim'] ?><br />
-<strong>About:</strong> <?php print $row['about'] ?><br />
-<strong>Interests:</strong> <?php print $row['interests'] ?><br />
-<strong>Website:</strong> <a href="<?php print $row['website'] ?>" target="_blank"><?php print $row['website'] ?></a><br />
-<strong>Email:</strong> <a href="mailto:<?php print $row['email'] ?>"><?php print $row['email'] ?></a>
-<?php
-            };
+        } else {
+            $un = $get_username;
+            title("View Profile");
+            page_header('View Profile');
         };
-        if ($_GET['username'] != '' && $username != 'Guest') {
-            if(mysql_num_rows($view_user_query) == 0) {
-                title("Member Does Not Exist");
-                print '<h1><center>Member Does Not Exist</center></h1>
-                    <center><strong>This member does not exist.</strong></center>';
+        if ($user = $db->get_row("SELECT * FROM `users` WHERE `username` = '$un' LIMIT 1")) {
+            if ($user->avatar == '') {
+                $avatar = 'themes/' . $theme . '/images/no_avatar.gif';
             } else {
-                title("View Profile");
-                page_header('View Profile');
-                while ($row = mysql_fetch_array($view_user_query)) {
-                    if ($row[online] == '1') {
-                        $status = 'themes/'.$_SESSION[theme].'/images/online.gif';
-                    };
-                    if ($row[online] == '0') {
-                        $status = 'themes/'.$_SESSION[theme].'/images/offline.gif';
-                    };
-?>
-<center><img src="<?php print $avatar ?>"></center><br />
-<strong>Member Username:</strong> <?php print $row[username] ?><br />
-<strong>Member First Name:</strong> <?php print $row[first_name] ?><br />
-<strong>Member Last Name:</strong> <?php print $row[last_name] ?><br />
-<strong>Member Rank:</strong> <?php print $row[rank] ?><br />
-<strong>Member Group:</strong> <?php print $row[group] ?><br />
-<strong>Date Joined:</strong> <?php print $row[date_joined] ?><br />
-<img src="<?php print $status ?>"  /><br /><br />
-<h2>Statistics:</h2>
-<strong>Profile Views:</strong> <?php print $row[views] ?> <br />
-<strong>Number of Comments:</strong> <?php print $comment_count ?><br />
-<strong>Positive (+) Reputation:</strong> <?php print $row[kpos] ?><br />
-<strong>Negative (-) Reputation:</strong> <?php print $row[kneg] ?><br />
-<a href="?act=profile&amp;action=reputation&amp;username=<?php print $_GET[username] ?>">Change <?php print $_GET[username] ?>'s Reputation</a><br />
-<a href="?act=inbox&amp;action=compose&amp;to=<?php print $row[username] ?>">Compose New Message</a><br />
-<strong>AIM User Name:</strong> <?php print $row[aim] ?><br />
-<strong>About:</strong> <?php print $row[about] ?><br />
-<strong>Interests:</strong> <?php print $row[interests] ?><br />
-<strong>Website:</strong> <a href="<?php print $row[website] ?>" target="_blank"><?php print $row[website] ?></a><br />
-<strong>Email:</strong> <a href="mailto:<?php print $row[email] ?>"><?php print $row[email] ?></a><br /><br />
-<h2>Add a New Comment:</h2>
-<form role="form" class="form-horizontal" action="?act=profile&amp;action=comment&amp;set=add_new_comment&amp;username=<?php print $_GET[username] ?>" method="post">
-<textarea name="comment" class="form-control"></textarea><br />
-<button type="submit" class="btn">Submit New Comment</button>
-</form>
-<?php
-                };
+                $avatar = $user->avatar;
             };
+            if ($user->online == true) {
+                $status = 'themes/' . $theme . '/images/online.gif';
+            } else {
+                $status = 'themes/' . $theme . '/images/offline.gif';
+            };
+?>
+<p><img src="<?php print $avatar ?>"></p>
+<p><strong>Member Username:</strong> <?php print $user->username ?></p>
+<p><strong>Member First Name:</strong> <?php print $user->first_name ?></p>
+<p><strong>Member Last Name:</strong> <?php print $user->last_name ?></p>
+<p><strong>Member Group:</strong> <?php print $user->user_group ?></p>
+<p><strong>Date Joined:</strong> <?php print $user->date_joined ?></p>
+<p><img src="<?php print $status ?>"  /></p></p>
+
+<h2>Statistics:</h2>
+<p><strong>Profile Views:</strong> <?php print $user->views ?> </p>
+<p><strong>Positive (+) Reputation:</strong> <?php print $user->kpos ?></p>
+<p><strong>Negative (-) Reputation:</strong> <?php print $user->kneg ?></p>
+<p><a href="profile.php?action=reputation&amp;username=<?php print $un ?>">Change <?php print $un ?>'s Reputation</a></p>
+<p><a href="?act=inbox&amp;action=compose&amp;to=<?php print $user->username ?>">Compose New Message</a></p>
+<p><strong>AIM User Name:</strong> <?php print $user->aim ?></p>
+<p><strong>About:</strong> <?php print $user->about ?></p>
+<p><strong>Interests:</strong> <?php print $user->interests ?></p>
+<p><strong>Website:</strong> <a href="<?php print $user->website ?>" target="_blank"><?php print $user->website ?></a></p>
+<p><strong>Email:</strong> <a href="mailto:<?php print $user->email ?>"><?php print $user->email ?></a></p></p>
+<?php
+        } else {
+            title("Member Does Not Exist");
+            page_header('Member Does Not Exist');
+?>
+<p>Member <strong><?php print $get_username ?></strong> does not exist.</p>
+<?php
         };
     };
 };
-//ACCOUNT OVERVIEW
-if ($action == 'options') {
+
+// ACCOUNT OVERVIEW
+if ($get_action == 'options') {
     title("Options");
     while ($row = mysql_fetch_array($find_data)) {
         print '<h1><center>Options</center></h1>
@@ -101,42 +66,47 @@ if ($action == 'options') {
             <table class="table" align="center">
             <tr><td>
             <strong>Profile Information:</strong><br />
-            Views: '.$row[views].' <br />
-            Reputation: +'.$row[kpos].'/-'.$row[kneg].'<br /><br />
+            Views: '.$user->views.' <br />
+            Reputation: +'.$user->kpos.'/-'.$user->kneg.'<br /><br />
             Local Time: '.$local_time.'<br />
-            Last Logon: '.$row[last_log_on].'<br />
+            Last Logon: '.$user->last_log_on.'<br />
             IP: '.$ip.'<br />
             </td>
             </tr>
             <tr><td>
             <strong>Profile Settings:</strong><br />
             <a href="?act=profile&amp;action=view">View My Profile </a> |
-            <a href="?act=profile&amp;action=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
             <a href="?act=profile&amp;action=edit_profile">Edit Profile</a> |
             <a href="?act=profile&amp;action=change_password">Change Password</a>
             </td></tr>
             </table> ';
     };
 };
-if ($action =='reputation') {
+
+// REPUTATION
+if ($get_action =='reputation') {
     title("Reputation");
-    print '<h1><center>Reputation</center></h1>
-        <hr width="100%" align="center"/>
-        <table class="table" align="center">
-        <tr><td>Would you like to add +rep or -rep?
-        <form action="?act=profile&amp;action=change_reputation&amp;username='.$_GET[username].'" method="post">
-        <select name="rep"><option value="+rep">Add One (+1) to Reputation</option><option value="-rep">Subtract One (-1) to Reputation</option></select>
-        <input type="submit" value="Submit Change in Reputation" />
-        </form></td></tr></table>';
+    page_header('Reputation');
+?>
+<h2>Would you like to add +rep or -rep?</h2>
+<form action="?action=change_reputation&amp;username=<?php print $get_username ?>" method="post">
+<select name="rep" class="form-control">
+<option value="+rep">Add One (+1) to Reputation</option>
+<option value="-rep">Subtract One (-1) to Reputation</option>
+</select>
+<button type="submit" class="btn btn-lg btn-primary">Submit Change in Reputation</button>
+</form>
+<?php
 };
-if ($action == 'change_reputation') {
+
+if ($get_action == 'change_reputation') {
     if ($_POST['rep'] == '+rep') {
         title("Positive (+1) Reputation Given");
         print '<h1><center>Positive (+1) Reputation Given</center></h1>
             <hr width="100%" align="center"/>
             <table class="table" align="center">
-            <tr><td>Positive reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-            <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+            <tr><td>Positive reputation has been given to <strong>'.$get_username.'</strong>.<br />
+            <a href="?act=profile&amp;action=view&amp;username='.$get_username.'">Back to '.$get_username.'\'s profile</a>
             </td></tr></table>';
     };
     if ($_POST['rep'] == '-rep') {
@@ -144,13 +114,14 @@ if ($action == 'change_reputation') {
         print '<h1><center>Negative (-1) Reputation Given</center></h1>
             <hr width="100%" align="center"/>
             <table class="table" align="center">
-            <tr><td>Negative reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-            <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+            <tr><td>Negative reputation has been given to <strong>'.$get_username.'</strong>.<br />
+            <a href="?act=profile&amp;action=view&amp;username='.$get_username.'">Back to '.$get_username.'\'s profile</a>
             </td></tr></table>';
     };
 };
-//EDIT PROFILE
-if ($action == 'edit_profile') {
+
+// EDIT PROFILE
+if ($get_action == 'edit_profile') {
     if ($set == 'fix') {
         $_SESSION['firstname'] = $_POST['fname'];
         $_SESSION['lastname'] = $_POST['lname'];
@@ -163,27 +134,27 @@ if ($action == 'edit_profile') {
         print '<table class="table" align="center">
             <tr><td>
             <form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
-            <strong>Username:</strong> '.$row[username].'<br />
+            <strong>Username:</strong> '.$user->username.'<br />
             <strong>First Name:</strong><br />
-            <input type="text" name="fname" size="65" value="'.$row[first_name].'" /><br />
+            <input type="text" name="fname" size="65" value="'.$user->first_name.'" /><br />
             <strong>Last Name:</strong><br />
-            <input type="text" name="lname" size="65" value="'.$row[last_name].'" /><br />
-            <strong>Date Joined:</strong> '.$row[date_joined].' <br />
+            <input type="text" name="lname" size="65" value="'.$user->last_name.'" /><br />
+            <strong>Date Joined:</strong> '.$user->date_joined.' <br />
             <strong>About:</strong><br />
-            <textarea name="about" rows="10" cols="56">'.$row[about].'</textarea><br /> 
+            <textarea name="about" rows="10" cols="56">'.$user->about.'</textarea><br /> 
             <strong>Interests:</strong><br />
-            <textarea name="interests" rows="10" cols="56">'.$row[interests].'</textarea><br />
+            <textarea name="interests" rows="10" cols="56">'.$user->interests.'</textarea><br />
             <strong>Signature:</strong><br />
-            <textarea name="signature" rows="10" cols="56">'.$row[signature].'</textarea><br />
+            <textarea name="signature" rows="10" cols="56">'.$user->signature.'</textarea><br />
             <strong>AIM:</strong><br />
-            <input type="text" name="aim" size="65" value="'.$row[aim].'" /><br /> 
+            <input type="text" name="aim" size="65" value="'.$user->aim.'" /><br /> 
             <strong>Email:</strong><br />
-            <input type="text" name="email" size="65" value="'.$row[email].'" /><br />
+            <input type="text" name="email" size="65" value="'.$user->email.'" /><br />
             <strong>Avatar:</strong><br />
-            <input type="text" name="avatar" size="65" value="'.$row[avatar].'" /><br />
+            <input type="text" name="avatar" size="65" value="'.$user->avatar.'" /><br />
             <strong>Website:</strong><br />
-            <input type="text" name="website" size="65" value="'.$row[website].'" /><br /> 
-            <strong>Date of Birth:</strong> '.$row[date_of_birth].'<br />
+            <input type="text" name="website" size="65" value="'.$user->website.'" /><br /> 
+            <strong>Date of Birth:</strong> '.$user->date_of_birth.'<br />
             <input type="submit" name="submit" value="Save Edited Profile" />
             </form>
             </td></tr>
@@ -191,7 +162,7 @@ if ($action == 'edit_profile') {
     };
 };
 //CHANGE PASSWORD
-if ($action == 'change_password') {
+if ($get_action == 'change_password') {
     title("Change Password");
     print '<h1><center>Change Password</center></h1>
         <hr width="100%" align="center"/>
@@ -206,7 +177,7 @@ if ($action == 'change_password') {
         </td></tr></table>';
 };
 //SUBMIT CHANGE PASSWORD
-if ($action == 'submit_change_password') {
+if ($get_action == 'submit_change_password') {
     $currentpass = sha1(md5($_POST[current_password]));
     if (mysql_num_rows($query) == 1) {
         if ($_POST[new_password] == $_POST[reenter_new_password]) {
@@ -238,7 +209,7 @@ if ($action == 'submit_change_password') {
                         </td></tr>
                         </table>';
                 };
-            } //if ($_POST[new_password] != '')
+            }
             else {
                 title("New Password Cannot be Blank");
                 print '<h1><center>New Password Cannot be Blank</center></h1>

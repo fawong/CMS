@@ -15,15 +15,12 @@
 -->
 <title><?php print $cms_name ?></title>
 <?php
-if ($action == 'login' || $action == 'register') {
+if ($get_action == 'login' || $get_action == 'register') {
 ?>
 <link rel="stylesheet" type="text/css" href="//<?php print $settings['url'] ?>/themes/default/css/signin.css" media="screen" />
 <?php
 };
 ?>
-<style type="text/css">
-<?php print $row['css'] ?>
-</style>
 <link href="//<?php print $settings['url'] ?>/themes/default/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="//<?php print $settings['url'] ?>/themes/default/css/navbar.css" media="screen" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" />
@@ -45,7 +42,7 @@ check_inbox();
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="//<?php print $settings['url'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
+<a class="navbar-brand" href="//<?php print $settings['url'] ?>"><img src="//<?php print $settings['logo'] ?>" alt="Logo" /></a>
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
@@ -75,7 +72,7 @@ if ($_SESSION['login'] == true) {
 <li><a href="//<?php print $settings['url'] ?>/admin/overview.php"><?php print $cms_name ?> Overview</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/posts.php?action=new_post">Add New Post</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/page.php?action=page">Web Page Control Panel</a></li>
-<li><a href="//<?php print $settings['url'] ?>/admin/members.php?action=edit_members">Edit Members List</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/members.php?action=list_members">Edit Members List</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/dcp.php?action=overview">Downloads Control Panel</a></li>
 <?php
     };
@@ -89,7 +86,7 @@ if ($_SESSION['login'] == true) {
 <?php
 if($_SESSION['login'] != true) {
 ?>
-<li><a href="loginout.php?action=login">Login</a></li>
+<li><a href="https://<?php print $settings['url'] ?>/loginout.php?action=login">Login</a></li>
 <li><a href="register.php?action=register">Register</a></li>
 <?php
     //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';

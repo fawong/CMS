@@ -1,8 +1,8 @@
 <?php 
 require_once(dirname(dirname(__FILE__)) . '/functions.php');
 
-if($_SESSION['group'] != 'admin') {
-    redirect("failed.php?amp;id=2");
+if($group != 'admin') {
+    redirect("failed.php?id=2");
 } else {
     if ($action == 'confirm_delete_comment') {
         title("Comment Deleted");

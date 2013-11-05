@@ -1,9 +1,11 @@
 <?php
 require_once('functions.php');
 
-if ($action == 'login') {
-    title("Login to $cms_name");
-    page_header("Sign in to $cms_name");
+// LOGIN
+if ($login == false) {
+    if ($get_action == 'login') {
+        title("Login to $cms_name");
+        page_header("Sign in to $cms_name");
 ?>
 <form class="form-signin" method="post" action="?action=authenticate" name="login">
     <h2 class="form-signin-heading">Please sign in</h2>
@@ -18,34 +20,31 @@ if ($action == 'login') {
 </form>
 
 <?php
-};
+    };
+} else {
+    page_header('Already Logged In');
+?>
+You are already logged in.
+<?php
+}
 
-if ($action == 'authenticate') {
-    $iun = $_POST['inputusername'];
+if ($get_action == 'authenticate') {
+    $inputun = $_POST['inputusername'];
     $inputp = $_POST['inputpassword'];
-    if ($iun != '' || $inputp != '') {
+    if ($inputun != '' && $inputp != '') {
         $hashpass = sha1(md5($inputp));
-        $check_sql = mysql_query("SELECT * FROM users WHERE username = '$iun' AND password = '$hashpass'");
-        $check_row = mysql_num_rows($check_sql);
-        if ($check_row == 1) {
-            $select = mysql_query("SELECT * FROM users WHERE username = '$iun'");
-            while ($row = mysql_fetch_array($select)) {
-                $_SESSION['group'] = $row['user_group'];
-                $_SESSION['rank'] = $row['rank'];
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['firstname'] = $row['first_name'];
-                $_SESSION['lastname'] = $row['last_name'];
-                $_SESSION['theme_name'] = $row['theme'];
-                $_SESSION['access_file_manager'] = $row['access_file_manager'];
-                $_SESSION['choice'] = 'agree';
-            };
+        if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
+            $_SESSION['group'] = $user->user_group;
+            $_SESSION['rank'] = $user->rank;
+            $_SESSION['user_id'] = $user->user_id;
+            $_SESSION['username'] = $user->username;
+            $_SESSION['firstname'] = $user->first_name;
+            $_SESSION['lastname'] = $user->last_name;
+            $_SESSION['theme_name'] = $user->theme;
+            $_SESSION['access_file_manager'] = $user->access_file_manager;
             $_SESSION['login'] = true;
-            $sql = "UPDATE users SET last_log_on = '$timestamp', ip = '$ip' WHERE username = '$username'";
-            $result = mysql_query($sql) or die (mysql_error());
-            $sql = "UPDATE users SET online = '1' WHERE username = '$username'";
-            $result = mysql_query($sql) or die (mysql_error());
-            redirect('posts.php');
+            $db->query("UPDATE users SET last_log_on = '$timestamp', ip = '$ip', online = '1' WHERE username = '$username'");
+            redirect("posts.php");
         } else {
             redirect("failed.php?id=1");
         };
@@ -54,12 +53,12 @@ if ($action == 'authenticate') {
     };
 };
 
-//LOGOUT SCRIPT
-if ($action == 'logout') {
-    $result = mysql_query("UPDATE users SET `online` = '0' WHERE `username` = '$username'") or die (mysql_error());
+// LOGOUT
+if ($get_action == 'logout') {
+    $db->query("UPDATE users SET `online` = '0' WHERE `username` = '$username'");
     $_SESSION['login'] = false;
     session_destroy();
-    redirect('posts.php');
-}; //if ($act == 'logout')
+    redirect('index.php');
+};
 require_once('footer.php');
 ?>

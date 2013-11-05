@@ -7,7 +7,7 @@ if($_SESSION['group'] != 'admin') {
     // SUBMIT NEW POST
     if($action == 'submit_new_post') {
         if($_POST['post'] != '') {
-            $insert_query = mysql_query("INSERT INTO `posts`(`title`, `username`, `post`, `date`) VALUES('$_POST[title]', '$username', '$_POST[post]', '$timestamp')") or die(mysql_error());
+            $insert_query = mysql_query("INSERT INTO `posts`(`title`, `username`, `post`) VALUES ('$_POST[title]', '$username', '$_POST[post]')") or die(mysql_error());
             page_header('New Post Added');
 ?>
 New Post Added.
@@ -24,14 +24,6 @@ New Post Added.
 <div class="form-group">
 <label>Title:</label>
 <input name="title" type="text" class="form-control" />
-</div>
-<div class="form-group">
-<label>Date:</label>
-<?php print $timestamp ?>
-</div>
-<div class="form-group">
-<label>Poster:</label>
-<?php print $username ?>
 </div>
 <div class="form-group">
 <label>Post:</label>
