@@ -1,6 +1,6 @@
 <?php
 require_once('functions.php');
-require_once("recaptcha/recaptchalib.php");
+require_once("includes/recaptcha/recaptchalib.php");
 
 // CREATE ACCOUNT
 if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
