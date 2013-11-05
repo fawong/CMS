@@ -58,22 +58,16 @@ if ($_SESSION['login'] == true) {
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
 <ul class="dropdown-menu">
-<li><a href="?act=account&amp;action=members_list">View Members List</a></li>
-<li><a href="?act=profile&amp;action=options">Options</a></li>
+<li><a href="account.php?action=members_list">View Members List</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/settings.php?action=options">Options</a></li>
+<li><a href="wpcp.php?action=page">Web Page Control Panel</a></li>
+<li><a href="pm.php">Personal Messages</a></li>
 <?php
-    if ($_SESSION['group'] == 'member') {
-?>
-<li><a href="?act=wpcp&amp;action=page">Web Page Control Panel</a></li>
-<?php
-    };
     if ($_SESSION['group'] == 'admin' || $_SESSION['access_file_manager'] == 1) {
 ?>
 <li><a href="?act=manager">File Manager</a></li>
 <?php
     };
-?>
-<li><a href="?act=inbox">Inbox</a></li>
-<?php
     if ($_SESSION['group'] == 'admin') {
 ?>
 <li class="divider"></li>
@@ -99,7 +93,7 @@ if($_SESSION['login'] != true) {
 <li><a href="register.php?action=register">Register</a></li>
 <?php
     //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
-} //if($_SESSION['login'] != true)
+}
 else {
 ?>
 <li><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>

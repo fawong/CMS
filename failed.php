@@ -36,7 +36,9 @@ if (!isset($id)){
 if ($error_message_title != '' || $error_message != '') {
     title($error_message_title);
     page_header($error_message_title);
-    print $error_message;
-};
 ?>
-Need to fix this ASAP
+<?php print $error_message ?>
+<?php
+};
+require_once('footer.php');
+?>

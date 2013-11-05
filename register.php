@@ -5,7 +5,7 @@ require_once("recaptcha/recaptchalib.php");
 // CREATE ACCOUNT
 if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
     if ($action == 'create_account') {
-        $resp = recaptcha_check_answer($setting['recaptcha_private_key'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
+        $resp = recaptcha_check_answer($settings['recaptcha_private_key'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
         if ($resp->is_valid) {
             $user_name = $_POST['username'];
             $username_check = mysql_query("SELECT * FROM users WHERE username = '$user_name'");
