@@ -56,7 +56,7 @@ function valid_url($str) {
 
 // REDIRECT FUNCTION
 function redirect($url) {
-    print '<meta http-equiv="refresh" content="0; url='.$url.'" />';
+    header("$url");
 };
 
 // FIND TOTAL STORAGE SPACE

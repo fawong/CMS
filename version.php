@@ -1,13 +1,13 @@
 <?php
 /**
- * The CMS version string
+ * The version string
  *
  * @global string $cms_version
  */
 $cms_version = '2013.11.04-dev';
 
 /**
- * Holds the CMS DB revision, increments when changes are made to the WordPress DB schema.
+ * Holds the DB revision, increments when changes are made to the DB schema.
  *
  * @global int $cms_db_version
  */

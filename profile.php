@@ -91,154 +91,144 @@ if ($_SESSION['login'] != true) {
             };
         };
     };
-    //ACCOUNT OVERVIEW
-    if ($action == 'options') {
-        title("Options");
-        while ($row = mysql_fetch_array($find_data)) {
-            print '<h1><center>Options</center></h1>
-                <hr width="100%" align="center"/>
-                <table class="table" align="center">
-                <tr><td>
-                <strong>Profile Information:</strong><br />
-                Views: '.$row[views].' <br />
-                Reputation: +'.$row[kpos].'/-'.$row[kneg].'<br /><br />
-                Local Time: '.$local_time.'<br />
-                Last Logon: '.$row[last_log_on].'<br />
-                IP: '.$ip.'<br />
-                </td>
-                </tr>
-                <tr><td>
-                <strong>Profile Settings:</strong><br />
-                <a href="?act=profile&amp;action=view">View My Profile </a> |
-                <a href="?act=profile&amp;action=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
-                <a href="?act=profile&amp;action=edit_profile">Edit Profile</a> |
-                <a href="?act=profile&amp;action=change_password">Change Password</a>
-                </td></tr>
-                </table> ';
-        };
-    };
-    if ($action =='reputation') {
-        title("Reputation");
-        print '<h1><center>Reputation</center></h1>
-            <hr width="100%" align="center"/>
-            <table class="table" align="center">
-            <tr><td>Would you like to add +rep or -rep?
-            <form action="?act=profile&amp;action=change_reputation&amp;username='.$_GET[username].'" method="post">
-            <select name="rep"><option value="+rep">Add One (+1) to Reputation</option><option value="-rep">Subtract One (-1) to Reputation</option></select>
-            <input type="submit" value="Submit Change in Reputation" />
-            </form></td></tr></table>';
-    };
-    if ($action == 'change_reputation') {
-        if ($_POST['rep'] == '+rep') {
-            title("Positive (+1) Reputation Given");
-            print '<h1><center>Positive (+1) Reputation Given</center></h1>
-                <hr width="100%" align="center"/>
-                <table class="table" align="center">
-                <tr><td>Positive reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
-                </td></tr></table>';
-        };
-        if ($_POST['rep'] == '-rep') {
-            title("Negative (-1) Reputation Given");
-            print '<h1><center>Negative (-1) Reputation Given</center></h1>
-                <hr width="100%" align="center"/>
-                <table class="table" align="center">
-                <tr><td>Negative reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
-                <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
-                </td></tr></table>';
-        };
-    };
-    //EDIT PROFILE
-    if ($action == 'edit_profile') {
-        if ($set == 'fix') {
-            $_SESSION['firstname'] = $_POST['fname'];
-            $_SESSION['lastname'] = $_POST['lname'];
-            print '<strong>Your profile has been updated.</strong>';
-        };
-        title("Edit Profile");
-        print '<h1><center>Edit Profile</center></h1>
-            <hr width="100%" align="center"/>';
-        while ($row = mysql_fetch_array($edit_query)) {
-            print '<table class="table" align="center">
-                <tr><td>
-                <form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
-                <strong>Username:</strong> '.$row[username].'<br />
-                <strong>First Name:</strong><br />
-                <input type="text" name="fname" size="65" value="'.$row[first_name].'" /><br />
-                <strong>Last Name:</strong><br />
-                <input type="text" name="lname" size="65" value="'.$row[last_name].'" /><br />
-                <strong>Date Joined:</strong> '.$row[date_joined].' <br />
-                <strong>About:</strong><br />
-                <textarea name="about" rows="10" cols="56">'.$row[about].'</textarea><br /> 
-                <strong>Interests:</strong><br />
-                <textarea name="interests" rows="10" cols="56">'.$row[interests].'</textarea><br />
-                <strong>Signature:</strong><br />
-                <textarea name="signature" rows="10" cols="56">'.$row[signature].'</textarea><br />
-                <strong>AIM:</strong><br />
-                <input type="text" name="aim" size="65" value="'.$row[aim].'" /><br /> 
-                <strong>Email:</strong><br />
-                <input type="text" name="email" size="65" value="'.$row[email].'" /><br />
-                <strong>Avatar:</strong><br />
-                <input type="text" name="avatar" size="65" value="'.$row[avatar].'" /><br />
-                <strong>Website:</strong><br />
-                <input type="text" name="website" size="65" value="'.$row[website].'" /><br /> 
-                <strong>Date of Birth:</strong> '.$row[date_of_birth].'<br />
-                <input type="submit" name="submit" value="Save Edited Profile" />
-                </form>
-                </td></tr>
-                </table>';
-        };
-    };
-    //CHANGE PASSWORD
-    if ($action == 'change_password') {
-        title("Change Password");
-        print '<h1><center>Change Password</center></h1>
+};
+//ACCOUNT OVERVIEW
+if ($action == 'options') {
+    title("Options");
+    while ($row = mysql_fetch_array($find_data)) {
+        print '<h1><center>Options</center></h1>
             <hr width="100%" align="center"/>
             <table class="table" align="center">
             <tr><td>
-            <form action="?act=profile&amp;action=submit_change_password" method="post">
-            Current Password: <input type="password" name="current_password" value="" /><br />
-            New Password: <input type="password" name="new_password" value="" /><br />
-            Re-Enter New Password: <input type="password" name="reenter_new_password" value="" /><br />
-            <input type="submit" value="Change Password" />
-            </form>
+            <strong>Profile Information:</strong><br />
+            Views: '.$row[views].' <br />
+            Reputation: +'.$row[kpos].'/-'.$row[kneg].'<br /><br />
+            Local Time: '.$local_time.'<br />
+            Last Logon: '.$row[last_log_on].'<br />
+            IP: '.$ip.'<br />
+            </td>
+            </tr>
+            <tr><td>
+            <strong>Profile Settings:</strong><br />
+            <a href="?act=profile&amp;action=view">View My Profile </a> |
+            <a href="?act=profile&amp;action=comment&amp;set=view_comments&amp;username='.$username.'">View Comments</a> |
+            <a href="?act=profile&amp;action=edit_profile">Edit Profile</a> |
+            <a href="?act=profile&amp;action=change_password">Change Password</a>
+            </td></tr>
+            </table> ';
+    };
+};
+if ($action =='reputation') {
+    title("Reputation");
+    print '<h1><center>Reputation</center></h1>
+        <hr width="100%" align="center"/>
+        <table class="table" align="center">
+        <tr><td>Would you like to add +rep or -rep?
+        <form action="?act=profile&amp;action=change_reputation&amp;username='.$_GET[username].'" method="post">
+        <select name="rep"><option value="+rep">Add One (+1) to Reputation</option><option value="-rep">Subtract One (-1) to Reputation</option></select>
+        <input type="submit" value="Submit Change in Reputation" />
+        </form></td></tr></table>';
+};
+if ($action == 'change_reputation') {
+    if ($_POST['rep'] == '+rep') {
+        title("Positive (+1) Reputation Given");
+        print '<h1><center>Positive (+1) Reputation Given</center></h1>
+            <hr width="100%" align="center"/>
+            <table class="table" align="center">
+            <tr><td>Positive reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
+            <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
             </td></tr></table>';
     };
-    //SUBMIT CHANGE PASSWORD
-    if ($action == 'submit_change_password') {
-        $currentpass = sha1(md5($_POST[current_password]));
-        if (mysql_num_rows($query) == 1) {
-            if ($_POST[new_password] == $_POST[reenter_new_password]) {
-                if ($_POST[new_password] != '') {
-                    if ($_POST[reenter_new_password] != '') {
-                        $newpass = sha1(md5($_POST[new_password]));
-                        $_SESSION['group'] = 'public';
-                        $_SESSION['rank'] = 'member';
-                        $_SESSION['user_id'] = '0';
-                        $_SESSION['username'] = 'guest';
-                        $_SESSION['theme'] = 'default';
-                        $_SESSION['login'] = false;
-                        title("Successfully Changed Password");
-                        print '<h1><center>Successfully Changed Password</center></h1>
-                            <hr width="100%" align="center"/>
-                            <table class="table" align="center">
-                            <tr><td>
-                            Your password has been changed.<br />
-                            You have been logged out of the system.
-                            </td></tr>
-                            </table>';
-                    } else {
-                        title("New Password Cannot be Blank");
-                        print '<h1><center>New Password Cannot be Blank</center></h1>
-                            <hr width="100%" align="center"/>
-                            <table class="table" align="center">
-                            <tr><td>
-                            Your new password cannot be blank.
-                            </td></tr>
-                            </table>';
-                    };
-                } //if ($_POST[new_password] != '')
-                else {
+    if ($_POST['rep'] == '-rep') {
+        title("Negative (-1) Reputation Given");
+        print '<h1><center>Negative (-1) Reputation Given</center></h1>
+            <hr width="100%" align="center"/>
+            <table class="table" align="center">
+            <tr><td>Negative reputation has been given to <strong>'.$_GET[username].'</strong>.<br />
+            <a href="?act=profile&amp;action=view&amp;username='.$_GET[username].'">Back to '.$_GET[username].'\'s profile</a>
+            </td></tr></table>';
+    };
+};
+//EDIT PROFILE
+if ($action == 'edit_profile') {
+    if ($set == 'fix') {
+        $_SESSION['firstname'] = $_POST['fname'];
+        $_SESSION['lastname'] = $_POST['lname'];
+        print '<strong>Your profile has been updated.</strong>';
+    };
+    title("Edit Profile");
+    print '<h1><center>Edit Profile</center></h1>
+        <hr width="100%" align="center"/>';
+    while ($row = mysql_fetch_array($edit_query)) {
+        print '<table class="table" align="center">
+            <tr><td>
+            <form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
+            <strong>Username:</strong> '.$row[username].'<br />
+            <strong>First Name:</strong><br />
+            <input type="text" name="fname" size="65" value="'.$row[first_name].'" /><br />
+            <strong>Last Name:</strong><br />
+            <input type="text" name="lname" size="65" value="'.$row[last_name].'" /><br />
+            <strong>Date Joined:</strong> '.$row[date_joined].' <br />
+            <strong>About:</strong><br />
+            <textarea name="about" rows="10" cols="56">'.$row[about].'</textarea><br /> 
+            <strong>Interests:</strong><br />
+            <textarea name="interests" rows="10" cols="56">'.$row[interests].'</textarea><br />
+            <strong>Signature:</strong><br />
+            <textarea name="signature" rows="10" cols="56">'.$row[signature].'</textarea><br />
+            <strong>AIM:</strong><br />
+            <input type="text" name="aim" size="65" value="'.$row[aim].'" /><br /> 
+            <strong>Email:</strong><br />
+            <input type="text" name="email" size="65" value="'.$row[email].'" /><br />
+            <strong>Avatar:</strong><br />
+            <input type="text" name="avatar" size="65" value="'.$row[avatar].'" /><br />
+            <strong>Website:</strong><br />
+            <input type="text" name="website" size="65" value="'.$row[website].'" /><br /> 
+            <strong>Date of Birth:</strong> '.$row[date_of_birth].'<br />
+            <input type="submit" name="submit" value="Save Edited Profile" />
+            </form>
+            </td></tr>
+            </table>';
+    };
+};
+//CHANGE PASSWORD
+if ($action == 'change_password') {
+    title("Change Password");
+    print '<h1><center>Change Password</center></h1>
+        <hr width="100%" align="center"/>
+        <table class="table" align="center">
+        <tr><td>
+        <form action="?act=profile&amp;action=submit_change_password" method="post">
+        Current Password: <input type="password" name="current_password" value="" /><br />
+        New Password: <input type="password" name="new_password" value="" /><br />
+        Re-Enter New Password: <input type="password" name="reenter_new_password" value="" /><br />
+        <input type="submit" value="Change Password" />
+        </form>
+        </td></tr></table>';
+};
+//SUBMIT CHANGE PASSWORD
+if ($action == 'submit_change_password') {
+    $currentpass = sha1(md5($_POST[current_password]));
+    if (mysql_num_rows($query) == 1) {
+        if ($_POST[new_password] == $_POST[reenter_new_password]) {
+            if ($_POST[new_password] != '') {
+                if ($_POST[reenter_new_password] != '') {
+                    $newpass = sha1(md5($_POST[new_password]));
+                    $_SESSION['group'] = 'public';
+                    $_SESSION['rank'] = 'member';
+                    $_SESSION['user_id'] = '0';
+                    $_SESSION['username'] = 'guest';
+                    $_SESSION['theme'] = 'default';
+                    $_SESSION['login'] = false;
+                    title("Successfully Changed Password");
+                    print '<h1><center>Successfully Changed Password</center></h1>
+                        <hr width="100%" align="center"/>
+                        <table class="table" align="center">
+                        <tr><td>
+                        Your password has been changed.<br />
+                        You have been logged out of the system.
+                        </td></tr>
+                        </table>';
+                } else {
                     title("New Password Cannot be Blank");
                     print '<h1><center>New Password Cannot be Blank</center></h1>
                         <hr width="100%" align="center"/>
@@ -248,26 +238,36 @@ if ($_SESSION['login'] != true) {
                         </td></tr>
                         </table>';
                 };
-            } else {
-                title("New Passwords Do Not Match");
-                print '<h1><center>New Passwords Do Not Match</center></h1>
+            } //if ($_POST[new_password] != '')
+            else {
+                title("New Password Cannot be Blank");
+                print '<h1><center>New Password Cannot be Blank</center></h1>
                     <hr width="100%" align="center"/>
                     <table class="table" align="center">
                     <tr><td>
-                    Your new passwords do not match.
+                    Your new password cannot be blank.
                     </td></tr>
                     </table>';
             };
         } else {
-            title("Current Password is Incorrect");
-            print '<h1><center>Current Password is Incorrect</center></h1>
+            title("New Passwords Do Not Match");
+            print '<h1><center>New Passwords Do Not Match</center></h1>
                 <hr width="100%" align="center"/>
                 <table class="table" align="center">
                 <tr><td>
-                Your current password is incorrect.
+                Your new passwords do not match.
                 </td></tr>
                 </table>';
         };
+    } else {
+        title("Current Password is Incorrect");
+        print '<h1><center>Current Password is Incorrect</center></h1>
+            <hr width="100%" align="center"/>
+            <table class="table" align="center">
+            <tr><td>
+            Your current password is incorrect.
+            </td></tr>
+            </table>';
     };
 };
 require_once('footer.php');
