@@ -2,12 +2,13 @@
 <html xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="description" content="A very, very simple version of Facebook, MySpace, Gmail, Blogger, Blogspot, all shoved into one." />
-<meta name="keywords" content="<?php print $cms_name ?>, <?php print $cms_name ?>.com, blog, forums, Super Testing, SUPER TESTING, SUPER, super, TESTING, testing" />
-<meta name="author" content="<?php print $cms_name ?>.com, <?php print $cms_name ?>.com, <?php print $cms_name ?>, <?php print $cms_name ?>" />
+<meta name="description" content="Not A CMS is not a CMS" />
+<meta name="keywords" content="<?php print $cms_name ?>, blog, forums, posts, comments" />
+<meta name="author" content="<?php print $cms_name ?>" />
 <meta name="rating" content="general" />
 <meta name="revisit-after" content="5 Days" />
 <meta name="robots" content="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--
 <meta name="copyright" content="Copyright &copy; <?php print ''.date("Y").'-'.(date("Y") + 1).'' ?> <?php print $cms_name ?>. All Rights Reserved." />
 <meta name="distribution" content="GLOBAL" />
@@ -46,9 +47,21 @@ check_inbox();
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
-<li class="active"><a href="//<?php print $settings['url'] ?>/posts.php">Posts</a></li>
-<li><a href="//<?php print $settings['url'] ?>/page.php?page=contact">Contact Us</a></li>
-<li><a href="//<?php print $settings['url'] ?>/page.php?page=about">About <?php print $cms_name ?></a></li>
+<?php
+$active1 = '<li>';
+$active2 = '<li>';
+$active3 = '<li>';
+if ($uri == '/cms/posts.php') {
+    $active1 = '<li class="active">';
+} else if ($get_page == 'contact') {
+    $active2 = '<li class="active">';
+} else if ($get_page == 'about') {
+    $active3 = '<li class="active">';
+}
+?>
+<?php print $active1 ?><a href="//<?php print $settings['url'] ?>/posts.php">Posts</a></li>
+<?php print $active2 ?><a href="//<?php print $settings['url'] ?>/page.php?page=contact">Contact Us</a></li>
+<?php print $active3 ?><a href="//<?php print $settings['url'] ?>/page.php?page=about">About <?php print $cms_name ?></a></li>
 <?php
 if ($_SESSION['login'] == true) {
 ?>
@@ -85,16 +98,30 @@ if ($_SESSION['login'] == true) {
 <ul class="nav navbar-nav navbar-right">
 <?php
 if($_SESSION['login'] != true) {
+$active4 = '<li>';
+$active5 = '<li>';
+if ($get_action == 'login') {
+    $active4 = '<li class="active">';
+} else if ($get_action == 'register') {
+    $active5 = '<li class="active">';
+}
 ?>
-<li><a href="https://<?php print $settings['url'] ?>/loginout.php?action=login">Login</a></li>
-<li><a href="register.php?action=register">Register</a></li>
+<?php print $active4 ?><a href="https://<?php print $settings['url'] ?>/loginout.php?action=login">Login</a></li>
+<?php print $active5 ?><a href="register.php?action=register">Register</a></li>
 <?php
     //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
 }
 else {
+$active6 = '<li>';
+$active7 = '<li>';
+if ($get_action == 'view') {
+    $active6 = '<li class="active">';
+} else if ($get_action == 'logout') {
+    $active7 = '<li class="active">';
+}
 ?>
-<li><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
-<li><a href="//<?php print $settings['url'] ?>/loginout.php?action=logout">Logout</a></li>
+<?php print $active6?><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
+<?php print $active7?><a href="//<?php print $settings['url'] ?>/loginout.php?action=logout">Logout</a></li>
 <?php
 };
 ?>

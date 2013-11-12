@@ -7,10 +7,8 @@ if ($_SESSION['login'] == false) {
     $_SESSION['theme'] = 'default';
 };
 
-page_header('Nothing here right now');
-?>
-Coming soon
-<?php
+redirect('posts.php');
+
 // FOOTER
 require('footer.php');
 ?>

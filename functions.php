@@ -21,6 +21,7 @@ $get_dir = $_GET['dir'];
 $get_file = $_GET['file'];
 
 $ip = $_SERVER['REMOTE_ADDR'];
+$uri = $_SERVER['REQUEST_URI'];
 
 // REQUIRED PHP SCRIPTS
 if (file_exists(dirname(__FILE__) . '/settings.php')) {
