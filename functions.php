@@ -10,18 +10,18 @@ $login = $_SESSION['login'];
 $theme = $_SESSION['theme'];
 
 $get_username = $_GET['username'];
-$get_user_id = $_GET['user_id'];
+$get_id = $_GET['id'];
 $get_id = $_GET['id'];
 $get_page = $_GET['page'];
 $get_action = $_GET['action'];
-$get_id = $_GET['id'];
 $get_path = $_GET['path'];
 $get_file_name = $_GET['filename'];
 $get_dir = $_GET['dir'];
 $get_file = $_GET['file'];
 
 $ip = $_SERVER['REMOTE_ADDR'];
-$uri = $_SERVER['REQUEST_URI'];
+$ruri = $_SERVER['REQUEST_URI'];
+$full_uri = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 // REQUIRED PHP SCRIPTS
 if (file_exists(dirname(__FILE__) . '/settings.php')) {
@@ -41,7 +41,13 @@ require_once('header.php');
 
 // DISPLAY TITLE IN WINDOW
 function title($title) {
+    global $print_title;
+    $print_title = $title;
 };
+
+function timestamp2date($timestamp) {
+    return date('F j, Y \a\t g:i A', strtotime($timestamp));
+}
 
 // PRINT HEADER
 function page_header($name) {

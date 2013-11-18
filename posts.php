@@ -1,14 +1,14 @@
 <?php
 require_once('functions.php');
 
-title("News and Updates");
-page_header("News and Updates");
+title("Posts");
+page_header("Posts");
 foreach ($db->get_results("SELECT * FROM posts ORDER BY id DESC") as $post) {
 ?>
 <h2><?php print $post->title ?></h2>
 Posted by: <a href="?act=profile&amp;action=view&amp;username=<?php print $post->post_author ?>"><?php print $post->username ?></a>
 <br />
-Date: <?php print $post->date ?>
+Post date: <?php print timestamp2date($post->timestamp) ?>
 <p><?php print $post->post ?></p>
 <?php
     if ($settings['comments'] == 1) {

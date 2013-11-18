@@ -68,8 +68,6 @@ if ($act == 'downloadscontrolpanel') {
                 </form></td></tr></table>';
         };
         if ($action == 'save_file') {
-            //id, file_id, name, author, submited_by, file_name, file_size, file_type, file_path, views, downloads, date_submited, rating, description, hidden, cat
-            //$save_sql25 = "INSERT INTO `files` VALUES id, file_id, name, author, submit_by, user_id, file_name, file_size, file_type, file_path, views, downloads, date_submit, rate, description, hidden, cat, password, comments";
             $file_id = rand(000000,999999);
             print $_POST[file_name].' has been saved correctly';
         };

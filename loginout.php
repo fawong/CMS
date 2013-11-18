@@ -36,7 +36,7 @@ if ($get_action == 'authenticate') {
         if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
             $_SESSION['group'] = $user->user_group;
             $_SESSION['rank'] = $user->rank;
-            $_SESSION['user_id'] = $user->user_id;
+            $_SESSION['id'] = $user->id;
             $_SESSION['username'] = $user->username;
             $_SESSION['firstname'] = $user->first_name;
             $_SESSION['lastname'] = $user->last_name;

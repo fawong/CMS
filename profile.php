@@ -184,12 +184,7 @@ if ($get_action == 'submit_change_password') {
             if ($_POST[new_password] != '') {
                 if ($_POST[reenter_new_password] != '') {
                     $newpass = sha1(md5($_POST[new_password]));
-                    $_SESSION['group'] = 'public';
-                    $_SESSION['rank'] = 'member';
-                    $_SESSION['user_id'] = '0';
-                    $_SESSION['username'] = 'guest';
-                    $_SESSION['theme'] = 'default';
-                    $_SESSION['login'] = false;
+                    session_destroy();
                     title("Successfully Changed Password");
                     print '<h1><center>Successfully Changed Password</center></h1>
                         <hr width="100%" align="center"/>

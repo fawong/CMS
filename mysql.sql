@@ -45,7 +45,7 @@ CREATE TABLE `comments` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -72,6 +72,15 @@ CREATE TABLE `groups` (
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `links` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `url` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -117,7 +126,7 @@ CREATE TABLE `posts` (
   `username` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -130,7 +139,7 @@ CREATE TABLE `settings` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL DEFAULT '',
@@ -160,8 +169,8 @@ CREATE TABLE `users` (
   `banned` tinyint(1) NOT NULL DEFAULT '0',
   `views` int(255) NOT NULL,
   `access_dlcp` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=98898 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
