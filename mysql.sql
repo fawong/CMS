@@ -45,7 +45,7 @@ CREATE TABLE `comments` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -86,7 +86,7 @@ CREATE TABLE `links` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pages` (
-  `id` int(255) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `page_name` varchar(255) NOT NULL DEFAULT '',
   `page_title` varchar(255) NOT NULL DEFAULT '',
   `page_author` varchar(255) NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE `pages` (
   `public` tinyint(1) NOT NULL,
   `password` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9360 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -127,7 +127,7 @@ CREATE TABLE `posts` (
   `username` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -168,7 +168,7 @@ CREATE TABLE `users` (
   `access_file_manager` tinyint(1) NOT NULL DEFAULT '0',
   `file_space` tinyint(4) NOT NULL,
   `banned` tinyint(1) NOT NULL DEFAULT '0',
-  `views` int(255) NOT NULL,
+  `views` mediumint(9) NOT NULL,
   `access_dlcp` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=98898 DEFAULT CHARSET=latin1;

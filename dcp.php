@@ -1,9 +1,9 @@
 <?php 
 if ($act == 'downloadscontrolpanel') {
-    if ($_SESSION['group'] != 'admin' || $access['downloadscontrolpanel'] = '0') {
+    if ($group != 1 || $access['downloadscontrolpanel'] = '0') {
         redirect("failed.php?amp;id=2");
     };
-    if ($_SESSION['group'] == 'admin' || $access['downloadscontrolpanel'] == '1') {
+    if ($group == 1 || $access['downloadscontrolpanel'] == '1') {
         if ($action == 'overview') {
             title("Downloads Control Panel");
             print '<h1><center>Downloads Control Panel</center></h1>

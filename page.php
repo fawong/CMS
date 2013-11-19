@@ -2,14 +2,16 @@
 include_once('functions.php');
 
 if ($action == '') {
-    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `page_name` = '$get_page'")) {
+    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_page'")) {
         title($page->page_title);
         $password = $page->password;
-        if ($page->public == 1 || $page->$_SESSION['group'] == 1) {
+        if ($page->public == 1 || $group == 1) {
             if ($password == '') {
                 page_header($page->page_title)
 ?>
+<?php print $page->header ?>
 <?php print $page->body ?>
+<?php print $page->footer ?>
 <?php
             };
             if ($password != '') {

@@ -33,7 +33,7 @@ if ($_SESSION['login'] == true){
                 $_SESSION['path'] = $path;
             };
             $dirname = '/files/';
-            if($_SESSION['group'] == 'admin'){
+            if($group == 1){
                 $_SESSION[limit_space] = 'unmetered';
             }else{
                 $thequery = 'SELECT `file_space` FROM `users` WHERE `username` = ' . $_SESSION['username'];
@@ -250,7 +250,7 @@ if ($_SESSION['login'] == true){
             };
             if($action == 'view_folder'){
                 if($cpath == '/' || $cpath == ''){
-                    if($_SESSION['group'] != 'admin'){
+                    if($group != 1){
                         $cpath = $_SESSION['username']."/";
                     };
                 };

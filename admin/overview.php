@@ -1,7 +1,7 @@
 <?php 
 require_once(dirname(dirname(__FILE__)) . '/functions.php');
 
-if($_SESSION['group'] != 'admin') {
+if($group != 1) {
     redirect("failed.php?id=2");
 } else {
     title("Overview of SUPER TESTING");
@@ -10,16 +10,17 @@ if($_SESSION['group'] != 'admin') {
 <div class="row">
 <div class="col-md-6">
 <h3>Administrator Rights</h3>
-<p>View Website Settings</p>
-<p>Add New News Post</p>
-<p>Web Page Control Panel</p>
-<p>Add New Web Page</p>
-<p>Edit Members List</p>
-<p>Add New Member</p>
-<p>Download Database Control Panel</p>
+<p>View website settings</p>
+<p>Add new post</p>
+<p>Web page control panel</p>
+<p>Add new web page</p>
+<p>Edit members list</p>
+<p>Add new member</p>
+<p>Download database control panel</p>
 <p>Overview</p>
-<p>Add a New File</p>
-<p>Add a New Category</p>
+<p>Add a new file</p>
+<p>Add a new category</p>
+<p>Category</p>
 </div>
 <div class="col-md-6">
 <h3>Regular Members Rights</h3>

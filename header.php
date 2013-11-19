@@ -61,7 +61,7 @@ foreach ($links as $link) {
 <li<?php if ($full_uri == preg_replace('@https?://@', '', $link->url)) { print ' class="active"'; } ?>><a href="<?php print $link->url ?>"<?php if ($link->target) { print ' target="'.$link->target.'"'; } ?>><?php print $link->name ?></a></li>
 <?php
 };
-if ($_SESSION['login'] == true) {
+if ($login == true) {
 ?>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
@@ -71,12 +71,12 @@ if ($_SESSION['login'] == true) {
 <li><a href="wpcp.php?action=page">Web Page Control Panel</a></li>
 <li><a href="pm.php">Personal Messages</a></li>
 <?php
-    if ($_SESSION['group'] == 'admin' || $_SESSION['access_file_manager'] == 1) {
+    if ($group == 1 || $access_file_manager == 1) {
 ?>
 <li><a href="?act=manager">File Manager</a></li>
 <?php
     };
-    if ($_SESSION['group'] == 'admin') {
+    if ($group == 1) {
 ?>
 <li class="divider"></li>
 <li class="dropdown-header">Administrator Control Panel</li>
@@ -95,7 +95,7 @@ if ($_SESSION['login'] == true) {
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <?php
-if($_SESSION['login'] != true) {
+if($login != true) {
     $active2 = '<li>';
     $active3 = '<li>';
     if ($get_action == 'login') {
@@ -118,7 +118,7 @@ else {
         $active5 = '<li class="active">';
     }
 ?>
-<?php print $active4?><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $_SESSION['username']; ?></a></li>
+<?php print $active4?><a href="//<?php print $settings['url'] ?>/profile.php?action=view"><?php print $username; ?></a></li>
 <?php print $active5?><a href="//<?php print $settings['url'] ?>/loginout.php?action=logout">Logout</a></li>
 <?php
 };

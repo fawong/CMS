@@ -79,7 +79,7 @@ if ($act == 'inbox'){
         };
         if ($action == 'reply'){
             if ($id != ''){
-                if ($_SESSION['group'] == 'admin'){
+                if ($group == 1){
                     $admin_check = 'Important: <input type="text" value="0" name="admin"><br />';
                 };
                 print '<table class="table" width="100%"><tr><td>';
@@ -97,7 +97,7 @@ if ($act == 'inbox'){
             };
         };
         if ($action == 'reply_to'){
-            if ($_SESSION['group'] == 'admin'){
+            if ($group == 1){
                 if ($_POST['admin'] == '1'){
                     $admin = 1;
                 };
@@ -105,13 +105,13 @@ if ($act == 'inbox'){
                     $admin = 0;
                 };
             };
-            if ($_SESSION['group'] != 'admin'){
+            if ($group != 1){
                 $admin = 0; 
             };
             print '<strong><center>Message Sent!</center></strong>';
         };
         if ($action == 'compose'){
-            if ($_SESSION['group'] == 'admin'){
+            if ($group == 1){
                 $admin_check = 'Important: <input type="text" value="0" name="admin"><br />';
             };
             print '<table class="table" align="center"><tr><td>

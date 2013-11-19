@@ -11,7 +11,6 @@ $theme = $_SESSION['theme'];
 
 $get_username = $_GET['username'];
 $get_id = $_GET['id'];
-$get_id = $_GET['id'];
 $get_page = $_GET['page'];
 $get_action = $_GET['action'];
 $get_path = $_GET['path'];
@@ -70,12 +69,12 @@ function redirect($url) {
 
 // FIND TOTAL STORAGE SPACE
 function total_message() {
-    if($group == 'admin') {
+    if($group == 1) {
         $max = 'unlimited';
-    }; // if($group == 'admin')
-    if($group != 'admin') {
+    }; // if($group == 1)
+    if($group != 1) {
         $max = '100';
-    }; // if($group != 'admin')
+    }; // if($group != 1)
     print $find_number.'/'.$max;
 };
 
