@@ -58,7 +58,7 @@ if ($ruri == '/cms/posts.php') {
 $links = $db->get_results("SELECT * FROM links");
 foreach ($links as $link) {
 ?>
-<li<?php if ($full_uri == preg_replace('@https?://@', '', $link->url)) { print ' class="active"'; } ?>><a href="<?php print $link->url ?>"><?php print $link->name ?></a></li>
+<li<?php if ($full_uri == preg_replace('@https?://@', '', $link->url)) { print ' class="active"'; } ?>><a href="<?php print $link->url ?>"<?php if ($link->target) { print ' target="'.$link->target.'"'; } ?>><?php print $link->name ?></a></li>
 <?php
 };
 if ($_SESSION['login'] == true) {
@@ -67,7 +67,7 @@ if ($_SESSION['login'] == true) {
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="//<?php print $settings['url'] ?>/members.php?action=view">View Members List</a></li>
-<li><a href="//<?php print $settings['url'] ?>/admin/settings.php?action=options">Options</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/options.php">Options</a></li>
 <li><a href="wpcp.php?action=page">Web Page Control Panel</a></li>
 <li><a href="pm.php">Personal Messages</a></li>
 <?php

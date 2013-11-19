@@ -9,11 +9,9 @@ if ($get_action == 'view_comments') {
 ?>
 <h2><?php print $post->title ?></h2>
 <br />
-<strong>
-Posted by: <a href="?act=profile&amp;action=view&amp;username=<?php print $post->username ?>"><?php print $post->username ?></a>
+<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print $post->username ?>"><?php print $post->username ?></a>
 <br />
-Post date: <?php print timestamp2date($post->timestamp) ?>
-</strong>
+<strong>Post date:</strong> <?php print timestamp2date($post->timestamp) ?>
 <p><?php print $post->post ?></p>
 <?php
     };
@@ -25,8 +23,8 @@ Post date: <?php print timestamp2date($post->timestamp) ?>
         foreach ($comments as $comment) {
 ?>
 <h4>Comment # <?php print $count ?></h4>
-<p><strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print $comment->post_author ?>"><?php print $comment->post_author ?></a></p>
-<p><strong>Post date:</strong> <?php print timestamp2date($comment->timestamp) ?></p>
+<p><strong>Comment author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print $comment->post_author ?>"><?php print $comment->post_author ?></a></p>
+<p><strong>Comment date:</strong> <?php print timestamp2date($comment->timestamp) ?></p>
 <p><?php print $comment->comment ?></p>
 <?php
             if ($group == 'admin') {

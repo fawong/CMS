@@ -4,14 +4,14 @@
  *
  * @global string $cms_version
  */
-$cms_version = '2013.11.18-dev';
+$cms_version = '2013.11.19-dev';
 
 /**
  * Holds the DB revision, increments when changes are made to the DB schema.
  *
  * @global int $cms_db_version
  */
-$cms_db_version = 5;
+$cms_db_version = 8;
 
 /**
  * Holds the TinyMCE version

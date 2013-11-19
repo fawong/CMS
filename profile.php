@@ -8,14 +8,12 @@ if ($_SESSION['login'] != true) {
     if($get_action == 'view') {
         if ($get_username == '') {
             $un = $username;
-            title("View Own Profile");
-            page_header('View Own Profile');
         } else {
             $un = $get_username;
-            title("View Profile");
-            page_header('View Profile');
         };
         if ($user = $db->get_row("SELECT * FROM `users` WHERE `username` = '$un' LIMIT 1")) {
+            title("View Profile");
+            page_header('View Profile');
             if ($user->avatar == '') {
                 $avatar = 'themes/' . $theme . '/images/no_avatar.gif';
             } else {
@@ -102,22 +100,21 @@ if ($get_action =='reputation') {
 if ($get_action == 'change_reputation') {
     if ($_POST['rep'] == '+rep') {
         title("Positive (+1) Reputation Given");
-        print '<h1><center>Positive (+1) Reputation Given</center></h1>
-            <hr width="100%" align="center"/>
-            <table class="table" align="center">
-            <tr><td>Positive reputation has been given to <strong>'.$get_username.'</strong>.<br />
-            <a href="?act=profile&amp;action=view&amp;username='.$get_username.'">Back to '.$get_username.'\'s profile</a>
-            </td></tr></table>';
+        page_header('Positive (+1) Reputation Given');
+?>
+<p>Positive reputation has been given to <strong><?php print $get_username ?></strong>.</p>
+<?php
     };
     if ($_POST['rep'] == '-rep') {
         title("Negative (-1) Reputation Given");
-        print '<h1><center>Negative (-1) Reputation Given</center></h1>
-            <hr width="100%" align="center"/>
-            <table class="table" align="center">
-            <tr><td>Negative reputation has been given to <strong>'.$get_username.'</strong>.<br />
-            <a href="?act=profile&amp;action=view&amp;username='.$get_username.'">Back to '.$get_username.'\'s profile</a>
-            </td></tr></table>';
+        page_header('Negative (-1) Reputation Given');
+?>
+<p>Negative reputation has been given to <strong><?php print $get_username ?></strong>.</p>
+<?php
     };
+?>
+<a href="?action=view&amp;username=<?php print $get_username ?>">Back to <?php print $get_username ?>'s profile</a>
+<?php
 };
 
 // EDIT PROFILE
@@ -161,7 +158,7 @@ if ($get_action == 'edit_profile') {
             </table>';
     };
 };
-//CHANGE PASSWORD
+// CHANGE PASSWORD
 if ($get_action == 'change_password') {
     title("Change Password");
     print '<h1><center>Change Password</center></h1>
@@ -176,7 +173,7 @@ if ($get_action == 'change_password') {
         </form>
         </td></tr></table>';
 };
-//SUBMIT CHANGE PASSWORD
+// SUBMIT CHANGE PASSWORD
 if ($get_action == 'submit_change_password') {
     $currentpass = sha1(md5($_POST[current_password]));
     if (mysql_num_rows($query) == 1) {

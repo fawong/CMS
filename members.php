@@ -23,7 +23,7 @@ if ($_SESSION['login'] != true) {
 <td>
 <a href="profile.php?action=view&amp;username=<?php print $user->username ?>"><?php print $user->username ?></a>
 </td>
-<td><?php print $user->user_group ?></td>
+<td><?php print $db->get_var("SELECT description from `groups` WHERE id=$user->user_group") ?></td>
 <?php
             };
 ?>

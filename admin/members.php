@@ -4,23 +4,24 @@ require_once(dirname(dirname(__FILE__)) . '/functions.php');
 if ($group != 'admin') {
     redirect('failed.php?id=2');
 } else {
-    if($get_action == 'force_offline') {
-        $find_people = mysql_query("SELECT * FROM users");
-        while($row = mysql_fetch_array($find_people)) {
-            if($timestamp > $user->last_logged_on) {
-                $force_offline = mysql_query("UPDATE users SET `online` = '0'");
-            };
-        };
-        print 'All online members have been forced offline.';
+    if ($get_action == 'force_offline') {
+        $force_offline = $db->query("UPDATE users SET `online` = '0'");
+        page_header('Members forced offine');
+?>
+All online members have been forced offline.
+<?php
     };
 
     // SUBMIT SAVE MEMBER
-    if($get_action == 'save_member') {
-        print 'Member <strong>'.$get_username.'</strong> has been updated.';
+    if ($get_action == 'save_member') {
+        page_header('Member Updated');
+?>
+Member <strong><?php print $get_username ?></strong> has been updated.
+<?php
     };
 
     // SUBMIT ADD NEW MEMBER
-    if($get_action == 'submit_add_member') {
+    if ($get_action == 'submit_add_member') {
         if ($_REQUEST['yesno'] == 'access_file_manager_yes')
         {
             $access_file_manager_yesorno = 1;
@@ -29,24 +30,23 @@ if ($group != 'admin') {
         {
             $access_file_manager_yesorno = 0;
         };
-        $new_user_id = rand(00000, 99999);
         $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
         print 'Member <strong>'.$_POST[username].'</strong> has been added.';
-        if($access_file_manager_yesorno == '1') {
-            mkdir('/home/waf/public_html/st/files/'.$get_username, 0755);
+        if ($access_file_manager_yesorno == '1') {
+            //mkdir('/hfiles/'.$get_username, 0755);
             print '<br />Member <strong>'.$get_username.'\'s</strong> folder has been created.';
         };
     };
 
     // LIST MEMBERS
-    if($get_action == 'list_members') {
+    if ($get_action == 'list_members') {
         if ($users = $db->get_results("SELECT * FROM `users` ORDER BY `user_group` ASC, `username` ASC")) {
             title("Members");
             page_header('Members');
 ?>
-<p><a href="?act=admin&amp;action=add_member">Add a Member</a></p>
-<p><a href="?act=admin&amp;action=edit_users_list&amp;set=force_offline">Force All Members Offline</a></p>
+<p><a href="?action=add_member">Add a Member</a></p>
+<p><a href="?action=force_offline">Force All Members Offline</a></p>
 <p>Total Number of Members: <?php print $db->num_rows ?></p>
 <table class="table">
 <tr>
@@ -62,23 +62,23 @@ if ($group != 'admin') {
             foreach ($users as $user) {
 ?>
 <tr>
-<td><?php print sprintf('%05s', $user->user_id) ?></td>
+<td><?php print $user->id ?></td>
 <td><?php print $user->username ?></td>
 <td>
-<?php print $user->user_group ?>
+<?php print $db->get_var("SELECT description from `groups` WHERE id=$user->user_group") ?>
 </td>
 <td>
-<?php print $user->online ?>
+<?php print $user->online ? 'Yes' : 'No' ?>
 </td>
 <td>
-<?php print $user->activated_account ?>
+<?php print $user->activated_account ? 'Yes' : 'No' ?>
 </td>
 <td>
-<?php print $user->access_file_manager ?>
+<?php print $user->access_file_manager ? 'Yes' : 'No' ?>
 </td>
 <td>
 <a href="?act=profile&amp;action=view&amp;username=<?php print $user->username ?>">View</a> | 
-<a href="?action=edit_member&amp;user_id=<?php print $user->user_id ?>">Edit</a> | 
+<a href="?action=edit_member&amp;id=<?php print $user->id ?>">Edit</a> | 
 <a href="?action=delete_member&amp;username=<?php print $user->username ?>">Delete</a>
 </td>
 </tr>
@@ -91,7 +91,7 @@ if ($group != 'admin') {
     };
 
     // ADD NEW MEMBER
-    if($get_action == 'add_member') {
+    if ($get_action == 'add_member') {
         title("Add New Member");
         $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $activation_code = substr(str_shuffle($alphanumeric), 0, 15);
@@ -158,12 +158,12 @@ IP: <?php print $ip ?><br />
     };
 
     // EDIT MEMBER
-    if($get_action == 'edit_member') {
+    if ($get_action == 'edit_member') {
         title("Edit Member");
-        if ($user = $db->get_row("SELECT * FROM users WHERE user_id = '$get_user_id'")) {
+        if ($user = $db->get_row("SELECT * FROM users WHERE id = '$get_id'")) {
             page_header('Edit Member');
 ?>
-<form method="post" action="?action=save_member&amp;username=<?php print $user->username ?>&amp;user_id=<?php print $user_id ?>">
+<form method="post" action="?action=save_member&amp;username=<?php print $user->username ?>&amp;id=<?php print $user->id ?>">
 <div class="form-group">
 <label>Username:</label>
 <input type="text" name="username" class="form-control" value="<?php print $user->username ?>" disabled/>
@@ -245,7 +245,7 @@ IP: <?php print $ip ?><br />
 </div>
 <div class="form-group">
 <label>IP:</label>
-<?php print $user->ip ?>
+<?php print long2ip($user->ip) ?>
 </div>
 <button type="submit" name="submit" class="btn btn-lg btn-primary">Edit Member</button>
 </div>
@@ -255,7 +255,7 @@ IP: <?php print $ip ?><br />
     };
 
     // DELETE MEMBER
-    if($get_action == 'delete_member') {
+    if ($get_action == 'delete_member') {
         title("Delete Member");
         page_header('Delete Member');
 ?>
@@ -268,7 +268,7 @@ IP: <?php print $ip ?><br />
     };
 
     // SUBMIT DELETE MEMBER
-    if($get_action == 'submit_delete_member') {
+    if ($get_action == 'submit_delete_member') {
         $db->query("DELETE FROM `users` WHERE `username` = '$get_username'");
         page_header('Member deleted');
 ?>
