@@ -1,7 +1,7 @@
 <?php 
 require_once(dirname(dirname(__FILE__)) . '/functions.php');
 
-if ($group != 'admin') {
+if ($group != 1) {
     redirect('failed.php?id=2');
 } else {
     if ($get_action == 'force_offline') {
@@ -16,7 +16,7 @@ All online members have been forced offline.
     if ($get_action == 'save_member') {
         page_header('Member Updated');
 ?>
-Member <strong><?php print $get_username ?></strong> has been updated.
+Member <strong><?php print id2username($get_id) ?></strong> has been updated.
 <?php
     };
 
@@ -41,7 +41,7 @@ Member <strong><?php print $get_username ?></strong> has been updated.
 
     // LIST MEMBERS
     if ($get_action == 'list_members') {
-        if ($users = $db->get_results("SELECT * FROM `users` ORDER BY `user_group` ASC, `username` ASC")) {
+        if ($users = $db->get_results("SELECT * FROM `users` ORDER BY `group_id` ASC, `username` ASC")) {
             title("Members");
             page_header('Members');
 ?>
@@ -65,7 +65,7 @@ Member <strong><?php print $get_username ?></strong> has been updated.
 <td><?php print $user->id ?></td>
 <td><?php print $user->username ?></td>
 <td>
-<?php print $db->get_var("SELECT description from `groups` WHERE id=$user->user_group") ?>
+<?php print id2group($user->group_id) ?>
 </td>
 <td>
 <?php print $user->online ? 'Yes' : 'No' ?>
@@ -77,9 +77,9 @@ Member <strong><?php print $get_username ?></strong> has been updated.
 <?php print $user->access_file_manager ? 'Yes' : 'No' ?>
 </td>
 <td>
-<a href="?act=profile&amp;action=view&amp;username=<?php print $user->username ?>">View</a> | 
+<a href="//<?php print $settings['url'] ?>/profile.php?action=view&amp;id=<?php print $user->id ?>">View</a> | 
 <a href="?action=edit_member&amp;id=<?php print $user->id ?>">Edit</a> | 
-<a href="?action=delete_member&amp;username=<?php print $user->username ?>">Delete</a>
+<a href="?action=delete_member&amp;id=<?php print $user->id ?>">Delete</a>
 </td>
 </tr>
 <?php
@@ -184,8 +184,8 @@ IP: <?php print $ip ?><br />
 <label>Group:</label>
 <div class="checkbox">
 <label>
-<input name="group" type="radio" value="<?php print $user->user_group ?>" checked/> 
-<?php print $user->user_group ?>
+<input name="group" type="radio" value="<?php print $user->group_id ?>" checked/> 
+<?php print id2group($user->group_id) ?>
 </label>
 </div>
 </div>
@@ -259,8 +259,8 @@ IP: <?php print $ip ?><br />
         title("Delete Member");
         page_header('Delete Member');
 ?>
-<form role="form" action="?action=submit_delete_member&amp;username=<?php print $get_username ?>" method="post">
-<p><strong>Are you sure you want to delete user <?php print $get_username ?>?</strong></p>
+<form role="form" action="?action=submit_delete_member&amp;id=<?php print $get_id ?>" method="post">
+<p><strong>Are you sure you want to delete user <?php print $get_id ?>?</strong></p>
 <button type="submit" class="btn btn-lg btn-primary">Yes</button>
 <button type="button" class="btn btn-lg" onclick="history.go(-1)">No</button>
 </form>
@@ -269,10 +269,10 @@ IP: <?php print $ip ?><br />
 
     // SUBMIT DELETE MEMBER
     if ($get_action == 'submit_delete_member') {
-        $db->query("DELETE FROM `users` WHERE `username` = '$get_username'");
+        $db->query("DELETE FROM `users` WHERE `id` = '$get_id'");
         page_header('Member deleted');
 ?>
-Member <strong><?php print $get_username ?></strong> has been deleted.
+Member <strong><?php print id2username($get_id) ?></strong> has been deleted.
 <?php
     };
     require_once(dirname(dirname(__FILE__)) . '/footer.php');

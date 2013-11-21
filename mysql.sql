@@ -13,6 +13,7 @@
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `calendar` (
   `id` int(7) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `start_time` time NOT NULL,
@@ -28,19 +29,20 @@ CREATE TABLE `calendar` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
   `hidden` varchar(255) NOT NULL DEFAULT '0',
   `password` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` varchar(255) NOT NULL,
-  `post_author` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL,
   `comment` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -89,7 +91,7 @@ CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `page_name` varchar(255) NOT NULL DEFAULT '',
   `page_title` varchar(255) NOT NULL DEFAULT '',
-  `page_author` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL,
   `header` text NOT NULL,
   `body` text NOT NULL,
   `footer` text NOT NULL,
@@ -109,22 +111,22 @@ CREATE TABLE `personal_messages` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `subject` varchar(255) NOT NULL DEFAULT '',
-  `member_from` varchar(255) NOT NULL,
-  `member_to` varchar(255) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
+  `to_user_id` int(11) NOT NULL,
   `text` text NOT NULL,
-  `important` varchar(255) NOT NULL DEFAULT '',
+  `important` tinyint(1) NOT NULL,
   `mark_read` tinyint(1) NOT NULL DEFAULT '0',
-  `folder` varchar(255) NOT NULL DEFAULT '',
+  `folder` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `post` text NOT NULL,
-  `username` varchar(255) NOT NULL DEFAULT '',
+  `author_id` int(11) NOT NULL,
+  `name` mediumtext NOT NULL,
+  `post` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
@@ -144,7 +146,7 @@ CREATE TABLE `users` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL DEFAULT '',
-  `user_group` tinyint(4) NOT NULL DEFAULT '2',
+  `group_id` tinyint(4) NOT NULL DEFAULT '2',
   `password` varchar(255) NOT NULL,
   `date_joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_of_birth` date NOT NULL,

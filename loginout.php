@@ -34,16 +34,12 @@ if ($get_action == 'authenticate') {
     if ($inputun != '' && $inputp != '') {
         $hashpass = sha1(md5($inputp));
         if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
-            $_SESSION['group'] = $user->user_group;
+            $_SESSION['group_id'] = $user->group_id;
             $_SESSION['rank'] = $user->rank;
-            $_SESSION['id'] = $user->id;
+            $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
-            $_SESSION['firstname'] = $user->first_name;
-            $_SESSION['lastname'] = $user->last_name;
-            $_SESSION['theme_name'] = $user->theme;
-            $_SESSION['access_file_manager'] = $user->access_file_manager;
             $_SESSION['login'] = true;
-            $db->query("UPDATE users SET last_log_on = '$timestamp', ip = '$ip', online = '1' WHERE username = '$username'");
+            $db->query("UPDATE users SET ip = '".ip2long($ip)."', online = 1 WHERE username = '$username'");
             redirect("posts.php");
         } else {
             redirect("failed.php?id=1");

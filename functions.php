@@ -3,13 +3,11 @@ session_start();
 
 // GLOBAL VARIABLES
 $username = $_SESSION['username'];
-$firstname = $_SESSION['firstname'];
-$lastname = $_SESSION['lastname'];
-$group = $_SESSION['group'];
+$user_id = $_SESSION['user_id'];
+$ltname = $_SESSION['lastname'];
+$group = $_SESSION['group_id'];
 $login = $_SESSION['login'];
-$theme = $_SESSION['theme'];
 
-$get_username = $_GET['username'];
 $get_id = $_GET['id'];
 $get_page = $_GET['page'];
 $get_action = $_GET['action'];
@@ -44,16 +42,30 @@ function title($title) {
     $print_title = $title;
 };
 
+// CONVERT TIMESTAMP TO PHP DATE
 function timestamp2date($timestamp) {
     return date('F j, Y \a\t g:i A', strtotime($timestamp));
 }
 
+// CONVERT USER ID TO USERNAME
+function id2group($id) {
+    global $db;
+    return $db->get_row("SELECT * FROM `groups` WHERE `id` = $id")->description;
+}
+
+// CONVERT USER ID TO USERNAME
+function id2username($id) {
+    global $db;
+    return $db->get_row("SELECT * FROM `users` WHERE `id` = $id")->username;
+}
+
 // PRINT HEADER
 function page_header($name) {
-    print '<div class="page-header">
-        <h1>' . $name . '</h1>
-        </div>
-        ';
+?>
+<div class="page-header">
+<h1><?php print $name ?></h1>
+</div>
+<?php
 }
 // VALID URL
 function valid_url($str) {
@@ -78,7 +90,7 @@ function total_message() {
     print $find_number.'/'.$max;
 };
 
-// CHECK NEW MESSAGES IN "INBOX" AND NEW COMMENTS IN "USER_COMMENTS"
+// CHECK NEW MESSAGES IN PRIVATE MESSAGES INBOX
 function check_inbox() {
     if ($login == true) {
         $important = 'Nothing important right now.';
@@ -101,7 +113,7 @@ function check_inbox() {
     };
 };
 
-function relink($url, $name, $target) {
+function reflink($url, $name, $target) {
     if ($url != '') {
         if ($target == '') {
             print '<a href="'.$url.'" target="'.$target.'">'.$name.'</a>';

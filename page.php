@@ -1,26 +1,34 @@
 <?php
 include_once('functions.php');
 
-if ($action == '') {
-    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_page'")) {
-        title($page->page_title);
+if ($get_action == '') {
+    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_id'")) {
         $password = $page->password;
         if ($page->public == 1 || $group == 1) {
             if ($password == '') {
-                page_header($page->page_title)
+                title($page->page_title);
+                page_header($page->page_title);
 ?>
-<?php print $page->header ?>
-<?php print $page->body ?>
-<?php print $page->footer ?>
+<p><?php print $page->header ?></p>
+<p><?php print $page->body ?></p>
+<p><?php print $page->footer ?></p>
 <?php
-            };
-            if ($password != '') {
+                if ($group == 1) {
+?>
+<a href="//<?php print $settings['url'] ?>/admin/page.php?action=edit_page&amp;id=<?php print $page->id ?>">Edit</a>
+<br />
+<a href="//<?php print $settings['url'] ?>/admin/page.php?action=delete_page&amp;id=<?php print $page->id ?>">Delete</a>
+<?php
+                }
+            } else {
 ?>
 <form method="page" action="?page=<?php print $page ?>">
 <p>This page is password protected.</p>
 <p>You must enter a password to proceed.</p>
-<br /><br />
-Password: <input type="password" name="pass" />
+<div class="form-group">
+<label>Password:</label>
+<input type="password" name="pass" />
+</div>
 <button type="submit" class="btn btn-lg btn-primary">Submit</button>
 </form>
 <?php

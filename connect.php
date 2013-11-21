@@ -7,4 +7,7 @@ $db = new ezSQL_mysqli("$db_username", "$db_password", "$db_name", "$db_host");
 
 // Get CMS name
 $cms_name = $db->get_row("SELECT * FROM settings WHERE `setting` = 'cmsname'")->value;
+
+// Get footer
+$footer = $db->get_row("SELECT * FROM settings WHERE `setting` = 'footer'")->value;
 ?>

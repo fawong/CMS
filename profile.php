@@ -6,12 +6,11 @@ if ($_SESSION['login'] != true) {
 } else {
     // VIEW PROFILE
     if($get_action == 'view') {
-        if ($get_username == '') {
-            $un = $username;
-        } else {
-            $un = $get_username;
+        $ui = $user_id;
+        if ($get_id) {
+            $ui = $get_id;
         };
-        if ($user = $db->get_row("SELECT * FROM `users` WHERE `username` = '$un' LIMIT 1")) {
+        if ($user = $db->get_row("SELECT * FROM `users` WHERE `id` = $ui")) {
             title("View Profile");
             page_header('View Profile');
             if ($user->avatar == '') {
@@ -29,15 +28,15 @@ if ($_SESSION['login'] != true) {
 <p><strong>Member Username:</strong> <?php print $user->username ?></p>
 <p><strong>Member First Name:</strong> <?php print $user->first_name ?></p>
 <p><strong>Member Last Name:</strong> <?php print $user->last_name ?></p>
-<p><strong>Member Group:</strong> <?php print $user->user_group ?></p>
+<p><strong>Member Group:</strong> <?php print id2group($user->group_id) ?></p>
 <p><strong>Date Joined:</strong> <?php print $user->date_joined ?></p>
-<p><img src="<?php print $status ?>"  /></p></p>
+<p><img src="<?php print $status ?>" /></p></p>
 
 <h2>Statistics:</h2>
 <p><strong>Profile Views:</strong> <?php print $user->views ?> </p>
 <p><strong>Positive (+) Reputation:</strong> <?php print $user->kpos ?></p>
 <p><strong>Negative (-) Reputation:</strong> <?php print $user->kneg ?></p>
-<p><a href="profile.php?action=reputation&amp;username=<?php print $un ?>">Change <?php print $un ?>'s Reputation</a></p>
+<p><a href="profile.php?action=reputation&amp;username=<?php print $ui ?>">Change <?php print $user->username?>'s Reputation</a></p>
 <p><a href="?act=inbox&amp;action=compose&amp;to=<?php print $user->username ?>">Compose New Message</a></p>
 <p><strong>AIM User Name:</strong> <?php print $user->aim ?></p>
 <p><strong>About:</strong> <?php print $user->about ?></p>
@@ -49,7 +48,7 @@ if ($_SESSION['login'] != true) {
             title("Member Does Not Exist");
             page_header('Member Does Not Exist');
 ?>
-<p>Member <strong><?php print $get_username ?></strong> does not exist.</p>
+<p>Member <strong><?php print id2username($get_id) ?></strong> does not exist.</p>
 <?php
         };
     };
@@ -87,7 +86,7 @@ if ($get_action =='reputation') {
     page_header('Reputation');
 ?>
 <h2>Would you like to add +rep or -rep?</h2>
-<form action="?action=change_reputation&amp;username=<?php print $get_username ?>" method="post">
+<form action="?action=change_reputation&amp;id=<?php print $get_id ?>" method="post">
 <select name="rep" class="form-control">
 <option value="+rep">Add One (+1) to Reputation</option>
 <option value="-rep">Subtract One (-1) to Reputation</option>
@@ -102,18 +101,18 @@ if ($get_action == 'change_reputation') {
         title("Positive (+1) Reputation Given");
         page_header('Positive (+1) Reputation Given');
 ?>
-<p>Positive reputation has been given to <strong><?php print $get_username ?></strong>.</p>
+<p>Positive reputation has been given to <strong><?php print id2username($get_id) ?></strong>.</p>
 <?php
     };
     if ($_POST['rep'] == '-rep') {
         title("Negative (-1) Reputation Given");
         page_header('Negative (-1) Reputation Given');
 ?>
-<p>Negative reputation has been given to <strong><?php print $get_username ?></strong>.</p>
+<p>Negative reputation has been given to <strong><?php print id2username($get_id) ?></strong>.</p>
 <?php
     };
 ?>
-<a href="?action=view&amp;username=<?php print $get_username ?>">Back to <?php print $get_username ?>'s profile</a>
+<a href="?action=view&amp;id=<?php print $get_id ?>">Back to <?php print id2username($get_id) ?>'s profile</a>
 <?php
 };
 

@@ -2,8 +2,14 @@
 </div>
 <footer>
 <div class="container">
-<p class="text-muted credit">Copyright &copy; <?php print '2007-'.date("Y") ?> FAWONG. All Rights Reserved.  Not A CMS Version <?php print $cms_version ?></p>
-<p class="text-muted credit">Content copyright &copy; <?php print '2007-'.date("Y").' '.$cms_name ?> and contributors. All Rights Reserved.</p>
+<p class="text-muted credit">Copyright &copy; <?php print '2007-'.date("Y") ?> FAWONG. All Rights Reserved. Not A CMS Version <?php print $cms_version ?></p>
+<?php
+if ($footer) {
+?>
+<p class="text-muted credit"><?php print $footer ?></p>
+<?php
+};
+?>
 </div>
 </footer>
 

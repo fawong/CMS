@@ -9,7 +9,7 @@ if ($get_action == 'view_comments') {
 ?>
 <h2><?php print $post->title ?></h2>
 <br />
-<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print $post->username ?>"><?php print $post->username ?></a>
+<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($post->username) ?>"><?php print id2username($post->username) ?></a>
 <br />
 <strong>Post date:</strong> <?php print timestamp2date($post->timestamp) ?>
 <p><?php print $post->post ?></p>
@@ -23,7 +23,7 @@ if ($get_action == 'view_comments') {
         foreach ($comments as $comment) {
 ?>
 <h4>Comment # <?php print $count ?></h4>
-<p><strong>Comment author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print $comment->post_author ?>"><?php print $comment->post_author ?></a></p>
+<p><strong>Comment author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($comment->author_id) ?>"><?php print id2username($comment->author_id) ?></a></p>
 <p><strong>Comment date:</strong> <?php print timestamp2date($comment->timestamp) ?></p>
 <p><?php print $comment->comment ?></p>
 <?php
@@ -49,7 +49,7 @@ if ($login != true && $get_action != 'view_comments') {
     // ADD POSTED COMMENT
     if ($get_action == 'post_comment') {
         if ($_POST['comment'] != '') {
-            $db->query("INSERT INTO `comments` (`post_id`, `post_author`, `comment`) VALUES ('" . $_POST['id'] . "', '$username', '" . $_POST['comment'] . "')");
+            $db->query("INSERT INTO `comments` (`post_id`, `author_id`, `comment`) VALUES ('" . $_POST['id'] . "', '$user_id', '" . $_POST['comment'] . "')");
             page_header('Comment Saved');
 ?>
 Comment Edited and Saved.
@@ -69,7 +69,7 @@ Comment is empty.
         if ($post = $db->get_row("SELECT * FROM `posts` WHERE `id` = '$get_id'")) {
 ?>
 <h2><?php print $post->title ?></h2>
-<p><strong>Posted by:</strong> <a href="profile.php?action=view&amp;username=<?php print $post->username ?>"><?php print $post->username ?></a></p>
+<p><strong>Posted by:</strong> <a href="profile.php?action=view&amp;username=<?php print id2username($post->username) ?>"><?php print id2username($post->username) ?></a></p>
 <p><strong>Date:</strong> <?php print $post->date ?></p>
 <p><?php print $post->post ?></p>
 

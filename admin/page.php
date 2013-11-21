@@ -33,7 +33,7 @@ if ($group != 1) {
 <td><center><?php print $page->public ? 'Yes' : 'No' ?></center></td>
 <td><?php print $page->views ?></td>
 <td>
-<a href="//<?php print $settings['url'] ?>/page.php?page=<?php print $page->id ?>" target="_blank">View</a> | 
+<a href="//<?php print $settings['url'] ?>/page.php?id=<?php print $page->id ?>" target="_blank">View</a> | 
 <a href="?action=edit_page&amp;id=<?php print $page->id ?>">Edit</a> | 
 <a href="?action=delete_page&amp;id=<?php print $page->id ?>">Delete</a>
 </td>
