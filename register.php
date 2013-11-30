@@ -33,7 +33,7 @@ if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
                                                     $ip = ip2long($_SERVER['REMOTE_ADDR']);
                                                     $alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                                                     $activation_code = substr(str_shuffle($alphanumeric), 0, 20);
-                                                    $hashedpass = sha1(md5($password));
+                                                    $hashedpass = password2hash($password);
                                                     $db->query("INSERT INTO `users` (`first_name`, `last_name`, `username`, `password`, `date_of_birth`, `email`, `ip`, `activation_code`, `access_file_manager`, `access_dlcp`) VALUES ('$first_name', '$last_name', '$user_name', '$hashedpass', '$date_of_birth', '$email', '$ip', '$activation_code', '0' ,'0')");
                                                     title("Successful Registration");
                                                     page_header('Successful Registration');

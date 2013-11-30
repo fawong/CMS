@@ -67,6 +67,7 @@ function page_header($name) {
 </div>
 <?php
 }
+
 // VALID URL
 function valid_url($str) {
     return preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\(com|org|net|us)+?\/?/i', $str);
@@ -78,6 +79,11 @@ function redirect($url) {
     $host = $settings['url'];
     header("Location: https://$host/$url");
 };
+
+// PLAIN TEXT PASSWORD TO HASH
+function password2hash($password) {
+    return sha1(md5($password));
+}
 
 // FIND TOTAL STORAGE SPACE
 function total_message() {

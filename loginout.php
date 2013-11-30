@@ -32,7 +32,7 @@ if ($get_action == 'authenticate') {
     $inputun = $_POST['inputusername'];
     $inputp = $_POST['inputpassword'];
     if ($inputun != '' && $inputp != '') {
-        $hashpass = sha1(md5($inputp));
+        $hashpass = password2hash($inputp);
         if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
             $_SESSION['group_id'] = $user->group_id;
             $_SESSION['rank'] = $user->rank;

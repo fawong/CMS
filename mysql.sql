@@ -163,7 +163,7 @@ CREATE TABLE `users` (
   `msn` varchar(255) NOT NULL,
   `yahoo` varchar(255) NOT NULL,
   `avatar` text NOT NULL,
-  `signature` varchar(255) NOT NULL,
+  `signature` text NOT NULL,
   `theme` varchar(255) NOT NULL DEFAULT 'default',
   `kpos` smallint(6) NOT NULL DEFAULT '0',
   `kneg` smallint(6) NOT NULL DEFAULT '0',
@@ -172,7 +172,8 @@ CREATE TABLE `users` (
   `banned` tinyint(1) NOT NULL DEFAULT '0',
   `views` mediumint(9) NOT NULL,
   `access_dlcp` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=98898 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

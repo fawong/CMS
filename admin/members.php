@@ -15,6 +15,7 @@ All online members have been forced offline.
     // SUBMIT SAVE MEMBER
     if ($get_action == 'save_member') {
         page_header('Member Updated');
+        $db->query("UPDATE `users` SET `password` = '".password2hash($_POST[password])."' WHERE `id` = $get_id");
 ?>
 Member <strong><?php print id2username($get_id) ?></strong> has been updated.
 <?php
@@ -163,7 +164,7 @@ IP: <?php print $ip ?><br />
         if ($user = $db->get_row("SELECT * FROM users WHERE id = '$get_id'")) {
             page_header('Edit Member');
 ?>
-<form method="post" action="?action=save_member&amp;username=<?php print $user->username ?>&amp;id=<?php print $user->id ?>">
+<form method="post" action="?action=save_member&amp;id=<?php print $user->id ?>">
 <div class="form-group">
 <label>Username:</label>
 <input type="text" name="username" class="form-control" value="<?php print $user->username ?>" disabled/>
@@ -227,7 +228,24 @@ IP: <?php print $ip ?><br />
 </div>
 <div class="form-group">
 <label>Date of Birth:</label>
-<input type="text" name="date_of_birth" class="form-control" value="<?php print $user->date_of_birth ?>" />
+<br />
+<?php
+            list($year, $month, $day) = preg_split('-', $user->date_of_birth);
+?>
+<div class="col-lg-4">
+<select class="form-control" name="year">
+<option name="year" value="<?php print $year ?>"></option>
+</select>
+</div>
+<div class="col-lg-4">
+<select class="form-control" name="month">
+<option name="month" value="<?php print $month ?>"></option>
+</select>
+</div>
+<div class="col-lg-4">
+<select class="form-control" name="day">
+<option name="day" value="<?php print $day ?>"></option>
+</select>
 </div>
 <div class="form-group">
 <label>Website Theme:</label>
@@ -237,7 +255,11 @@ IP: <?php print $ip ?><br />
 </div>
 <div class="form-group">
 <label>Access File Manager:</label>
-<?php print $user->access_file_manager ?>
+<?php print $user->access_file_manager ? 'Yes' : 'No' ?>
+</div>
+<div class="form-group">
+<label>Change Password:</label>
+<input type="password" name="password" class="form-control">
 </div>
 <div class="form-group">
 <label>Last Log On:</label>
@@ -260,7 +282,8 @@ IP: <?php print $ip ?><br />
         page_header('Delete Member');
 ?>
 <form role="form" action="?action=submit_delete_member&amp;id=<?php print $get_id ?>" method="post">
-<p><strong>Are you sure you want to delete user <?php print $get_id ?>?</strong></p>
+<p><strong>Are you sure you want to delete user <?php print id2username($get_id) ?>?</strong></p>
+<input type="hidden" value="<?php print id2username($get_id) ?>" name="username">
 <button type="submit" class="btn btn-lg btn-primary">Yes</button>
 <button type="button" class="btn btn-lg" onclick="history.go(-1)">No</button>
 </form>
@@ -272,7 +295,7 @@ IP: <?php print $ip ?><br />
         $db->query("DELETE FROM `users` WHERE `id` = '$get_id'");
         page_header('Member deleted');
 ?>
-Member <strong><?php print id2username($get_id) ?></strong> has been deleted.
+Member <strong><?php print $_POST['username'] ?></strong> has been deleted.
 <?php
     };
     require_once(dirname(dirname(__FILE__)) . '/footer.php');
