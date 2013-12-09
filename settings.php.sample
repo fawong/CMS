@@ -14,10 +14,10 @@ $ftp_username = 'ftp_username'; // FTP server username
 $ftp_password = 'ftp_password'; // FTP server password
 
 // Logo (without http://)
-$settings['logo'] = 'http://example/logo.png';
+$settings['logo'] = 'http://www.example.com/logo.png';
 
 // URL of CMS (without http://)
-$settings['url'] = 'http://example.com/path/to/cms';
+$settings['url'] = 'http://www.example.com/path/to/cms';
 
 // Agree before registering for site
 $settings['agree_page'] = true;
@@ -42,7 +42,7 @@ $settings['theme'] = 'default';
 $settings['allow_theme_change'] = true;
 
 // Inbox limit for members (in MB)
-$settings['inbox_limit_member'] = 50;
+$settings['inbox_limit_member'] = 10;
 
 // Inbox limit for administrators
 $settings['inbox_limit_admin'] = 'unlimited';

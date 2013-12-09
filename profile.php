@@ -29,7 +29,7 @@ if ($_SESSION['login'] != true) {
 <p><strong>Member First Name:</strong> <?php print $user->first_name ?></p>
 <p><strong>Member Last Name:</strong> <?php print $user->last_name ?></p>
 <p><strong>Member Group:</strong> <?php print id2group($user->group_id) ?></p>
-<p><strong>Date Joined:</strong> <?php print $user->date_joined ?></p>
+<p><strong>Date Joined:</strong> <?php print timestamp2date($user->date_joined) ?></p>
 <p><img src="<?php print $status ?>" /></p></p>
 
 <h2>Statistics:</h2>
@@ -42,7 +42,9 @@ if ($_SESSION['login'] != true) {
 <p><strong>About:</strong> <?php print $user->about ?></p>
 <p><strong>Interests:</strong> <?php print $user->interests ?></p>
 <p><strong>Website:</strong> <a href="<?php print $user->website ?>" target="_blank"><?php print $user->website ?></a></p>
-<p><strong>Email:</strong> <a href="mailto:<?php print $user->email ?>"><?php print $user->email ?></a></p></p>
+<p><strong>Email:</strong> <a href="mailto:<?php print $user->email ?>"><?php print $user->email ?></a></p>
+<p><strong>Last Logon:</strong> <?php print timestamp2date($user->last_log_on) ?></p>
+<p><strong>Last IP:</strong> <?php print long2ip($user->ip) ?></p>
 <?php
         } else {
             title("Member Does Not Exist");
@@ -52,38 +54,11 @@ if ($_SESSION['login'] != true) {
 <?php
         };
     };
-};
 
-// ACCOUNT OVERVIEW
-if ($get_action == 'options') {
-    title("Options");
-    while ($row = mysql_fetch_array($find_data)) {
-        print '<h1><center>Options</center></h1>
-            <hr width="100%" align="center"/>
-            <table class="table" align="center">
-            <tr><td>
-            <strong>Profile Information:</strong><br />
-            Views: '.$user->views.' <br />
-            Reputation: +'.$user->kpos.'/-'.$user->kneg.'<br /><br />
-            Local Time: '.$local_time.'<br />
-            Last Logon: '.$user->last_log_on.'<br />
-            IP: '.$ip.'<br />
-            </td>
-            </tr>
-            <tr><td>
-            <strong>Profile Settings:</strong><br />
-            <a href="?act=profile&amp;action=view">View My Profile </a> |
-            <a href="?act=profile&amp;action=edit_profile">Edit Profile</a> |
-            <a href="?act=profile&amp;action=change_password">Change Password</a>
-            </td></tr>
-            </table> ';
-    };
-};
-
-// REPUTATION
-if ($get_action =='reputation') {
-    title("Reputation");
-    page_header('Reputation');
+    // REPUTATION
+    if ($get_action =='reputation') {
+        title("Reputation");
+        page_header('Reputation');
 ?>
 <h2>Would you like to add +rep or -rep?</h2>
 <form action="?action=change_reputation&amp;id=<?php print $get_id ?>" method="post">
@@ -94,142 +69,127 @@ if ($get_action =='reputation') {
 <button type="submit" class="btn btn-lg btn-primary">Submit Change in Reputation</button>
 </form>
 <?php
-};
+    };
 
-if ($get_action == 'change_reputation') {
-    if ($_POST['rep'] == '+rep') {
-        title("Positive (+1) Reputation Given");
-        page_header('Positive (+1) Reputation Given');
+    if ($get_action == 'change_reputation') {
+        if ($_POST['rep'] == '+rep') {
+            title("Positive (+1) Reputation Given");
+            page_header('Positive (+1) Reputation Given');
 ?>
 <p>Positive reputation has been given to <strong><?php print id2username($get_id) ?></strong>.</p>
 <?php
-    };
-    if ($_POST['rep'] == '-rep') {
-        title("Negative (-1) Reputation Given");
-        page_header('Negative (-1) Reputation Given');
+        };
+        if ($_POST['rep'] == '-rep') {
+            title("Negative (-1) Reputation Given");
+            page_header('Negative (-1) Reputation Given');
 ?>
 <p>Negative reputation has been given to <strong><?php print id2username($get_id) ?></strong>.</p>
 <?php
-    };
+        };
 ?>
 <a href="?action=view&amp;id=<?php print $get_id ?>">Back to <?php print id2username($get_id) ?>'s profile</a>
 <?php
-};
+    };
 
-// EDIT PROFILE
-if ($get_action == 'edit_profile') {
-    if ($set == 'fix') {
-        $_SESSION['firstname'] = $_POST['fname'];
-        $_SESSION['lastname'] = $_POST['lname'];
+    // SUBMIT EDIT PROFILE
+    if ($get_action == 'submit_edit_profile') {
         print '<strong>Your profile has been updated.</strong>';
     };
-    title("Edit Profile");
-    print '<h1><center>Edit Profile</center></h1>
-        <hr width="100%" align="center"/>';
-    while ($row = mysql_fetch_array($edit_query)) {
-        print '<table class="table" align="center">
-            <tr><td>
-            <form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
-            <strong>Username:</strong> '.$user->username.'<br />
-            <strong>First Name:</strong><br />
-            <input type="text" name="fname" size="65" value="'.$user->first_name.'" /><br />
-            <strong>Last Name:</strong><br />
-            <input type="text" name="lname" size="65" value="'.$user->last_name.'" /><br />
-            <strong>Date Joined:</strong> '.$user->date_joined.' <br />
-            <strong>About:</strong><br />
-            <textarea name="about" rows="10" cols="56">'.$user->about.'</textarea><br /> 
-            <strong>Interests:</strong><br />
-            <textarea name="interests" rows="10" cols="56">'.$user->interests.'</textarea><br />
-            <strong>Signature:</strong><br />
-            <textarea name="signature" rows="10" cols="56">'.$user->signature.'</textarea><br />
-            <strong>AIM:</strong><br />
-            <input type="text" name="aim" size="65" value="'.$user->aim.'" /><br /> 
-            <strong>Email:</strong><br />
-            <input type="text" name="email" size="65" value="'.$user->email.'" /><br />
-            <strong>Avatar:</strong><br />
-            <input type="text" name="avatar" size="65" value="'.$user->avatar.'" /><br />
-            <strong>Website:</strong><br />
-            <input type="text" name="website" size="65" value="'.$user->website.'" /><br /> 
-            <strong>Date of Birth:</strong> '.$user->date_of_birth.'<br />
-            <input type="submit" name="submit" value="Save Edited Profile" />
-            </form>
-            </td></tr>
-            </table>';
+
+    // EDIT PROFILE
+    if ($get_action == 'edit_profile') {
+        title("Edit Profile");
+        page_header("Edit Profile");
+?>
+<form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
+<strong>Username:</strong> '.$user->username.'<br />
+<strong>First Name:</strong><br />
+<input type="text" name="fname" size="65" value="'.$user->first_name.'" /><br />
+<strong>Last Name:</strong><br />
+<input type="text" name="lname" size="65" value="'.$user->last_name.'" /><br />
+<strong>Date Joined:</strong> '.$user->date_joined.' <br />
+<strong>About:</strong><br />
+<textarea name="about" rows="10" cols="56">'.$user->about.'</textarea><br /> 
+<strong>Interests:</strong><br />
+<textarea name="interests" rows="10" cols="56">'.$user->interests.'</textarea><br />
+<strong>Signature:</strong><br />
+<textarea name="signature" rows="10" cols="56">'.$user->signature.'</textarea><br />
+<strong>AIM:</strong><br />
+<input type="text" name="aim" size="65" value="'.$user->aim.'" /><br /> 
+<strong>Email:</strong><br />
+<input type="text" name="email" size="65" value="'.$user->email.'" /><br />
+<strong>Avatar:</strong><br />
+<input type="text" name="avatar" size="65" value="'.$user->avatar.'" /><br />
+<strong>Website:</strong><br />
+<input type="text" name="website" size="65" value="'.$user->website.'" /><br /> 
+<strong>Date of Birth:</strong> '.$user->date_of_birth.'<br />
+<input type="submit" name="submit" value="Save Edited Profile" />
+</form>
+<?php
     };
-};
-// CHANGE PASSWORD
-if ($get_action == 'change_password') {
-    title("Change Password");
-    print '<h1><center>Change Password</center></h1>
-        <hr width="100%" align="center"/>
-        <table class="table" align="center">
-        <tr><td>
-        <form action="?act=profile&amp;action=submit_change_password" method="post">
-        Current Password: <input type="password" name="current_password" value="" /><br />
-        New Password: <input type="password" name="new_password" value="" /><br />
-        Re-Enter New Password: <input type="password" name="reenter_new_password" value="" /><br />
-        <input type="submit" value="Change Password" />
-        </form>
-        </td></tr></table>';
-};
-// SUBMIT CHANGE PASSWORD
-if ($get_action == 'submit_change_password') {
-    $currentpass = sha1(md5($_POST[current_password]));
-    if (mysql_num_rows($query) == 1) {
-        if ($_POST[new_password] == $_POST[reenter_new_password]) {
-            if ($_POST[new_password] != '') {
-                if ($_POST[reenter_new_password] != '') {
-                    $newpass = sha1(md5($_POST[new_password]));
+    // CHANGE PASSWORD
+    if ($get_action == 'change_password') {
+        title("Change Password");
+        page_header('Change Password');
+?>
+<form role="form" class="form-horizontal" action="?action=submit_change_password" method="post">
+<div class="form-group">
+<label class="col-sm-2 control-label">Current Password:</label>
+<div class="col-sm-6">
+<input type="password" name="current_password" class="form-control" placeholder="Current Password">
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">New Password:</label>
+<div class="col-sm-6">
+<input type="password" name="new_password" class="form-control" placeholder="New Password">
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Confirm New Password:</label>
+<div class="col-sm-6">
+<input type="password" name="reenter_new_password" class="form-control" placeholder="Confirm New Password">
+</div>
+</div>
+<button type="submit" class="btn btn-lg btn-primary">Change Password</button>
+</form>
+<?php
+    };
+    // SUBMIT CHANGE PASSWORD
+    if ($get_action == 'submit_change_password') {
+        $currentpass = password2hash($_POST[current_password]);
+        if ($db->query("SELECT * FROM `users` WHERE `id` = $user_id AND `password` = '$currentpass'")) {
+            if ($_POST[new_password] == $_POST[reenter_new_password]) {
+                if ($_POST[new_password] != '' || $_POST[reenter_new_password] != '') {
+                    $newpass = password2hash($_POST[new_password]);
                     session_destroy();
                     title("Successfully Changed Password");
-                    print '<h1><center>Successfully Changed Password</center></h1>
-                        <hr width="100%" align="center"/>
-                        <table class="table" align="center">
-                        <tr><td>
-                        Your password has been changed.<br />
-                        You have been logged out of the system.
-                        </td></tr>
-                        </table>';
+                    page_header("Successfully Changed Password");
+?>
+<p>Your password has been changed.</p>
+<p>You have been logged out of the system.</p>
+<?php
                 } else {
                     title("New Password Cannot be Blank");
-                    print '<h1><center>New Password Cannot be Blank</center></h1>
-                        <hr width="100%" align="center"/>
-                        <table class="table" align="center">
-                        <tr><td>
-                        Your new password cannot be blank.
-                        </td></tr>
-                        </table>';
+                    page_header("New Password Cannot be Blank");
+?>
+Your new password cannot be blank.
+<?php
                 };
-            }
-            else {
-                title("New Password Cannot be Blank");
-                print '<h1><center>New Password Cannot be Blank</center></h1>
-                    <hr width="100%" align="center"/>
-                    <table class="table" align="center">
-                    <tr><td>
-                    Your new password cannot be blank.
-                    </td></tr>
-                    </table>';
+            } else {
+                title("New Passwords Do Not Match");
+                page_header("New Passwords Do Not Match");
+?>
+Your new passwords do not match.
+<?php
             };
         } else {
-            title("New Passwords Do Not Match");
-            print '<h1><center>New Passwords Do Not Match</center></h1>
-                <hr width="100%" align="center"/>
-                <table class="table" align="center">
-                <tr><td>
-                Your new passwords do not match.
-                </td></tr>
-                </table>';
+            title("Current Password is Incorrect");
+            page_header("Current Password is Incorrect");
+?>
+Your current password is incorrect.
+<?php
         };
-    } else {
-        title("Current Password is Incorrect");
-        print '<h1><center>Current Password is Incorrect</center></h1>
-            <hr width="100%" align="center"/>
-            <table class="table" align="center">
-            <tr><td>
-            Your current password is incorrect.
-            </td></tr>
-            </table>';
     };
 };
 require_once('footer.php');

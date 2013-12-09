@@ -47,16 +47,22 @@ function timestamp2date($timestamp) {
     return date('F j, Y \a\t g:i A', strtotime($timestamp));
 }
 
-// CONVERT USER ID TO USERNAME
+// CONVERT GROUP ID TO GROUP NAME
 function id2group($id) {
     global $db;
-    return $db->get_row("SELECT * FROM `groups` WHERE `id` = $id")->description;
+    return $db->get_var("SELECT description FROM `groups` WHERE `id` = $id");
+}
+
+// CONVERT USERNAME TO USER ID
+function username2id($username) {
+    global $db;
+    return $db->get_var("SELECT id FROM `users` WHERE `username` = '$username'");
 }
 
 // CONVERT USER ID TO USERNAME
 function id2username($id) {
     global $db;
-    return $db->get_row("SELECT * FROM `users` WHERE `id` = $id")->username;
+    return $db->get_var("SELECT username FROM `users` WHERE `id` = $id");
 }
 
 // PRINT HEADER
@@ -68,8 +74,8 @@ function page_header($name) {
 <?php
 }
 
-// VALID URL
-function valid_url($str) {
+// VALID URI
+function valid_uri($str) {
     return preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\(com|org|net|us)+?\/?/i', $str);
 };
 
@@ -85,15 +91,17 @@ function password2hash($password) {
     return sha1(md5($password));
 }
 
-// FIND TOTAL STORAGE SPACE
-function total_message() {
-    if($group == 1) {
+// FIND PM USAGE
+function pm_usage() {
+    global $db, $settings, $user_id;
+    if ($group == 1) {
         $max = 'unlimited';
-    }; // if($group == 1)
-    if($group != 1) {
-        $max = '100';
-    }; // if($group != 1)
-    print $find_number.'/'.$max;
+    } else {
+        $max = $settings['inbox_limit_member'];
+    };
+?>
+<?php print $db->get_var("SELECT COUNT(*) FROM `personal_messages` WHERE `to_user_id` = $user_id") ?> / <?php print $max ?>
+<?php
 };
 
 // CHECK NEW MESSAGES IN PRIVATE MESSAGES INBOX

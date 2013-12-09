@@ -66,8 +66,10 @@ if ($login == true) {
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="//<?php print $settings['url'] ?>/profile.php?action=edit_profile">Edit Profile</a></li>
+<li><a href="//<?php print $settings['url'] ?>/profile.php?action=change_password">Change Password</a></li>
 <li><a href="//<?php print $settings['url'] ?>/members.php">View Members List</a></li>
-<li><a href="pm.php">Personal Messages</a></li>
+<li><a href="//<?php print $settings['url'] ?>/pm.php">Personal Messages</a></li>
 <?php
     if ($group == 1 || $access_file_manager == 1) {
 ?>
@@ -81,7 +83,7 @@ if ($login == true) {
 <li><a href="//<?php print $settings['url'] ?>/admin/overview.php"><?php print $cms_name ?> Overview</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/settings.php">Settings</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/posts.php?action=new_post">Add New Post</a></li>
-<li><a href="//<?php print $settings['url'] ?>/admin/page.php?action=page">Web Page Control Panel</a></li>
+<li><a href="//<?php print $settings['url'] ?>/admin/page.php?action=page">Page Control Panel</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/members.php?action=list_members">Edit Members List</a></li>
 <li><a href="//<?php print $settings['url'] ?>/admin/dcp.php?action=overview">Downloads Control Panel</a></li>
 <?php
@@ -107,7 +109,6 @@ if($login != true) {
 <?php print $active3 ?><a href="register.php?action=register">Register</a></li>
 <?php
     //<a href="?act=forgot_username/password">Forgot Username and/or Password?</a>';
-    //<li><a href="page.php?action=page">Web Page Control Panel</a></li>
 }
 else {
     $active4 = '<li>';

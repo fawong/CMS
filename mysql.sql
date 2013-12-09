@@ -93,7 +93,7 @@ CREATE TABLE `pages` (
   `page_title` varchar(255) NOT NULL DEFAULT '',
   `author_id` int(11) NOT NULL,
   `header` text NOT NULL,
-  `body` text NOT NULL,
+  `body` mediumtext NOT NULL,
   `footer` text NOT NULL,
   `css` text NOT NULL,
   `views` mediumint(9) NOT NULL,
@@ -109,24 +109,23 @@ CREATE TABLE `pages` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_messages` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `subject` varchar(255) NOT NULL DEFAULT '',
   `from_user_id` int(11) NOT NULL,
   `to_user_id` int(11) NOT NULL,
-  `text` text NOT NULL,
-  `important` tinyint(1) NOT NULL,
+  `text` mediumtext NOT NULL,
   `mark_read` tinyint(1) NOT NULL DEFAULT '0',
-  `folder` tinyint(4) NOT NULL,
+  `folder` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
-  `name` mediumtext NOT NULL,
-  `post` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL,
+  `post` mediumtext NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;

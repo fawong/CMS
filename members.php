@@ -9,7 +9,7 @@ if ($_SESSION['login'] != true) {
     page_header('Members List');
     if ($users = $db->get_results("SELECT * FROM `users` ORDER BY username ASC")) {
 ?>
-<p>Total Number of Members: <?php print $db->num_rows ?></p>
+<p>Total number of members: <?php print $db->num_rows ?></p>
 <table class="table">
 <tr>
 <th>Username</th>

@@ -39,7 +39,8 @@ if ($get_action == 'authenticate') {
             $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
             $_SESSION['login'] = true;
-            $db->query("UPDATE users SET ip = '".ip2long($ip)."', online = 1 WHERE username = '$username'");
+            $db->query("UPDATE users SET ip = '" . ip2long($ip) . "', online = 1 WHERE username = '$user->username'");
+            $db->debug();
             redirect("posts.php");
         } else {
             redirect("failed.php?id=1");

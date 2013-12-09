@@ -10,10 +10,10 @@ if($group != 1) {
 <div class="row">
 <div class="col-md-6">
 <h3>Administrator Rights</h3>
-<p>View website settings</p>
+<p>View cms settings</p>
 <p>Add new post</p>
-<p>Web page control panel</p>
-<p>Add new web page</p>
+<p>page control panel</p>
+<p>Add new page</p>
 <p>Edit members list</p>
 <p>Add new member</p>
 <p>Download database control panel</p>

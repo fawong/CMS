@@ -1,21 +1,25 @@
 <?php 
 require_once('functions.php');
 
-$current_folder = 'inbox';
-// INBOX
 if ($login != true) {
-redirect('failed.php?id=3');
+    redirect('failed.php?id=3');
 } else {
-if ($get_action == 'inbox' || $get_action == '') {
-title("Inbox");
-page_header('Inbox');
+    $current_folder = 'inbox';
+
+    // INBOX
+    if ($get_action == 'inbox' || $get_action == '') {
+        title("Inbox");
+        page_header('Inbox');
 ?>
-<form method="post" action="?act=inbox&amp;action=change_folder">
 <p>Current Folder: <?php print $current_folder ?></p>
-<p>Total Usage: <?php print total_message() ?> (Used/Maximum)</p>
+<p>Total Usage: <?php print pm_usage() ?> (Used/Maximum)</p>
 <p><a href="?act=inbox&amp;action=compose">Compose</a></p>
+
+<form method="post" role="form" action="?action=change_folder">
 Change Folder: 
-<select name="folder" size="1"> 
+<div class="form-group">
+<div class="col-sm-2">
+<select name="folder" class="form-control"> 
 <option value="inbox" selected="selected">Inbox</option>
 <option value="outbox">Outbox</option>
 <option value="drafts">Drafts</option>
@@ -23,7 +27,9 @@ Change Folder:
 <option value="trash">Trash</option>
 <option value="spam">Spam</option>
 </select>
-<input type="submit" value="Go!" />
+</div>
+<button type="submit" class="btn btn-primary">Go!</button>
+</div>
 </form>
 
 <table class="table">
@@ -35,127 +41,123 @@ Change Folder:
 <td>Options</td>
 </tr>
 <?php
-$count = 1;
-foreach ($db->get_results("SELECT * FROM `personal_messages` WHERE `to_user_id` = $user_id") as $message) {
+        $count = 1;
+        foreach ($db->get_results("SELECT * FROM `personal_messages` WHERE `to_user_id` = $user_id ORDER BY `timestamp`") as $message) {
 ?>
 <tr>
 <td><?php print $count ?></td>
-<?php
-foreach (Array('from_user_id', 'subject', 'timestamp') as $field) {
-?>
-<td><?php $message->mark_read ? '<strong>' : ''?><?php $message->important ? '<strong>' : '' ?><?php print $message->$field ?><?php $message->mark_read ? '<strong>' : ''?><?php $message->important ? '<strong>' : '' ?></td>
-<?php
-}
-?>
-<td><a href="?act=inbox&amp;action=read&amp;id='.$message->id].'">Read</a> | <a href="index.php?act=inbox&amp;action=reply&amp;id='.$message->id].'">Reply</a> | <a href="index.php?act=inbox&amp;action=move&amp;id='.$message->id].'">Move</a> | <a href="index.php?act=inbox&amp;action=delete&amp;id='.$message->id].'">Delete</a></td>
+<td><?php print id2username($message->from_user_id) ?></td>
+<td><?php print $message->subject ?></td>
+<td><?php print timestamp2date($message->timestamp) ?></td>
+<td><a href="?action=read&amp;id=<?php print $message->id ?>">Read</a> | <a href="?action=reply&amp;id=<?php print $message->id ?>">Reply</a> | <a href="?action=move&amp;id=<?php print $message->id ?>">Move</a> | <a href="?action=delete&amp;id=<?php print $message->id ?>">Delete</a></td>
 </tr>
 <?php
-$count++;
-};
-};
-print '</table>';
-};
-if ($get_action == 'read') {
-if ($id != '') {
-print '<table class="table" align="center"><tr><td>';
-while ($row = mysql_fetch_array($read_msg)) {
-if ($message->important == '1') {
-$priority = '<span class="important">Important</span>';
-};
-if ($message->important == '0') {
-$priority = '<strong>Normal</strong>';
-};
-print '<strong>Subject:</strong> '.$message->subject.'<br />
-<strong>From:</strong> '.$message->from.' <strong>To:</strong> '.$message->to.'<br />
-<strong>Date:</strong> '.$message->date.'<br />
-<strong>Priority:</strong> '.$priority.'<br />
-&nbsp;&nbsp;<a href="?act=inbox&amp;action=reply&amp;id='.$message->id.'">Reply</a> | <a href="index.php?act=inbox&amp;action=move&amp;id='.$message->id.'">Move</a> | <a href="index.php?act=inbox&amp;action=delete&amp;id='.$message->id.'">Delete</a><br /><br /></td>
-</tr>
-<tr><td>'.$message->text.'</td>';
-};
-print '</tr></table>';
-};
-};
-if ($get_action == 'reply') {
-if ($id != '') {
-if ($group == 1) {
-$admin_check = 'Important: <input type="text" value="0" name="admin"><br />';
-};
-print '<table class="table" width="100%"><tr><td>';
-while ($row = mysql_fetch_array($find_un_msg)) {
-print '<form method="post" action="?act=inbox&amp;action=reply_to">
-To: <input type="text" name="to" value="'.$message->username.'" /><br />
-Subject: <input type="text" name="subject" value="RE: '.$message->subject.' " /><br />
-Body:<br />
-<textarea name="body" rows="10" cols="50"><quote>'.$message->text.'</quote></textarea><br /><br /><br />
-'.$admin_check.'
-<input type="submit" value="Send Message" name="submit" />
-</form>';
-};
-print '</td></tr></table>';
-};
-};
-if ($get_action == 'reply_to') {
-if ($group == 1) {
-if ($_POST['admin'] == '1') {
-$admin = 1;
-};
-if ($_POST['admin'] == '0') {
-$admin = 0;
-};
-};
-if ($group != 1) {
-$admin = 0; 
-};
-print '<strong><center>Message Sent!</center></strong>';
-};
-if ($get_action == 'compose') {
-if ($group == 1) {
-$admin_check = 'Important: <input type="text" value="0" name="admin"><br />';
-};
-print '<table class="table" align="center"><tr><td>
-<form method="post" action="?act=inbox&amp;action=reply_to">
+            $count++;
+        };
+?>
+</table>
+<?php
+    };
+
+    // READ
+    if ($get_action == 'read') {
+        if ($get_id != '') {
+            $message = $db->get_row("SELECT * FROM `personal_messages` WHERE `id` = $get_id");
+            title($message->subject);
+            page_header($message->subject);
+?>
+<p><strong>Subject:</strong> <?php print $message->subject ?></p>
+<p><strong>From:</strong> <?php print id2username($message->from_user_id) ?></p>
+<p><strong>To:</strong> <?php print id2username($message->to_user_id) ?></p>
+<p><strong>Date:</strong> <?php print timestamp2date($message->timestamp) ?></p>
+<p><?php print $message->text ?></p>
+<a href="?action=reply&amp;id=<?php print $message->id ?>">Reply</a> | <a href="index.php?action=move&amp;id=<?php print $message->id ?>">Move</a> | <a href="index.php?action=delete&amp;id=<?php print $message->id ?>">Delete</a>
+<?php
+        };
+    };
+
+    // REPLY
+    if ($get_action == 'reply') {
+        if ($get_id != '') {
+            $message = $db->get_row("SELECT * FROM `personal_messages` WHERE `id` = $get_id");
+            title($message->subject);
+            page_header('Reply to ' . $message->subject);
+?>
+<form method="post" role="form" action="?action=submit_reply">
+<div class="form-group">
+<label>To:</label>
+<input type="text" class="form-control" name="to" value="<?php print id2username($message->from_user_id) ?>" /></p>
+</div>
+<div class="form-group">
+<label>Subject:</label>
+<input type="text" class="form-control" name="subject" value="RE: <?php print $message->subject ?>" /></p>
+</div>
+<div class="form-group">
+<label>Body:</label>
+<textarea name="body" class="form-control"><quote><?php print $message->text ?></quote></textarea>
+</div>
+<button type="submit" class="btn btn-lg btn-primary" name="submit">Send Message</button>
+</form>
+<?php
+        };
+    };
+
+    // SUBMIT REPLY
+    if ($get_action == 'submit_reply') {
+        $to_id = username2id($_POST[to]);
+        $db->query("INSERT INTO `personal_messages` (`subject`, `from_user_id`, `to_user_id`, `text`) VALUES ('$_POST[subject]', $user_id, $to_id, '$_POST[body]')");
+        page_header('Message Sent!');
+?>
+Message sent!
+<?php
+    };
+
+    // COMPOSE MESSAGE
+    if ($get_action == 'compose') {
+?>
+<form method="post" action="?action=reply_to">
 To: <input type="text" name="to" value="" /><br />
 Subject: <input type="text" name="subject" value="" /><br />
 Body:<br />
 <textarea name="body" rows="10" cols="50"></textarea><br />
-'.$admin_check.' <input type="hidden" value="100" name="set">
+<input type="hidden" value="100" name="set">
 <input type="submit" value="Send Message" name="submit" />
 </form>
-</td></tr></table>';
-};
-if ($get_action == 'delete') {
-if ($id != '') {
-if ($_POST[set] == 'delete') {
-print '<strong>Message has been deleted.</strong></table>';
-};
-if (!isset($_POST[set])) {
-print '<strong>Are you sure you want to delete this message?</strong>';
-print '<table class="table" align="center"><tr><td>';
-while ($row = mysql_fetch_array($read_msg)) {
-if ($message->important == '1') {
-$priority = '<span class="important">Important</span>';
-};
-if ($message->important == '0') {
-$priority = 'Normal';
-};
-print '<strong>Subject:</strong> '.$message->subject.'<br />
-<strong>From:</strong> '.$message->from.'<br />
-<strong>To:</strong> '.$message->to.'<br />
-<strong>Date:</strong> '.$message->date.'<br />
-<strong>Priority:</strong> '.$priority.'<br />
-<strong>Message:</strong> '.$message->text.'';
-};
-print '<form action="?act=inbox&amp;action=delete&amp;id='.$id.'" method="post">
-<input type="hidden" name="set" value="delete">
-<input type="submit" value="Yes, Delete this message" />
+<?php
+    };
+
+    // DELETE MESSAGE
+    if ($get_action == 'delete') {
+        if ($get_id != '') {
+            page_header('Delete Message');
+            $message = $db->get_row("SELECT * FROM `personal_messages` WHERE `id` = $get_id");
+?>
+<h2>Are you sure you want to delete this message?</h2>
+<p><strong>Subject:</strong> <?php print $message->subject ?></p>
+<p><strong>From:</strong> <?php print id2username($message->from_user_id) ?></p>
+<p><strong>To:</strong> <?php print id2username($message->to_user_id) ?></p>
+<p><strong>Date:</strong> <?php print timestamp2date($message->timestamp) ?></p>
+<p><strong>Message:</strong> <?php print $message->text ?></p>
+
+<form action="?action=submit_delete&amp;id=<?php print $message->id ?>" class="form" role="form" method="post">
+<button type="submit" class="btn btn-lg btn-primary">Yes, delete this message</button>
+<button type="button" class="btn btn-lg" onclick="history.go(-1)">No</button>
 </form>
-</td></tr></table>';
-};
-};
-};
-if($get_action == 'change_folder') {
-print '<center>not implemented yet</center>';
+<?php
+        };
+    };
+
+    if ($get_action == 'submit_delete') {
+        $db->query("DELETE FROM `personal_messages` WHERE `id` = $get_id");
+        page_header('Message has been deleted');
+?>
+Message has been deleted.
+<?php
+    };
+
+    if($get_action == 'change_folder') {
+        print '<center>not implemented yet</center>';
+    };
 };
 require_once('footer.php');
 ?>

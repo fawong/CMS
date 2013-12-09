@@ -37,7 +37,8 @@ New Post Added.
     // SUBMIT EDIT POST
     if ($get_action == 'submit_edit_post') {
         if ($get_id != '') {
-            $db->query("UPDATE `posts` SET `title` = '$_POST[title]', `post` = '$_POST[post]' WHERE `id` ='$get_id'");
+            $db->query("UPDATE `posts` SET `name` = '$_POST[title]', `post` = '$_POST[post]' WHERE `id` ='$get_id'");
+            $db->debug();
             page_header('Post Saved');
 ?>
 Post edited and saved.
@@ -59,7 +60,7 @@ No post ID given.
 <form action="?action=submit_edit_post&amp;id=<?php print $post->id ?>" method="post">
 <div class="form-group">
 <label>Title:</label>
-<input name="title" type="text" class="form-control" value="<?php print $post->title ?>" />
+<input name="title" type="text" class="form-control" value="<?php print $post->name ?>" />
 </div>
 <div class="form-group">
 <label>Post date:</label>
@@ -67,7 +68,7 @@ No post ID given.
 </div>
 <div class="form-group">
 <label>Post author:</label>
-<?php print $post->username ?>
+<?php print id2username($post->author_id) ?>
 </div>
 <div class="form-group">
 <label>Post content:</label>

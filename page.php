@@ -3,6 +3,7 @@ include_once('functions.php');
 
 if ($get_action == '') {
     if ($page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_id'")) {
+        $db->query("UPDATE `pages` SET `views` = `views` + 1 WHERE `id` = $get_id");
         $password = $page->password;
         if ($page->public == 1 || $group == 1) {
             if ($password == '') {
@@ -34,6 +35,7 @@ if ($get_action == '') {
 <?php
             };
         } else {
+            http_response_code(404);
             page_header('Page Does Not Exist');
 ?>
 The page you are looking for does not exist.

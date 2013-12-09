@@ -9,7 +9,7 @@ if ($get_action == 'view_comments') {
 ?>
 <h2><?php print $post->title ?></h2>
 <br />
-<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($post->username) ?>"><?php print id2username($post->username) ?></a>
+<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($post->author_id) ?>"><?php print id2username($post->author_id) ?></a>
 <br />
 <strong>Post date:</strong> <?php print timestamp2date($post->timestamp) ?>
 <p><?php print $post->post ?></p>
@@ -69,8 +69,8 @@ Comment is empty.
         if ($post = $db->get_row("SELECT * FROM `posts` WHERE `id` = '$get_id'")) {
 ?>
 <h2><?php print $post->title ?></h2>
-<p><strong>Posted by:</strong> <a href="profile.php?action=view&amp;username=<?php print id2username($post->username) ?>"><?php print id2username($post->username) ?></a></p>
-<p><strong>Date:</strong> <?php print $post->date ?></p>
+<p><strong>Post author:</strong> <a href="profile.php?action=view&amp;username=<?php print id2username($post->author_id) ?>"><?php print id2username($post->author_id) ?></a></p>
+<p><strong>Post date:</strong> <?php print timestamp2date($post->timestamp) ?></p>
 <p><?php print $post->post ?></p>
 
 <form action="?action=post_comment" method="post">
