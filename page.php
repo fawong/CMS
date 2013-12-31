@@ -2,7 +2,13 @@
 include_once('functions.php');
 
 if ($get_action == '') {
-    if ($page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_id'")) {
+    if ($get_id) {
+        $page = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$get_id'");
+    } else {
+        $page = $db->get_row("SELECT * FROM `pages` WHERE `page_name` = '$get_page'");
+    }
+
+    if ($page) {
         $db->query("UPDATE `pages` SET `views` = `views` + 1 WHERE `id` = $get_id");
         $password = $page->password;
         if ($page->public == 1 || $group == 1) {

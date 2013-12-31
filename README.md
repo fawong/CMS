@@ -15,3 +15,10 @@ TODO
 
 Contributing
 ------------
+
+TODO
+
+Credits
+-------
+
+[ezSQL](https://github.com/jv2222/ezSQL)
