@@ -298,6 +298,6 @@ IP: <?php print $ip ?><br />
 Member <strong><?php print $_POST['username'] ?></strong> has been deleted.
 <?php
     };
-    require_once(dirname(dirname(__FILE__)) . '/footer.php');
 };
+require_once(dirname(dirname(__FILE__)) . '/footer.php');
 ?>

@@ -8,15 +8,16 @@ if ($login == false) {
         page_header("Sign in to $cms_name");
 ?>
 <form class="form-signin" method="post" action="?action=authenticate" name="login">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <input type="text" class="form-control" placeholder="Username" name="inputusername" autofocus>
-    <input type="password" class="form-control" placeholder="Password" name="inputpassword">
-<!-- 
-     <label class="checkbox">
-         <input type="checkbox" value="remember-me"> Remember me
-     </label>
+<h2 class="form-signin-heading">Please sign in</h2>
+<input type="text" class="form-control" placeholder="Username" name="inputusername" autofocus>
+<input type="password" class="form-control" placeholder="Password" name="inputpassword">
+<p><a href="forgotuserpass.php">Forgot username and/or password?</a></p>
+<!--
+<label class="checkbox">
+<input type="checkbox" value="remember-me"> Remember me
+</label>
 -->
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 
 <?php

@@ -109,23 +109,23 @@ You are already logged in to <?php print $cms_name ?>.
 </div>
 <div class="form-group">
 <label>*Username:</label>
-<input type="text"  class="form-control" name="username" />
+<input type="text" class="form-control" name="username" />
 </div>
 <div class="form-group">
 <label>*Password:</label>
-<input type="password"  class="form-control" name="password" />
+<input type="password" class="form-control" name="password" />
 </div>
 <div class="form-group">
 <label>*Confirm Password:</label>
-<input type="password"  class="form-control" name="confirm_password" />
+<input type="password" class="form-control" name="confirm_password" />
 </div>
 <div class="form-group">
 <label>*Email Address:</label>
-<input type="text"  class="form-control" name="email" />
+<input type="text" class="form-control" name="email" />
 </div>
 <div class="form-group">
 <label>*Confirm Email Address:</label>
-<input type="text"  class="form-control" name="confirm_email" />
+<input type="text" class="form-control" name="confirm_email" />
 </div>
 <div class="form-group">
 <label>*Date of Birth:</label>
