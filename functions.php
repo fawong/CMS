@@ -30,6 +30,16 @@ if ($settings['maintenance'] == true) {
     require_once('maintenance.php');
     die();
 }
+
+// Error handler
+function eh($errno, $errstr) {
+    http_response_code(500);
+    header("Not-A-CMS-Fail: $errstr");
+    error_log("Not A CMS: $errstr");
+    die($errstr);
+}
+set_error_handler('eh');
+
 require('version.php');
 require_once('connect.php');
 
