@@ -3,7 +3,7 @@ require_once('functions.php');
 require_once("includes/recaptcha/recaptchalib.php");
 
 // CREATE ACCOUNT
-if ($_SESSION['login'] == false || !isset($_SESSION['login'])) {
+if ($login == false) {
     if ($get_action == 'create_account') {
         $resp = recaptcha_check_answer($settings['recaptcha_private_key'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]) or die('ERROR');
         if ($resp->is_valid) {
@@ -82,7 +82,7 @@ You have successfully register for <?php print $cms_name ?>.
 
     // REGISTER
     if ($get_action == 'register') {
-        if($_SESSION['login'] == TRUE) {
+        if($login == true) {
             title("Registration Error");
             page_header('You Are Already Logged In');
 ?>
@@ -188,7 +188,11 @@ You are already logged in to <?php print $cms_name ?>.
         };
     };
 } else {
-    print 'You are already logged in.';
+    title("Registration Error");
+    page_header('You Are Already Logged In');
+?>
+You are already logged in.
+<?php
 };
 require_once('footer.php');
 ?>
