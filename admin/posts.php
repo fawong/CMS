@@ -7,7 +7,7 @@ if ($group != 1) {
     // SUBMIT NEW POST
     if ($get_action == 'submit_new_post') {
         if ($_POST['post'] != '') {
-            $db->query("INSERT INTO `posts`(`title`, `username`, `post`) VALUES ('$_POST[title]', '$username', '$_POST[post]')");
+            $db->query("INSERT INTO `posts`(`title`, `author_id`, `post`) VALUES ('$_POST[title]', '$user_id', '$_POST[post]')");
             page_header('New Post Added');
 ?>
 New Post Added.
