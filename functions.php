@@ -10,6 +10,7 @@ if (empty($_SESSION)) {
     $username = $_SESSION['username'];
     $user_id = $_SESSION['user_id'];
     $group = $_SESSION['group_id'];
+    $login = $_SESSION['login'];
 }
 
 if (empty($_GET)) {
@@ -129,6 +130,7 @@ function check_inbox() {
     global $login;
     if ($login == true) {
         $important = 'Nothing important right now.';
+        /*
         if ($check_count > 0) {
             $important = '<center><strong>
                 <a href="?act=inbox">NEW MESSAGE(S)</a>
@@ -144,6 +146,7 @@ function check_inbox() {
                 <a href="?act=profile&action=comment&set=view_comments">NEW COMMENT(S)</a>
                 </span></center>';
         };
+         */
         print ''.$important.'';
     };
 };

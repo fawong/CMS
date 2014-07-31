@@ -36,7 +36,6 @@ if ($get_action == 'authenticate') {
         $hashpass = password2hash($inputp);
         if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
             $_SESSION['group_id'] = $user->group_id;
-            $_SESSION['rank'] = $user->rank;
             $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
             $_SESSION['login'] = true;
