@@ -1,8 +1,9 @@
 <?php
 require_once('functions.php');
-if ($_SESSION['login'] == false) {
-    $_SESSION['group'] = -1;
+if (!isset($_SESSION['login'])) {
+    $_SESSION['group_id'] = -1;
     $_SESSION['username'] = 'Guest';
+    $_SESSION['user_id'] = -1;
     $_SESSION['theme'] = 'default';
 };
 

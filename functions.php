@@ -2,19 +2,33 @@
 session_start();
 
 // GLOBAL VARIABLES
-$username = $_SESSION['username'];
-$user_id = $_SESSION['user_id'];
-$ltname = $_SESSION['lastname'];
-$group = $_SESSION['group_id'];
-$login = $_SESSION['login'];
+if (empty($_SESSION)) {
+    $username = '';
+    $user_id = '';
+    $group = '';
+} else {
+    $username = $_SESSION['username'];
+    $user_id = $_SESSION['user_id'];
+    $group = $_SESSION['group_id'];
+}
 
-$get_id = $_GET['id'];
-$get_page = $_GET['page'];
-$get_action = $_GET['action'];
-$get_path = $_GET['path'];
-$get_file_name = $_GET['filename'];
-$get_dir = $_GET['dir'];
-$get_file = $_GET['file'];
+if (empty($_GET)) {
+    $get_id = '';
+    $get_page = '';
+    $get_action = '';
+    $get_path = '';
+    $get_file_name = '';
+    $get_dir = '';
+    $get_file = '';
+} else {
+    $get_id = $_GET['id'];
+    $get_page = $_GET['page'];
+    $get_action = $_GET['action'];
+    $get_path = $_GET['path'];
+    $get_file_name = $_GET['filename'];
+    $get_dir = $_GET['dir'];
+    $get_file = $_GET['file'];
+}
 
 $ip = $_SERVER['REMOTE_ADDR'];
 $ruri = $_SERVER['REQUEST_URI'];
@@ -32,19 +46,15 @@ if ($settings['maintenance'] == true) {
 }
 
 // Error handler
-function eh($errno, $errstr) {
+function eh($errno, $errstr, $errfile, $errline, $errcontext) {
     http_response_code(500);
     header("Not-A-CMS-Fail: $errstr");
-    error_log("Not A CMS: $errstr");
+    error_log("Not A CMS Error -- $errstr -- line $errline -- file $errfile");
     die($errstr);
 }
 set_error_handler('eh');
 
-require('version.php');
 require_once('connect.php');
-
-// HEADER
-require_once('header.php');
 
 // DISPLAY TITLE IN WINDOW
 function title($title) {
@@ -116,6 +126,7 @@ function pm_usage() {
 
 // CHECK NEW MESSAGES IN PRIVATE MESSAGES INBOX
 function check_inbox() {
+    global $login;
     if ($login == true) {
         $important = 'Nothing important right now.';
         if ($check_count > 0) {
@@ -147,4 +158,10 @@ function reflink($url, $name, $target) {
         };
     };
 };
+
+require('version.php');
+
+
+// HEADER
+require_once('header.php');
 ?>
