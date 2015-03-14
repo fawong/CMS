@@ -11,7 +11,7 @@ if ($get_action == '') {
     if ($page) {
         $db->query("UPDATE `pages` SET `views` = `views` + 1 WHERE `id` = $get_id");
         $password = $page->password;
-        if ($page->public == 1 || $group == 1) {
+        if ($page->public == 1 || $group_id == 1) {
             if ($password == '') {
                 title($page->page_title);
                 page_header($page->page_title);
@@ -20,7 +20,7 @@ if ($get_action == '') {
 <p><?php print $page->body ?></p>
 <p><?php print $page->footer ?></p>
 <?php
-                if ($group == 1) {
+                if ($group_id == 1) {
 ?>
 <a href="//<?php print $settings['url'] ?>/admin/page.php?action=edit_page&amp;id=<?php print $page->id ?>">Edit</a>
 <br />

@@ -1,7 +1,7 @@
 <?php 
 require_once(dirname(dirname(__FILE__)) . '/functions.php');
 
-if ($group != 1) {
+if ($group_id != 1) {
     redirect('failed?id=2');
 } else {
     if ($get_action == 'page') {
@@ -59,7 +59,7 @@ if ($group != 1) {
             $admin = $_POST['admin'] ? true : false;
             $member = $_POST['member'] ? true : false;
             $public = $_POST['public'] ? true : false;
-            $db->query("UPDATE `pages` SET `page_name` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admin', `member` = '$member', `public` = '$public', `password` = '$_POST[pass]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$get_id'");
+            $db->query("UPDATE `pages` SET `page_name` = '$_POST[urlkey]', `page_title` = '$_POST[title]', `body` = '$_POST[body]', `admin` = '$admin', `member` = '$member', `public` = '$public', `password` = '$_POST[password]', `css` = '$_POST[css]', `header` = '$_POST[head]', `footer` = '$_POST[footer]' WHERE `id` = '$get_id'");
 ?>
 <strong><?php print $_POST['title'] ?></strong> has been successfully saved.
 <?php

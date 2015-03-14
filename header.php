@@ -71,12 +71,12 @@ if ($login == true) {
 <li><a href="//<?php print $settings['url'] ?>/members.php">View Members List</a></li>
 <li><a href="//<?php print $settings['url'] ?>/pm.php">Personal Messages</a></li>
 <?php
-    if ($group == 1 || $access_file_manager == 1) {
+    if ($group_id == 1 || $access_file_manager == 1) {
 ?>
 <li><a href="?act=manager">File Manager</a></li>
 <?php
     };
-    if ($group == 1) {
+    if ($group_id == 1) {
 ?>
 <li class="divider"></li>
 <li class="dropdown-header">Administrator Control Panel</li>

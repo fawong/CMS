@@ -15,13 +15,13 @@ foreach ($db->get_results("SELECT * FROM posts ORDER BY id DESC") as $post) {
 ?>
 <a href="comments.php?action=view_comments&amp;id=<?php print $post->id ?>">View Comments</a>
 <?php
-        if ($group == 1 || $group == 2) {
+        if ($group_id == 1 || $group_id == 2) {
 ?>
 <br />
 <a href="comments.php?action=add_comments&amp;id=<?php print $post->id ?>">Add Comments</a>
 <?php
         };
-        if ($group == 1) {
+        if ($group_id == 1) {
 ?>
 <br /><br />
 <a href="admin/posts.php?action=edit_post&amp;id=<?php print $post->id ?>">Edit Post</a>

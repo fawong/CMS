@@ -27,7 +27,7 @@ if ($get_action == 'view_comments') {
 <p><strong>Comment date:</strong> <?php print timestamp2date($comment->timestamp) ?></p>
 <p><?php print $comment->comment ?></p>
 <?php
-            if ($group == 1) {
+            if ($group_id == 1) {
 ?>
 <a href="admin/comments.php?action=edit_comment&amp;id=<?php print $comment->id ?>">Edit Comment</a>
 <br />

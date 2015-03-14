@@ -1,34 +1,25 @@
 <?php
 session_start();
 
+$session_vars = array('username', 'user_id', 'group_id', 'login', 'theme');
+$get_vars = array('id', 'page', 'action', 'path', 'file_name', 'dir', 'file');
+
 // GLOBAL VARIABLES
-if (empty($_SESSION)) {
-    $username = '';
-    $user_id = '';
-    $group = '';
-} else {
-    $username = $_SESSION['username'];
-    $user_id = $_SESSION['user_id'];
-    $group = $_SESSION['group_id'];
-    $login = $_SESSION['login'];
+
+foreach ($session_vars as $var) {
+    if (array_key_exists($var, $_SESSION)) {
+        ${$var} = $_SESSION[$var];
+    } else {
+        ${$var} = '';
+    }
 }
 
-if (empty($_GET)) {
-    $get_id = '';
-    $get_page = '';
-    $get_action = '';
-    $get_path = '';
-    $get_file_name = '';
-    $get_dir = '';
-    $get_file = '';
-} else {
-    $get_id = $_GET['id'];
-    $get_page = $_GET['page'];
-    $get_action = $_GET['action'];
-    $get_path = $_GET['path'];
-    $get_file_name = $_GET['filename'];
-    $get_dir = $_GET['dir'];
-    $get_file = $_GET['file'];
+foreach ($get_vars as $var) {
+    if (array_key_exists($var, $_GET)) {
+        ${"get_" . $var} = $_GET[$var];
+    } else {
+        ${"get_" . $var} = '';
+    }
 }
 
 $ip = $_SERVER['REMOTE_ADDR'];
@@ -49,7 +40,7 @@ if ($settings['maintenance'] == true) {
 // Error handler
 function eh($errno, $errstr, $errfile, $errline, $errcontext) {
     http_response_code(500);
-    header("Not-A-CMS-Fail: $errstr");
+    header("X-Not-A-CMS-Error: $errstr");
     error_log("Not A CMS Error -- $errstr -- line $errline -- file $errfile");
     die($errstr);
 }
@@ -115,7 +106,7 @@ function password2hash($password) {
 // FIND PM USAGE
 function pm_usage() {
     global $db, $settings, $user_id;
-    if ($group == 1) {
+    if ($group_id == 1) {
         $max = 'unlimited';
     } else {
         $max = $settings['inbox_limit_member'];

@@ -100,30 +100,65 @@ if ($_SESSION['login'] != true) {
     if ($get_action == 'edit_profile') {
         title("Edit Profile");
         page_header("Edit Profile");
+        $user = $db->get_row("SELECT * FROM `users` WHERE `id` = $user_id");
 ?>
-<form method="post" action="?act=profile&amp;action=edit_profile&amp;set=fix">
-<strong>Username:</strong> '.$user->username.'<br />
-<strong>First Name:</strong><br />
-<input type="text" name="fname" size="65" value="'.$user->first_name.'" /><br />
-<strong>Last Name:</strong><br />
-<input type="text" name="lname" size="65" value="'.$user->last_name.'" /><br />
-<strong>Date Joined:</strong> '.$user->date_joined.' <br />
-<strong>About:</strong><br />
-<textarea name="about" rows="10" cols="56">'.$user->about.'</textarea><br /> 
-<strong>Interests:</strong><br />
-<textarea name="interests" rows="10" cols="56">'.$user->interests.'</textarea><br />
-<strong>Signature:</strong><br />
-<textarea name="signature" rows="10" cols="56">'.$user->signature.'</textarea><br />
-<strong>AIM:</strong><br />
-<input type="text" name="aim" size="65" value="'.$user->aim.'" /><br /> 
-<strong>Email:</strong><br />
-<input type="text" name="email" size="65" value="'.$user->email.'" /><br />
-<strong>Avatar:</strong><br />
-<input type="text" name="avatar" size="65" value="'.$user->avatar.'" /><br />
-<strong>Website:</strong><br />
-<input type="text" name="website" size="65" value="'.$user->website.'" /><br /> 
-<strong>Date of Birth:</strong> '.$user->date_of_birth.'<br />
-<input type="submit" name="submit" value="Save Edited Profile" />
+<form role="form" class="form-horizontal" method="post" action="?act=profile&amp;action=edit_profile&amp;set=edit">
+<div class="form-group">
+<label class="col-sm-2 control-label">Username:</label>
+<div class="col-sm-6">
+<?php print $user->username; ?>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">First Name:</label>
+<div class="col-sm-6">
+<input class="form-control" type="text" name="fname" size="65" value="<?php print $user->first_name; ?>" placeholder="First Name" />
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Last Name:</label>
+<div class="col-sm-6">
+<input class="form-control" type="text" name="lname" size="65" value="<?php print $user->last_name; ?>" placeholder="Last Name" />
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Date Joined:</label>
+<div class="col-sm-6">
+<?php print $user->date_joined; ?> 
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">About:</label>
+<textarea name="about" rows="10" cols="56"><?php print $user->about; ?></textarea> 
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Interests:</label>
+<textarea name="interests" rows="10" cols="56"><?php print $user->interests; ?></textarea>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Signature:</label>
+<textarea name="signature" rows="10" cols="56"><?php print $user->signature; ?></textarea>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">AIM:</label>
+<input type="text" name="aim" size="65" value="<?php print $user->aim; ?>" /> 
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Email:</label>
+<input type="text" name="email" size="65" value="<?php print $user->email; ?>" />
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Avatar:</label>
+<input type="text" name="avatar" size="65" value="<?php print $user->avatar; ?>" />
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Website:</label>
+<input type="text" name="website" size="65" value="<?php print $user->website; ?>" /> 
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Date of Birth:</label> <?php print $user->date_of_birth; ?>
+</div>
+<button type="submit" name="submit" class="btn btn-lg btn-primary">Save Edited Profile</button>
 </form>
 <?php
     };

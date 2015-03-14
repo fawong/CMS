@@ -248,7 +248,7 @@ $set_to = '0';
   };
  };
  if ($set_to == '0'){
-     if ($_FILES['file']['size'] || $settings['img_size'] || $group == 1){
+     if ($_FILES['file']['size'] || $settings['img_size'] || $group_id == 1){
    $local_file = $_FILES['file']['tmp_name']; // Defines Name of Local File to be Uploaded
 
    $destination_file = basename($_FILES['file']['name']);  // Path for File Upload (relative to your login dir)

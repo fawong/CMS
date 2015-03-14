@@ -1,7 +1,7 @@
 <?php 
 require_once(dirname(dirname(__FILE__)) . '/functions.php');
 
-if($group != 1) {
+if($group_id != 1) {
     redirect("failed.php?id=2");
 } else {
     // CONFIRM DELETE COMMENT

@@ -122,7 +122,7 @@ $next_link .= mktime(0,0,0,($month +1),$day,$year);
 } 
 $next_link .= '">Next >></a>'; 
 
-if ($group == 1 || $_SESSION['access_calendar'] == 1){
+if ($group_id == 1 || $_SESSION['access_calendar'] == 1){
 print '<a href="?act=calendar&action=add_event&date='.$date.'">[Add Event to Current Date]</a>';
 };
 
@@ -277,7 +277,7 @@ if ($action == ''){
 
 /*$find = mysql_query('SELECT * FROM calendar WHERE `date` = '$date'');
 while ($row = mysql_fetch_array($find)){
-if ($group == 1 || $_SESSION['access_calendar'] == 1){
+if ($group_id == 1 || $_SESSION['access_calendar'] == 1){
 $admin_funcs = '<div align='right'><a href='?act=calendar&action=event_edit&id='.$row[id].''>Edit Post</a> -<a href='index.php?act=calendar&action=event_delete&id='.$row[id].''> Delete Post
 </a></div>';}else{
 $admin_funcs = '';
@@ -297,7 +297,7 @@ while ($fastd >= 1){
 $kadate = mktime(0,0,0,$month,$day+$count_dj,$year);
 $find = mysql_query("SELECT * FROM calendar WHERE `date` = '$kadate' LIMIT 1");
 while ($row = mysql_fetch_array($find)){
-if ($group == 1 || $_SESSION['access_calendar'] == 1){
+if ($group_id == 1 || $_SESSION['access_calendar'] == 1){
 $admin_funcs = '<div align="right"><a href="?act=calendar&action=event_edit&id='.$row[id].'">Edit Post</a> -<a href="index.php?act=calendar&action=event_delete&id='.$row[id].'"> Delete Post
 </a></div>';}else{
 $admin_funcs = '';

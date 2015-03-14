@@ -4,7 +4,7 @@
  *
  * @global string $cms_version
  */
-$cms_version = '2014.07.31-dev';
+$cms_version = '2015.03.14-dev';
 
 /**
  * Holds the DB revision, increments when changes are made to the DB schema.
