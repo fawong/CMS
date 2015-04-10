@@ -17,9 +17,7 @@ if ($footer) {
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<!--
-<script src="/assets/js/jquery.js"></script>
--->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="/themes/default/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
