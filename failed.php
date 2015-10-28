@@ -3,9 +3,9 @@ require_once('functions.php');
 $id = $_GET['id'];
 
 // No Error Occurred
-if ($id == '' || ($id != 1 && $id != 2)){
+if ($id == '' || ($id != 1 && $id != 2 && $id != 3)){
     $error_message_title = 'No Error Occurred';
-    $error_message = '<img align="middle" src="themes/' . $_SESSION[theme] . '/images/noerroroccurred.jpg">';
+    $error_message = '<img align="middle" src="themes/' . $theme . '/images/noerroroccurred.jpg">';
 };
 
 // Wrong Username and/or Password
@@ -25,7 +25,7 @@ if ($id == '2'){
 // Page Does Not Exist
 if ($id == '3'){
     $error_message_title = 'Page Does Not Exist';
-    $error_message = 'The page <u>' .$_GET['set']. '</u> does not exist.';
+    $error_message = 'The page you are looking for does not exist.';
 };
 
 // Function Not Defined
