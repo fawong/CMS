@@ -113,24 +113,42 @@ Change Folder:
 
     // SUBMIT REPLY
     if ($get_action == 'submit_reply') {
-        $to_id = username2id($_POST[to]);
-        $db->query("INSERT INTO `personal_messages` (`subject`, `from_user_id`, `to_user_id`, `text`) VALUES ('$_POST[subject]', $user_id, $to_id, '$_POST[body]')");
-        page_header('Message Sent!');
+        $to_id = username2id($_POST['to']);
+        if ($to_id == -1) {
+            page_header("Username not found");
+?>
+Username not found
+<?php
+        } else {
+          $subject = $_POST['subject'];
+          $body = $_POST['body'];
+          $db->query("INSERT INTO `personal_messages` (`subject`, `from_user_id`, `to_user_id`, `text`) VALUES ('$subject', '$user_id', '$to_id', '$body')");
+          page_header('Message Sent!');
 ?>
 Message sent!
 <?php
+        };
     };
 
     // COMPOSE MESSAGE
     if ($get_action == 'compose') {
+        title("Compose New Message");
+        page_header('Compose New Message');
 ?>
-<form method="post" action="?action=reply_to">
-To: <input type="text" name="to" value="" /><br />
-Subject: <input type="text" name="subject" value="" /><br />
-Body:<br />
-<textarea name="body" rows="10" cols="50"></textarea><br />
-<input type="hidden" value="100" name="set">
-<input type="submit" value="Send Message" name="submit" />
+<form method="post" action="?action=submit_reply">
+<div class="form-group">
+<label>To:</label>
+<input type="text" class="form-control" name="to" value="" />
+</div>
+<div class="form-group">
+<label>Subject:</label>
+<input type="text" class="form-control" name="subject" value="" />
+</div>
+<div class="form-group">
+<label>Body:</label>
+<textarea name="body" class="form-control" rows="10" cols="50"></textarea>
+</div>
+<button type="submit" class="btn btn-lg btn-primary" name="submit">Send Message</button>
 </form>
 <?php
     };
