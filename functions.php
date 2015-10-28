@@ -105,7 +105,7 @@ function password2hash($password) {
 
 // FIND PM USAGE
 function pm_usage() {
-    global $db, $settings, $user_id;
+    global $db, $settings, $user_id, $group_id;
     if ($group_id == 1) {
         $max = 'unlimited';
     } else {

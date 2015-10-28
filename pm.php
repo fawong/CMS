@@ -32,6 +32,10 @@ Change Folder:
 </div>
 </form>
 
+<?php
+        $results = $db->get_results("SELECT * FROM `personal_messages` WHERE `to_user_id` = $user_id ORDER BY `timestamp`");
+        if ($results) {
+?>
 <table class="table">
 <tr>
 <td>Number</td>
@@ -41,8 +45,8 @@ Change Folder:
 <td>Options</td>
 </tr>
 <?php
-        $count = 1;
-        foreach ($db->get_results("SELECT * FROM `personal_messages` WHERE `to_user_id` = $user_id ORDER BY `timestamp`") as $message) {
+            $count = 1;
+            foreach ($results as $message) {
 ?>
 <tr>
 <td><?php print $count ?></td>
@@ -52,7 +56,12 @@ Change Folder:
 <td><a href="?action=read&amp;id=<?php print $message->id ?>">Read</a> | <a href="?action=reply&amp;id=<?php print $message->id ?>">Reply</a> | <a href="?action=move&amp;id=<?php print $message->id ?>">Move</a> | <a href="?action=delete&amp;id=<?php print $message->id ?>">Delete</a></td>
 </tr>
 <?php
-            $count++;
+                $count++;
+            };
+        } else {
+?>
+<h4>You have no messages</h4>
+<?php
         };
 ?>
 </table>
