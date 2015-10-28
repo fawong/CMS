@@ -3,5 +3,5 @@ files
 downloads
 *.swo
 *.swp
-settings.php
+/settings.php
 config.php # future use
