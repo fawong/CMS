@@ -68,7 +68,12 @@ function id2group($id) {
 // CONVERT USERNAME TO USER ID
 function username2id($username) {
     global $db;
-    return $db->get_var("SELECT id FROM `users` WHERE `username` = '$username'");
+    $user_id = $db->get_var("SELECT id FROM `users` WHERE `username` = '$username'");
+    if ($user_id) {
+        return $user_id;
+    } else {
+        return -1;
+    }
 }
 
 // CONVERT USER ID TO USERNAME
