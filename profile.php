@@ -111,19 +111,19 @@ if ($_SESSION['login'] != true) {
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">First Name:</label>
-<div class="col-sm-6">
+<div class="col-sm-5">
 <input class="form-control" type="text" name="fname" size="65" value="<?php print $user->first_name; ?>" placeholder="First Name" />
 </div>
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Last Name:</label>
-<div class="col-sm-6">
+<div class="col-sm-5">
 <input class="form-control" type="text" name="lname" size="65" value="<?php print $user->last_name; ?>" placeholder="Last Name" />
 </div>
 </div>
 <div class="form-group">
 <label class="col-sm-2 control-label">Date Joined:</label>
-<div class="col-sm-6">
+<div class="col-sm-5">
 <?php print $user->date_joined; ?> 
 </div>
 </div>
