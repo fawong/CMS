@@ -1,0 +1,6 @@
+{
+  "name": "Not-a-cms",
+  "tagline": "Simple content managment system written in PHP",
+  "body": "Not A CMS\r\n===\r\n\r\nContent managment system written in PHP (originally known as FrostByte)\r\n\r\nInstallation\r\n------------\r\n\r\nTODO\r\n\r\nUsage\r\n-----\r\n\r\nTODO\r\n\r\nContributing\r\n------------\r\n\r\nTODO\r\n\r\nCredits\r\n-------\r\n\r\n[ezSQL](https://github.com/jv2222/ezSQL)\r\n\r\nLicense\r\n-------\r\n\r\nReleased under [GPLv3] (https://github.com/fawong/not-a-cms/blob/master/LICENSE)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
