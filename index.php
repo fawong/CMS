@@ -1,5 +1,6 @@
 <?php
 require_once('functions.php');
+
 if (!isset($_SESSION['login'])) {
     $_SESSION['group_id'] = -1;
     $_SESSION['username'] = 'Guest';
