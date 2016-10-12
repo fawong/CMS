@@ -9,8 +9,8 @@ if ($login == false) {
 ?>
 <form class="form-signin" method="post" action="?action=authenticate" name="login">
 <h2 class="form-signin-heading">Please sign in</h2>
-<input type="text" class="form-control" placeholder="Username" name="inputusername" autofocus>
-<input type="password" class="form-control" placeholder="Password" name="inputpassword">
+<input type="text" class="form-control" placeholder="Username" name="username" autofocus>
+<input type="password" class="form-control" placeholder="Password" name="password">
 <p><a href="forgotuserpass.php">Forgot username and/or password?</a></p>
 <!--
 <label class="checkbox">
@@ -30,12 +30,10 @@ You are already logged in.
 }
 
 if ($get_action == 'authenticate') {
-    $inputun = $_POST['inputusername'];
-    $inputp = $_POST['inputpassword'];
+    $inputun = $_POST['username'];
+    $inputp = $_POST['password'];
     if ($inputun != '' && $inputp != '') {
         if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun'")) {
-          var_dump($user);
-          print_r($user);
             if (password_verify($inputp, $user->password)) {
                 if (password_needs_rehash($user->password, PASSWORD_DEFAULT, [ 'cost' => 12 ])) {
                     $hashedpass = password2hash($inputp);
@@ -46,7 +44,6 @@ if ($get_action == 'authenticate') {
                 $_SESSION['username'] = $user->username;
                 $_SESSION['login'] = true;
                 $db->query("UPDATE users SET ip = '" . ip2long($ip) . "', online = 1 WHERE username = '$user->username'");
-                $db->debug();
                 redirect("posts.php");
             } else {
                 redirect("failed.php?id=1");

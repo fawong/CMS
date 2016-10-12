@@ -3,6 +3,7 @@ require_once('functions.php');
 
 title("Posts");
 page_header("Posts");
+
 foreach ($db->get_results("SELECT * FROM posts ORDER BY id DESC") as $post) {
 ?>
 <h2><?php print $post->title ?></h2>
