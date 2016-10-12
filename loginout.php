@@ -33,15 +33,24 @@ if ($get_action == 'authenticate') {
     $inputun = $_POST['inputusername'];
     $inputp = $_POST['inputpassword'];
     if ($inputun != '' && $inputp != '') {
-        $hashpass = password2hash($inputp);
-        if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun' AND password = '$hashpass'")) {
-            $_SESSION['group_id'] = $user->group_id;
-            $_SESSION['user_id'] = $user->id;
-            $_SESSION['username'] = $user->username;
-            $_SESSION['login'] = true;
-            $db->query("UPDATE users SET ip = '" . ip2long($ip) . "', online = 1 WHERE username = '$user->username'");
-            $db->debug();
-            redirect("posts.php");
+        if ($user = $db->get_row("SELECT * FROM users WHERE username = '$inputun'")) {
+          var_dump($user);
+          print_r($user);
+            if (password_verify($inputp, $user->password)) {
+                if (password_needs_rehash($user->password, PASSWORD_DEFAULT, [ 'cost' => 12 ])) {
+                    $hashedpass = password2hash($inputp);
+                    $db->query("UPDATE `users` SET `password` = '$hashedpass' WHERE `username` = '$inputun'");
+                };
+                $_SESSION['group_id'] = $user->group_id;
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['username'] = $user->username;
+                $_SESSION['login'] = true;
+                $db->query("UPDATE users SET ip = '" . ip2long($ip) . "', online = 1 WHERE username = '$user->username'");
+                $db->debug();
+                redirect("posts.php");
+            } else {
+                redirect("failed.php?id=1");
+            };
         } else {
             redirect("failed.php?id=1");
         };
