@@ -105,7 +105,7 @@ function redirect($url) {
 
 // PLAIN TEXT PASSWORD TO HASH
 function password2hash($password) {
-    return sha1(md5($password));
+    return password_hash($password, PASSWORD_DEFAULT, [ 'cost' => 12 ]);
 }
 
 // FIND PM USAGE
