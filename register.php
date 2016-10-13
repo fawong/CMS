@@ -173,7 +173,7 @@ You are already logged in to <?php print $cms_name ?>.
 </div>
 </div>
 <div class="form-group">
-<label>*I agree to and understand the <a href="page.php?page=tos" target="_blank">Terms of Service</a>.</label>
+<label>*I agree to and understand the <a href="page.php?id=499" target="_blank">Terms of Service</a>.</label>
 <input type="checkbox" name="agree" value="agree" />
 </div>
 <div class="form-group">

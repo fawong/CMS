@@ -38,13 +38,16 @@ if (isset($_POST['email'])) {
         $requestemail = $_POST['email'];
         if ($user = $db->get_row("SELECT * FROM `users` WHERE `email` = '$requestemail'")) {
             $replyemail = $settings['replyemail'];
+
             $headers .= "Return-Path: $replyemail\n";
             $headers .= "Reply-To: $replyemail\n";
             $headers .= "From: $replyemail\n";
             $headers .= "Errors-To: $replyemail\n";
             $headers .= "Content-Type: text/html; charset=UTF-8";
-            $user = $db->get_results("SELECT * FROM users WHERE `email` = '$requestemail'");
-            $body = "Username: $user['username']";
+
+            $user = $db->get_row("SELECT * FROM users WHERE `email` = '$requestemail'");
+
+            $body = "Username: $user->username";
             //Mail function will return true if it is successful
             $sendemail = mail($requestemail, "Your request for login details to $cms_name", $body, $headers);
             if($sendemail) {

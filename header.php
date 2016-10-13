@@ -43,7 +43,7 @@ check_inbox();
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="<?php print $settings['url'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
+<a class="navbar-brand" href="//<?php print $settings['url'] ?>"><img src="<?php print $settings['logo'] ?>" alt="Logo" /></a>
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
