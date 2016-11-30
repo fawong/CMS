@@ -1,7 +1,7 @@
 <?php 
 require_once('functions.php');
 
-if ($_SESSION['login'] != true) {
+if ($login != true) {
     redirect("failed.php?id=2");
 } else {
     // VIEW PROFILE
@@ -56,7 +56,7 @@ if ($_SESSION['login'] != true) {
     };
 
     // REPUTATION
-    if ($get_action =='reputation') {
+    if ($get_action == 'reputation') {
         title("Reputation");
         page_header('Reputation');
 ?>
@@ -102,7 +102,7 @@ if ($_SESSION['login'] != true) {
         page_header("Edit Profile");
         $user = $db->get_row("SELECT * FROM `users` WHERE `id` = $user_id");
 ?>
-<form role="form" class="form-horizontal" method="post" action="?act=profile&amp;action=edit_profile&amp;set=edit">
+<form role="form" class="form-horizontal" method="post" action="?&amp;action=edit_profile&amp;set=edit">
 <div class="form-group">
 <label class="col-sm-2 control-label">Username:</label>
 <div class="col-sm-6">

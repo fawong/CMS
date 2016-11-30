@@ -9,7 +9,7 @@ if ($get_action == 'view_comments') {
 ?>
 <h2><?php print $post->title ?></h2>
 <br />
-<strong>Post author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($post->author_id) ?>"><?php print id2username($post->author_id) ?></a>
+<strong>Post author:</strong> <a href="profile.php?action=view&amp;username=<?php print id2username($post->author_id) ?>"><?php print id2username($post->author_id) ?></a>
 <br />
 <strong>Post date:</strong> <?php print timestamp2date($post->timestamp) ?>
 <p><?php print $post->post ?></p>
@@ -23,7 +23,7 @@ if ($get_action == 'view_comments') {
         foreach ($comments as $comment) {
 ?>
 <h4>Comment # <?php print $count ?></h4>
-<p><strong>Comment author:</strong> <a href="?act=profile&amp;action=view&amp;username=<?php print id2username($comment->author_id) ?>"><?php print id2username($comment->author_id) ?></a></p>
+<p><strong>Comment author:</strong> <a href="profile.php?action=view&amp;username=<?php print id2username($comment->author_id) ?>"><?php print id2username($comment->author_id) ?></a></p>
 <p><strong>Comment date:</strong> <?php print timestamp2date($comment->timestamp) ?></p>
 <p><?php print $comment->comment ?></p>
 <?php

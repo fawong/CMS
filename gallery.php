@@ -166,7 +166,7 @@ if ($act == 'gallery'){
                         Information:
                         <table class="table" width="500"><tr><Td>
                         Name: '.$row[name].'<br />
-                        Submitted by: <a href="?act=profile&action=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
+                        Submitted by: <a href="profile.php?action=view&id='.$row[submited_by].'">'.$row[submited_by].'</a><br />
                         Author: '.$row[author].'<br />
                         File Size: '.$row[file_size].'<br />
                         File Type: '.$row[file_type].'<br />
@@ -187,7 +187,7 @@ if ($act == 'gallery'){
                             $abs[$count][avatar] = $row[avatar];
                         };
                         print '
-                            <tr><td><center><a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
+                            <tr><td><center><a href="profile.php?action=view&id='.$row[username].'">'.$row[username].'<br /><img align="middle" src="'.$abs[$count][avatar].'" /></a></center></td><td>'.$row[comment].'</td></tr>';
                         $count++;
                     };
                     print '

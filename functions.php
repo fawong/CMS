@@ -139,7 +139,7 @@ function check_inbox() {
         };
         if ($check_count_comment > 0) {
             $important .= '<center><span class="important">
-                <a href="?act=profile&action=comment&set=view_comments">NEW COMMENT(S)</a>
+                <a href="profile.php?action=comment&set=view_comments">NEW COMMENT(S)</a>
                 </span></center>';
         };
          */

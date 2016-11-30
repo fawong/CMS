@@ -284,7 +284,7 @@ $admin_funcs = '';
 };
 print '<tr bordercolor='#0066CC'><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href='?act=profile&action=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
+&nbsp;&nbsp;&nbsp;-posted by: <a href='profile.php?action=view&id='.$row[username].''>'.$row[username].'</a> Date: '.date('m-d-Y', $row[date]).'
 </td>
 </tr><tr bordercolor='#0066CC'><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -304,7 +304,7 @@ $admin_funcs = '';
 };
 print '<tr bordercolor="#0066CC"><td>
 <strong>'.$row[title].'</strong>
-&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
+:nbsp;&nbsp;&nbsp;-posted by: <a href="profile.php?action=view&id='.$row[username].'">'.$row[username].'</a> <b>Date: '.date('m-d-Y', $row[date]).'</b>
 </td>
 </tr><tr bordercolor="#0066CC"><td>
 <p>&nbsp;&nbsp;'.$row[text].'</p><br />'.$admin_funcs.'
@@ -369,7 +369,7 @@ print '<tr><td>
 <strong>Are you sure you want to delete this event?</strong>
 <br />
 '.$row[title].'
-&nbsp;&nbsp;&nbsp;-posted by: <a href="?act=profile&action=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
+&nbsp;&nbsp;&nbsp;-posted by: <a href="profile.php?action=view&id='.$row[username].'">'.$row[username].'</a> Date: '.$row[date].'
 </td>
 </tr><tr><td>
 <p>&nbsp;&nbsp;'.$row[post].'</p>'.$admin_funcs.'
