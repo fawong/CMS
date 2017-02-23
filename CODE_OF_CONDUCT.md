@@ -1,7 +1,6 @@
-# Ubuntu Code of Conduct v2.0
+# Code of Conduct v2.0
+
 ## Community
-Ubuntu is about showing humanity to one another: the word itself captures the spirit of being
-human.
 
 We want a productive, happy and agile community that can welcome new ideas in a complex field,
 improve every process every year, and foster collaboration between groups with very different
