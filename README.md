@@ -26,4 +26,4 @@ Credits
 License
 -------
 
-Released under [GPLv3] (https://github.com/fawong/not-a-cms/blob/master/LICENSE)
+Released under [GPLv3](https://github.com/fawong/not-a-cms/blob/master/LICENSE)
