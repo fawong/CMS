@@ -1,4 +1,6 @@
-1. File a ticket in the FAWONG [JIRA](https://jira.fawong.com)
-2. Clone repo
-3. Edit code
-4. Check-in code
+1. Check out the FAWONG [JIRA](https://jira.fawong.com) for any issues/bugs/features/etc.
+2. Fork this repo
+3. Edit the code
+4. Submit a pull request
+5. ...
+6. Profit?
