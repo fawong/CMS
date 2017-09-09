@@ -8,17 +8,16 @@ Content managment system written in PHP (originally known as FrostByte)
 Installation
 ------------
 
-TODO
-
-Usage
------
-
-TODO
+1. Clone this repo
+2. Copy `settings.php.sample` to `settings.php`
+3. Edit settings.php
+4. (Optional) configure your web server subdomain
+5. Load the page
 
 Contributing
 ------------
 
-TODO
+See the [CONTRIBUTING](https://github.com/fawong/not-a-cms/blob/master/.github/CONTRIBUTING.md) page
 
 Credits
 -------
